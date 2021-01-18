@@ -15,7 +15,7 @@ mathjax: false
 summary: ''
 date: 2014-10-17 17:02:31
 desc: Android 解决sqlite错误：no such column named xxx 找不到数据列错误的方法
-keywords: android sqlite: no such column named xxx,Android sqlite基础
+keywords: android sqlite：no such column named xxx,Android sqlite基础
 ---
 
 报错信息一眼就能看出来，找不到数据列。为什么onCreate中的create表语句明明有这一列啊.schema表结构也明明有啊。
