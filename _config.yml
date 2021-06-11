@@ -13,7 +13,8 @@ timezone: ''
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://example.com/child' and root as '/child/'
-url: http://lison.cc
+# url: http://lison.cc
+url: http://localhost:4000
 root: /
 permalink: :title/
 permalink_defaults:
@@ -98,7 +99,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: bubuzou
+theme: july
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
