@@ -11,7 +11,7 @@
     <meta name="description" content="功能折腾完了记录一下。带删除按钮的AutoCompleteTextView，普通的自动提示控件用起来比较简单，准备好数组给控件setAdapter一下行了，这里要说的是提取sqlite中的数据绑定并且加上清空按钮，先来张图片。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android控件之带清空按钮(功能)的AutoCompleteTextView自动提示">
-<meta property="og:url" content="http://localhost:4000/android-autocompletetextview-with-clear-button/index.html">
+<meta property="og:url" content="http://lison.cc/android-autocompletetextview-with-clear-button/index.html">
 <meta property="og:site_name" content="LISON">
 <meta property="og:description" content="功能折腾完了记录一下。带删除按钮的AutoCompleteTextView，普通的自动提示控件用起来比较简单，准备好数组给控件setAdapter一下行了，这里要说的是提取sqlite中的数据绑定并且加上清空按钮，先来张图片。">
 <meta property="og:locale" content="en_US">
@@ -26,9 +26,9 @@
     
     
         
-            <link rel="stylesheet" href="http://localhost:4000/css/markdown.css">
+            <link rel="stylesheet" href="http://lison.cc/css/markdown.css">
         
-            <link rel="stylesheet" href="http://localhost:4000/css/july.css">
+            <link rel="stylesheet" href="http://lison.cc/css/july.css">
         
     
 <meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
@@ -43,11 +43,11 @@
 <div id="menu-outer">
     <div id="menu-inner">
         
-            <a class="false" href="http://localhost:4000/index.html">Home</a>
+            <a class="false" href="http://lison.cc/index.html">Home</a>
         
-            <a class="false" href="http://localhost:4000/archives/index.html">Archives</a>
+            <a class="false" href="http://lison.cc/archives/index.html">Archives</a>
         
-            <a class="false" href="http://localhost:4000/about/index.html">About</a>
+            <a class="false" href="http://lison.cc/about/index.html">About</a>
         
     </div>
 </div>
@@ -76,7 +76,7 @@
 
 <p>一下子就腰不疼腿不酸了。注意“触摸点位置判断”那行，意思是当前触摸点如果大于AutoCompleteTextView的宽度减去paddingRight的值再剪掉一个固定值（R.dimen.space_4_touch,我这里是10dip），就算触摸到了删除小图标；固定值是多少根据情况来，值越大可以触摸的空间越大，相反越小，用户可能就点击不到那块区域（删除小图标的区域）从而激发不了事件，这也算是优化用户体验的一种手段吧。</p>
 <p>所以，按照上述代码，也可以举一反三为放大镜按钮加上事件，或者为删除小图标设置隐藏/显示条件，比如文本框没有内容时删除图标隐藏，有内容则显示等。</p>
-<p>文章内容中的代码没有单独整理摘除，<a target="_blank" rel="noopener" href="http://lison.cc/wp-content/uploads/2016/01/Desktop.7z">部分源码文件</a></p>
+<p>文章内容中的代码没有单独整理摘除，<a href="http://lison.cc/wp-content/uploads/2016/01/Desktop.7z">部分源码文件</a></p>
 
     </div>
 </article>
@@ -100,13 +100,13 @@
 
 
     
-        <script src="http://localhost:4000/js/jquery-3.4.1.min.js"></script>
+        <script src="http://lison.cc/js/jquery-3.4.1.min.js"></script>
     
-        <script src="http://localhost:4000/js/highlight-9.13.1.min.js"></script>
+        <script src="http://lison.cc/js/highlight-9.13.1.min.js"></script>
     
-        <script src="http://localhost:4000/js/transition.js"></script>
+        <script src="http://lison.cc/js/transition.js"></script>
     
-        <script src="http://localhost:4000/js/smooth-scroll.min.js"></script>
+        <script src="http://lison.cc/js/smooth-scroll.min.js"></script>
     
 
 

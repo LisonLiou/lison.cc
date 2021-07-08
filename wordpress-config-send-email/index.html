@@ -11,7 +11,7 @@
     <meta name="description" content="树莓派上搞定wordpress之后，设置了两个强密码，mysql的，pi登录的（为什么是强密码？你懂的），结果登录wordpress后台的时候发现管理员密码忘了，如何办？找回密码吧，于是点击找回密码，填入邮箱之后系统提示我：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="为wordpress配置发送邮件功能">
-<meta property="og:url" content="http://localhost:4000/wordpress-config-send-email/index.html">
+<meta property="og:url" content="http://lison.cc/wordpress-config-send-email/index.html">
 <meta property="og:site_name" content="LISON">
 <meta property="og:description" content="树莓派上搞定wordpress之后，设置了两个强密码，mysql的，pi登录的（为什么是强密码？你懂的），结果登录wordpress后台的时候发现管理员密码忘了，如何办？找回密码吧，于是点击找回密码，填入邮箱之后系统提示我：">
 <meta property="og:locale" content="en_US">
@@ -24,9 +24,9 @@
     
     
         
-            <link rel="stylesheet" href="http://localhost:4000/css/markdown.css">
+            <link rel="stylesheet" href="http://lison.cc/css/markdown.css">
         
-            <link rel="stylesheet" href="http://localhost:4000/css/july.css">
+            <link rel="stylesheet" href="http://lison.cc/css/july.css">
         
     
 <meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
@@ -41,11 +41,11 @@
 <div id="menu-outer">
     <div id="menu-inner">
         
-            <a class="false" href="http://localhost:4000/index.html">Home</a>
+            <a class="false" href="http://lison.cc/index.html">Home</a>
         
-            <a class="false" href="http://localhost:4000/archives/index.html">Archives</a>
+            <a class="false" href="http://lison.cc/archives/index.html">Archives</a>
         
-            <a class="false" href="http://localhost:4000/about/index.html">About</a>
+            <a class="false" href="http://lison.cc/about/index.html">About</a>
         
     </div>
 </div>
@@ -86,7 +86,7 @@
 <p>部分内容引自：<a target="_blank" rel="noopener" href="http://www.sjyhome.com/wordpress/wp-cant-email.html%EF%BC%88WordPress%E4%B8%8D%E8%83%BD%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6%EF%BC%8C%E6%8A%98%E8%85%BE%E7%9A%84%E5%BF%83%E9%85%B8%E5%8F%B2%EF%BC%89">http://www.sjyhome.com/wordpress/wp-cant-email.html（WordPress不能发送邮件，折腾的心酸史）</a></p>
 <p><strong>1. sudo apt-get install sendmail（其实我会用apt-get，不过想不起来了）</strong></p>
 <p><strong>2. 重启php-fpm：sudo service /etc/init.d/php5-fpm restart （我的是php5-fpm，跟上面教程的不是很一样，可能版本问题）</strong></p>
-<p><strong>3. 查看sendmail是否安装成功：/etc/init.d/sendmail status（没有加sudo），用putty运行的命令，过了很久都没有回应。我没有按Ctrl+C，而是选择了Duplicate Session，登录之后查看了一下/etc/init.d文件夹，发现sendmail安静的躺在那里，我没有作声。心里想，次奥，这到底是成没成功，于是又回到<a target="_blank" rel="noopener" href="http://lison.cc/wp-login.php%EF%BC%8C%E7%82%B9%E5%87%BB%E4%BA%86%E6%89%BE%E5%9B%9E%E5%AF%86%E7%A0%81%EF%BC%8C%E5%8F%88%E5%81%9A%E4%BA%86%E4%B8%80%E9%81%8D%E6%9C%80%E5%BC%80%E5%A7%8B%E7%9A%84%E5%8A%A8%E4%BD%9C%EF%BC%8C%E7%BB%93%E6%9E%9C%E5%9C%A8%E6%88%91%E7%82%B9%E5%87%BB%E8%8E%B7%E5%8F%96%E6%96%B0%E5%AF%86%E7%A0%81%E6%8C%89%E9%92%AE%E7%81%AB%E7%8B%90%E7%9A%84%E5%BD%93%E5%89%8D%E6%A0%87%E7%AD%BE%E9%A1%B5%E8%BD%AC%E4%BA%86%E5%87%A0%E7%A7%92%E9%92%9F%E5%90%8E%E5%91%8A%E8%AF%89%E6%88%91%EF%BC%9A">http://lison.cc/wp-login.php，点击了找回密码，又做了一遍最开始的动作，结果在我点击获取新密码按钮火狐的当前标签页转了几秒钟后告诉我：</a></strong></p>
+<p><strong>3. 查看sendmail是否安装成功：/etc/init.d/sendmail status（没有加sudo），用putty运行的命令，过了很久都没有回应。我没有按Ctrl+C，而是选择了Duplicate Session，登录之后查看了一下/etc/init.d文件夹，发现sendmail安静的躺在那里，我没有作声。心里想，次奥，这到底是成没成功，于是又回到<a href="http://lison.cc/wp-login.php%EF%BC%8C%E7%82%B9%E5%87%BB%E4%BA%86%E6%89%BE%E5%9B%9E%E5%AF%86%E7%A0%81%EF%BC%8C%E5%8F%88%E5%81%9A%E4%BA%86%E4%B8%80%E9%81%8D%E6%9C%80%E5%BC%80%E5%A7%8B%E7%9A%84%E5%8A%A8%E4%BD%9C%EF%BC%8C%E7%BB%93%E6%9E%9C%E5%9C%A8%E6%88%91%E7%82%B9%E5%87%BB%E8%8E%B7%E5%8F%96%E6%96%B0%E5%AF%86%E7%A0%81%E6%8C%89%E9%92%AE%E7%81%AB%E7%8B%90%E7%9A%84%E5%BD%93%E5%89%8D%E6%A0%87%E7%AD%BE%E9%A1%B5%E8%BD%AC%E4%BA%86%E5%87%A0%E7%A7%92%E9%92%9F%E5%90%8E%E5%91%8A%E8%AF%89%E6%88%91%EF%BC%9A">http://lison.cc/wp-login.php，点击了找回密码，又做了一遍最开始的动作，结果在我点击获取新密码按钮火狐的当前标签页转了几秒钟后告诉我：</a></strong></p>
 <h1 id="504-Gateway-Time-out"><a href="#504-Gateway-Time-out" class="headerlink" title="504 Gateway Time-out"></a>504 Gateway Time-out</h1><hr>
 <p>nginx/1.2.1</p>
 <p><strong>4.于是我又了想起来：wp的后台设置（撰写）邮件服务器的地方还空着，空着。。。一切仿佛又回到了最开始，那天下午。。。</strong></p>
@@ -133,13 +133,13 @@
 
 
     
-        <script src="http://localhost:4000/js/jquery-3.4.1.min.js"></script>
+        <script src="http://lison.cc/js/jquery-3.4.1.min.js"></script>
     
-        <script src="http://localhost:4000/js/highlight-9.13.1.min.js"></script>
+        <script src="http://lison.cc/js/highlight-9.13.1.min.js"></script>
     
-        <script src="http://localhost:4000/js/transition.js"></script>
+        <script src="http://lison.cc/js/transition.js"></script>
     
-        <script src="http://localhost:4000/js/smooth-scroll.min.js"></script>
+        <script src="http://lison.cc/js/smooth-scroll.min.js"></script>
     
 
 

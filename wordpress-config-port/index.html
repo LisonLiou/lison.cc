@@ -11,7 +11,7 @@
     <meta name="description" content="OK，小打小闹，在Pi上部署了wordpress，成功。无奈电信疯掉了我的80端口，所以需要修改为别的端口，于是使用8000，据说8080也被疯掉了。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="wordpress站点修改域名端口号（默认端口号修改）">
-<meta property="og:url" content="http://localhost:4000/wordpress-config-port/index.html">
+<meta property="og:url" content="http://lison.cc/wordpress-config-port/index.html">
 <meta property="og:site_name" content="LISON">
 <meta property="og:description" content="OK，小打小闹，在Pi上部署了wordpress，成功。无奈电信疯掉了我的80端口，所以需要修改为别的端口，于是使用8000，据说8080也被疯掉了。">
 <meta property="og:locale" content="en_US">
@@ -24,9 +24,9 @@
     
     
         
-            <link rel="stylesheet" href="http://localhost:4000/css/markdown.css">
+            <link rel="stylesheet" href="http://lison.cc/css/markdown.css">
         
-            <link rel="stylesheet" href="http://localhost:4000/css/july.css">
+            <link rel="stylesheet" href="http://lison.cc/css/july.css">
         
     
 <meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
@@ -41,11 +41,11 @@
 <div id="menu-outer">
     <div id="menu-inner">
         
-            <a class="false" href="http://localhost:4000/index.html">Home</a>
+            <a class="false" href="http://lison.cc/index.html">Home</a>
         
-            <a class="false" href="http://localhost:4000/archives/index.html">Archives</a>
+            <a class="false" href="http://lison.cc/archives/index.html">Archives</a>
         
-            <a class="false" href="http://localhost:4000/about/index.html">About</a>
+            <a class="false" href="http://lison.cc/about/index.html">About</a>
         
     </div>
 </div>
@@ -80,7 +80,7 @@
 </li>
 </ol>
 <p>后来各种谷歌度娘问：nginx 怎么修改端口？因为以前windows下部署ngxin可以直接修改目录下的nginx.conf的listen节点，现在nginx.conf中没有这个选项，于是，修改了上述/etc/nginx/sites-available(enabled)/wordpress这两个文件。怎么改也不行，难道是我重启nginx，php-fpm的方式不对？难道是我打开的方式不对？难道是。。。bla bla bla。</p>
-<p>上面绿色的第一项倒腾了好久，进入了误区，又是wp-config.php开启debug，开启表修复什么的。而且始终在以域名+端口方式访问，并没有加入具体的文件名，后来加入文件名访问（<a target="_blank" rel="noopener" href="http://lison.cc/wp-login.php%EF%BC%89%E5%8F%91%E7%8E%B0php%E6%B2%A1%E9%97%AE%E9%A2%98%EF%BC%8Cmysql%E4%B9%9F%E8%83%BD%E8%BF%9E%E4%B8%8A%EF%BC%8C%E4%BD%86%E6%98%AFcss%E6%B2%A1%E6%9C%89%E5%8A%A0%E8%BD%BD%E4%B8%8A%EF%BC%8C%E4%BA%8E%E6%98%AF%E6%9F%A5%E7%9C%8B%E6%BA%90%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%8F%91%E7%8E%B0css%E7%9A%84%E8%BF%9E%E6%8E%A5%E5%9C%B0%E5%9D%80%E9%83%BD%E6%B2%A1%E6%9C%89%E5%8A%A0%E5%85%A5%E7%AB%AF%E5%8F%A3%E5%8F%B7%EF%BC%8Cok%EF%BC%8C%E8%BF%99%E4%B8%8B%E9%97%AE%E5%BA%A6%E5%A8%98%E5%B0%B1%E6%9C%89%E6%96%B9%E5%90%91%E4%BA%86%EF%BC%9A%E2%80%9Dwordpress%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3%E2%80%9D%EF%BC%8C%E4%BA%8E%E6%98%AF%EF%BC%8C%E6%89%BE%E5%88%B0%E4%BA%86%E4%B8%8B%E9%9D%A2%E6%96%87%E7%AB%A0%E7%9A%84%E5%86%85%E5%AE%B9%EF%BC%8C%E4%BB%A5%E4%B8%8B%E6%98%AF%E5%86%85%E5%AE%B9%E7%89%87%E6%AE%B5%EF%BC%9A">http://lison.cc/wp-login.php）发现php没问题，mysql也能连上，但是css没有加载上，于是查看源代码，发现css的连接地址都没有加入端口号，ok，这下问度娘就有方向了：”wordpress修改端口”，于是，找到了下面文章的内容，以下是内容片段：</a></p>
+<p>上面绿色的第一项倒腾了好久，进入了误区，又是wp-config.php开启debug，开启表修复什么的。而且始终在以域名+端口方式访问，并没有加入具体的文件名，后来加入文件名访问（<a href="http://lison.cc/wp-login.php%EF%BC%89%E5%8F%91%E7%8E%B0php%E6%B2%A1%E9%97%AE%E9%A2%98%EF%BC%8Cmysql%E4%B9%9F%E8%83%BD%E8%BF%9E%E4%B8%8A%EF%BC%8C%E4%BD%86%E6%98%AFcss%E6%B2%A1%E6%9C%89%E5%8A%A0%E8%BD%BD%E4%B8%8A%EF%BC%8C%E4%BA%8E%E6%98%AF%E6%9F%A5%E7%9C%8B%E6%BA%90%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%8F%91%E7%8E%B0css%E7%9A%84%E8%BF%9E%E6%8E%A5%E5%9C%B0%E5%9D%80%E9%83%BD%E6%B2%A1%E6%9C%89%E5%8A%A0%E5%85%A5%E7%AB%AF%E5%8F%A3%E5%8F%B7%EF%BC%8Cok%EF%BC%8C%E8%BF%99%E4%B8%8B%E9%97%AE%E5%BA%A6%E5%A8%98%E5%B0%B1%E6%9C%89%E6%96%B9%E5%90%91%E4%BA%86%EF%BC%9A%E2%80%9Dwordpress%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3%E2%80%9D%EF%BC%8C%E4%BA%8E%E6%98%AF%EF%BC%8C%E6%89%BE%E5%88%B0%E4%BA%86%E4%B8%8B%E9%9D%A2%E6%96%87%E7%AB%A0%E7%9A%84%E5%86%85%E5%AE%B9%EF%BC%8C%E4%BB%A5%E4%B8%8B%E6%98%AF%E5%86%85%E5%AE%B9%E7%89%87%E6%AE%B5%EF%BC%9A">http://lison.cc/wp-login.php）发现php没问题，mysql也能连上，但是css没有加载上，于是查看源代码，发现css的连接地址都没有加入端口号，ok，这下问度娘就有方向了：”wordpress修改端口”，于是，找到了下面文章的内容，以下是内容片段：</a></p>
 <blockquote>
 <p><em>wordpress关于端口的不在配置文件里，而在数据表wp_options中的siteurl和home两个变量</em><br><em>mysql&gt; update wp_options set option_value = ‘<a href="http://sas.123.com:8001’">http://sas.123.com:8001’</a> where option_id = 1;</em><br><em>mysql&gt; update wp_options set option_value = ‘<a href="http://sas.123.com:8001’">http://sas.123.com:8001’</a> where option_id = 37;</em></p>
 <p><em>原有文章中如果有插图，则插图的URL地址要更新</em><br><em>mysql&gt; UPDATE wp_posts SET post_content = REPLACE( post_content, “<a target="_blank" rel="noopener" href="http://sas.123.com/">http://sas.123.com</a>“, “<a target="_blank" rel="noopener" href="http://sas.123.com:8001/">http://sas.123.com:8001</a>” ) where post_date &lt; “2011-09-15”;</em></p>
@@ -88,7 +88,7 @@
 <p>** <font color=red>遗留的问题：</font>**</p>
 <p><strong>1. <font color=red>现在正在编辑的文章不知道能不能提交成功。</font></strong></p>
 <p><strong>2. <font color=red>直接敲入域名<a target="_blank" rel="noopener" href="http://lison.cc还是打不开/">http://lison.cc还是打不开</a></font></strong></p>
-<p>** <font color=red><a target="_blank" rel="noopener" href="http://lison.cc/index.php%E4%B9%9F%E6%89%93%E4%B8%8D%E5%BC%80%E3%80%82%E8%80%8C%E4%B8%94%E8%87%AA%E5%8A%A8%E5%AF%BC%E5%90%91%E5%88%B0%E4%BA%86%EF%BC%9Ahttp://lison.cc%EF%BC%8C%E7%81%AB%E7%8B%90%E7%BB%99%E5%87%BA%E7%9A%84%E6%8F%90%E7%A4%BA%E6%98%AF%EF%BC%9A%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%97%B6%E9%97%B4%E8%BF%87%E9%95%BF%E3%80%82">http://lison.cc/index.php也打不开。而且自动导向到了：http://lison.cc，火狐给出的提示是：服务器响应时间过长。</a>**</font></p>
+<p>** <font color=red><a href="http://lison.cc/index.php%E4%B9%9F%E6%89%93%E4%B8%8D%E5%BC%80%E3%80%82%E8%80%8C%E4%B8%94%E8%87%AA%E5%8A%A8%E5%AF%BC%E5%90%91%E5%88%B0%E4%BA%86%EF%BC%9Ahttp://lison.cc%EF%BC%8C%E7%81%AB%E7%8B%90%E7%BB%99%E5%87%BA%E7%9A%84%E6%8F%90%E7%A4%BA%E6%98%AF%EF%BC%9A%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%97%B6%E9%97%B4%E8%BF%87%E9%95%BF%E3%80%82">http://lison.cc/index.php也打不开。而且自动导向到了：http://lison.cc，火狐给出的提示是：服务器响应时间过长。</a>**</font></p>
 <p>这是为什么，先不管了，反正端口号已经修改成功了，先Ctrl+C一下，面的提交保存不了。</p>
 <p>解决遗留的问题：</p>
 <p>1.看来是已经发布成功了。</p>
@@ -117,13 +117,13 @@
 
 
     
-        <script src="http://localhost:4000/js/jquery-3.4.1.min.js"></script>
+        <script src="http://lison.cc/js/jquery-3.4.1.min.js"></script>
     
-        <script src="http://localhost:4000/js/highlight-9.13.1.min.js"></script>
+        <script src="http://lison.cc/js/highlight-9.13.1.min.js"></script>
     
-        <script src="http://localhost:4000/js/transition.js"></script>
+        <script src="http://lison.cc/js/transition.js"></script>
     
-        <script src="http://localhost:4000/js/smooth-scroll.min.js"></script>
+        <script src="http://lison.cc/js/smooth-scroll.min.js"></script>
     
 
 

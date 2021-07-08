@@ -11,7 +11,7 @@
     <meta name="description" content="安卓网络请求中经常用到OkHttp库，用到域名请求API，使用到域名则必须与DNS交互，使用DNS域名解析则绕不开运营商的LocalDNS问题，域名污染、域名劫持问题，这也是很多场景客户那里打不开，我这里好好的情况的一种典型解释。上古的方法是客户端发起一次Http请求，服务端响应之后客户端根据httpStatus判断如果是某种情况，则更换IP或域名请求其他服务器，但是这样一次完整的请求实在太浪费时">
 <meta property="og:type" content="article">
 <meta property="og:title" content="android网络编程高可用实践：Okhttp 接入HttpDNS">
-<meta property="og:url" content="http://localhost:4000/android-okhttp-httpdns/index.html">
+<meta property="og:url" content="http://lison.cc/android-okhttp-httpdns/index.html">
 <meta property="og:site_name" content="LISON">
 <meta property="og:description" content="安卓网络请求中经常用到OkHttp库，用到域名请求API，使用到域名则必须与DNS交互，使用DNS域名解析则绕不开运营商的LocalDNS问题，域名污染、域名劫持问题，这也是很多场景客户那里打不开，我这里好好的情况的一种典型解释。上古的方法是客户端发起一次Http请求，服务端响应之后客户端根据httpStatus判断如果是某种情况，则更换IP或域名请求其他服务器，但是这样一次完整的请求实在太浪费时">
 <meta property="og:locale" content="en_US">
@@ -24,9 +24,9 @@
     
     
         
-            <link rel="stylesheet" href="http://localhost:4000/css/markdown.css">
+            <link rel="stylesheet" href="http://lison.cc/css/markdown.css">
         
-            <link rel="stylesheet" href="http://localhost:4000/css/july.css">
+            <link rel="stylesheet" href="http://lison.cc/css/july.css">
         
     
 <meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
@@ -41,11 +41,11 @@
 <div id="menu-outer">
     <div id="menu-inner">
         
-            <a class="false" href="http://localhost:4000/index.html">Home</a>
+            <a class="false" href="http://lison.cc/index.html">Home</a>
         
-            <a class="false" href="http://localhost:4000/archives/index.html">Archives</a>
+            <a class="false" href="http://lison.cc/archives/index.html">Archives</a>
         
-            <a class="false" href="http://localhost:4000/about/index.html">About</a>
+            <a class="false" href="http://lison.cc/about/index.html">About</a>
         
     </div>
 </div>
@@ -101,13 +101,13 @@
 
 
     
-        <script src="http://localhost:4000/js/jquery-3.4.1.min.js"></script>
+        <script src="http://lison.cc/js/jquery-3.4.1.min.js"></script>
     
-        <script src="http://localhost:4000/js/highlight-9.13.1.min.js"></script>
+        <script src="http://lison.cc/js/highlight-9.13.1.min.js"></script>
     
-        <script src="http://localhost:4000/js/transition.js"></script>
+        <script src="http://lison.cc/js/transition.js"></script>
     
-        <script src="http://localhost:4000/js/smooth-scroll.min.js"></script>
+        <script src="http://lison.cc/js/smooth-scroll.min.js"></script>
     
 
 
