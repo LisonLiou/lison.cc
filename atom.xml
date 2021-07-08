@@ -3,11 +3,11 @@
   <title>LISON</title>
   
   <subtitle>总会有光，告诉我们路的方向~！</subtitle>
-  <link href="http://lison.cc/atom.xml" rel="self"/>
+  <link href="https://lison.cc/atom.xml" rel="self"/>
   
-  <link href="http://lison.cc/"/>
+  <link href="https://lison.cc/"/>
   <updated>2021-06-10T03:45:00.847Z</updated>
-  <id>http://lison.cc/</id>
+  <id>https://lison.cc/</id>
   
   <author>
     <name>Lison Liou</name>
@@ -18,8 +18,8 @@
   
   <entry>
     <title>一种AutoJSPro在Android10下自由自在操作剪贴板的方法</title>
-    <link href="http://lison.cc/autojs-clipboard/"/>
-    <id>http://lison.cc/autojs-clipboard/</id>
+    <link href="https://lison.cc/autojs-clipboard/"/>
+    <id>https://lison.cc/autojs-clipboard/</id>
     <published>2021-06-10T03:07:34.000Z</published>
     <updated>2021-06-10T03:45:00.847Z</updated>
     
@@ -40,17 +40,17 @@
     
     
     
-    <category term="autojs" scheme="http://lison.cc/categories/autojs/"/>
+    <category term="autojs" scheme="https://lison.cc/categories/autojs/"/>
     
     
-    <category term="autojs pro" scheme="http://lison.cc/tags/autojs-pro/"/>
+    <category term="autojs pro" scheme="https://lison.cc/tags/autojs-pro/"/>
     
   </entry>
   
   <entry>
     <title>phpstorm 2020.2 配置yui-compressor压缩js与css的菜坑</title>
-    <link href="http://lison.cc/phpstorm-yui-compressor/"/>
-    <id>http://lison.cc/phpstorm-yui-compressor/</id>
+    <link href="https://lison.cc/phpstorm-yui-compressor/"/>
+    <id>https://lison.cc/phpstorm-yui-compressor/</id>
     <published>2021-01-18T09:21:16.000Z</published>
     <updated>2021-01-18T09:25:56.750Z</updated>
     
@@ -61,17 +61,17 @@
     
     
     
-    <category term="php" scheme="http://lison.cc/categories/php/"/>
+    <category term="php" scheme="https://lison.cc/categories/php/"/>
     
     
-    <category term="php" scheme="http://lison.cc/tags/php/"/>
+    <category term="php" scheme="https://lison.cc/tags/php/"/>
     
   </entry>
   
   <entry>
     <title>Debian 10 设置nginx开机自启</title>
-    <link href="http://lison.cc/debian10-nginx-bootup/"/>
-    <id>http://lison.cc/debian10-nginx-bootup/</id>
+    <link href="https://lison.cc/debian10-nginx-bootup/"/>
+    <id>https://lison.cc/debian10-nginx-bootup/</id>
     <published>2020-11-11T12:21:54.000Z</published>
     <updated>2020-11-18T02:32:12.160Z</updated>
     
@@ -83,19 +83,19 @@
     
     
     
-    <category term="linux" scheme="http://lison.cc/categories/linux/"/>
+    <category term="linux" scheme="https://lison.cc/categories/linux/"/>
     
     
-    <category term="nginx" scheme="http://lison.cc/tags/nginx/"/>
+    <category term="nginx" scheme="https://lison.cc/tags/nginx/"/>
     
-    <category term="debian" scheme="http://lison.cc/tags/debian/"/>
+    <category term="debian" scheme="https://lison.cc/tags/debian/"/>
     
   </entry>
   
   <entry>
     <title>Fiddler Android 7.0以上无法抓取https包问题解决</title>
-    <link href="http://lison.cc/android-fiddler/"/>
-    <id>http://lison.cc/android-fiddler/</id>
+    <link href="https://lison.cc/android-fiddler/"/>
+    <id>https://lison.cc/android-fiddler/</id>
     <published>2020-09-18T12:20:29.000Z</published>
     <updated>2020-11-18T02:32:12.112Z</updated>
     
@@ -106,17 +106,17 @@
     
     
     
-    <category term="android" scheme="http://lison.cc/categories/android/"/>
+    <category term="android" scheme="https://lison.cc/categories/android/"/>
     
     
-    <category term="fiddler" scheme="http://lison.cc/tags/fiddler/"/>
+    <category term="fiddler" scheme="https://lison.cc/tags/fiddler/"/>
     
   </entry>
   
   <entry>
     <title>Java拾遗：多线程中的生产者消费者问题 – 线程的同步</title>
-    <link href="http://lison.cc/java-threads-synchronize/"/>
-    <id>http://lison.cc/java-threads-synchronize/</id>
+    <link href="https://lison.cc/java-threads-synchronize/"/>
+    <id>https://lison.cc/java-threads-synchronize/</id>
     <published>2020-09-18T12:10:50.000Z</published>
     <updated>2020-11-18T02:32:12.222Z</updated>
     
@@ -129,17 +129,17 @@
     
     
     
-    <category term="java" scheme="http://lison.cc/categories/java/"/>
+    <category term="java" scheme="https://lison.cc/categories/java/"/>
     
     
-    <category term="多线程" scheme="http://lison.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
+    <category term="多线程" scheme="https://lison.cc/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/"/>
     
   </entry>
   
   <entry>
     <title>問題排查與解決：Fragment null must be a public static class to be properly recreated from instance state</title>
-    <link href="http://lison.cc/fragment-null-must-be-a-public-static-class-to-be-properly-recreated-from-instance-state/"/>
-    <id>http://lison.cc/fragment-null-must-be-a-public-static-class-to-be-properly-recreated-from-instance-state/</id>
+    <link href="https://lison.cc/fragment-null-must-be-a-public-static-class-to-be-properly-recreated-from-instance-state/"/>
+    <id>https://lison.cc/fragment-null-must-be-a-public-static-class-to-be-properly-recreated-from-instance-state/</id>
     <published>2020-09-15T12:06:28.000Z</published>
     <updated>2020-11-18T02:32:12.169Z</updated>
     
@@ -152,15 +152,15 @@
     
     
     
-    <category term="android" scheme="http://lison.cc/categories/android/"/>
+    <category term="android" scheme="https://lison.cc/categories/android/"/>
     
     
   </entry>
   
   <entry>
     <title>這世上真話本就不多，一位女子的臉紅勝過一大段對白</title>
-    <link href="http://lison.cc/dont-lie-to-me/"/>
-    <id>http://lison.cc/dont-lie-to-me/</id>
+    <link href="https://lison.cc/dont-lie-to-me/"/>
+    <id>https://lison.cc/dont-lie-to-me/</id>
     <published>2020-08-12T08:29:50.000Z</published>
     <updated>2020-11-18T02:32:12.168Z</updated>
     
@@ -171,15 +171,15 @@
     
     
     
-    <category term="water under the bridge" scheme="http://lison.cc/categories/water-under-the-bridge/"/>
+    <category term="water under the bridge" scheme="https://lison.cc/categories/water-under-the-bridge/"/>
     
     
   </entry>
   
   <entry>
     <title>非从零开始Redmi 4A Rolex获取Root与卸载系统应用折腾全过程</title>
-    <link href="http://lison.cc/android-redmi4a-root/"/>
-    <id>http://lison.cc/android-redmi4a-root/</id>
+    <link href="https://lison.cc/android-redmi4a-root/"/>
+    <id>https://lison.cc/android-redmi4a-root/</id>
     <published>2020-07-09T11:59:58.000Z</published>
     <updated>2020-11-18T02:32:12.113Z</updated>
     
@@ -190,17 +190,17 @@
     
     
     
-    <category term="刷机" scheme="http://lison.cc/categories/%E5%88%B7%E6%9C%BA/"/>
+    <category term="刷机" scheme="https://lison.cc/categories/%E5%88%B7%E6%9C%BA/"/>
     
     
-    <category term="root" scheme="http://lison.cc/tags/root/"/>
+    <category term="root" scheme="https://lison.cc/tags/root/"/>
     
   </entry>
   
   <entry>
     <title>Android模拟车间生产看板，数字看板安卓版</title>
-    <link href="http://lison.cc/android-digital-board/"/>
-    <id>http://lison.cc/android-digital-board/</id>
+    <link href="https://lison.cc/android-digital-board/"/>
+    <id>https://lison.cc/android-digital-board/</id>
     <published>2020-07-01T11:56:46.000Z</published>
     <updated>2020-11-18T02:32:12.111Z</updated>
     
@@ -211,15 +211,15 @@
     
     
     
-    <category term="android" scheme="http://lison.cc/categories/android/"/>
+    <category term="android" scheme="https://lison.cc/categories/android/"/>
     
     
   </entry>
   
   <entry>
     <title>android网络编程高可用实践：Okhttp 接入HttpDNS</title>
-    <link href="http://lison.cc/android-okhttp-httpdns/"/>
-    <id>http://lison.cc/android-okhttp-httpdns/</id>
+    <link href="https://lison.cc/android-okhttp-httpdns/"/>
+    <id>https://lison.cc/android-okhttp-httpdns/</id>
     <published>2020-05-21T11:50:46.000Z</published>
     <updated>2020-11-18T02:32:12.113Z</updated>
     
@@ -230,17 +230,17 @@
     
     
     
-    <category term="android" scheme="http://lison.cc/categories/android/"/>
+    <category term="android" scheme="https://lison.cc/categories/android/"/>
     
     
-    <category term="okhttp" scheme="http://lison.cc/tags/okhttp/"/>
+    <category term="okhttp" scheme="https://lison.cc/tags/okhttp/"/>
     
   </entry>
   
   <entry>
     <title>Android Studio优秀插件最佳实践，不定期更新中</title>
-    <link href="http://lison.cc/android-studio-plugins/"/>
-    <id>http://lison.cc/android-studio-plugins/</id>
+    <link href="https://lison.cc/android-studio-plugins/"/>
+    <id>https://lison.cc/android-studio-plugins/</id>
     <published>2020-04-15T11:47:39.000Z</published>
     <updated>2020-11-18T02:32:12.116Z</updated>
     
@@ -251,15 +251,15 @@
     
     
     
-    <category term="android" scheme="http://lison.cc/categories/android/"/>
+    <category term="android" scheme="https://lison.cc/categories/android/"/>
     
     
   </entry>
   
   <entry>
     <title>设计模式之我所使用的Builder模式 – 构建器模式</title>
-    <link href="http://lison.cc/design-pattern-builder/"/>
-    <id>http://lison.cc/design-pattern-builder/</id>
+    <link href="https://lison.cc/design-pattern-builder/"/>
+    <id>https://lison.cc/design-pattern-builder/</id>
     <published>2020-04-15T11:45:22.000Z</published>
     <updated>2020-11-18T02:32:12.167Z</updated>
     
@@ -270,17 +270,17 @@
     
     
     
-    <category term="java" scheme="http://lison.cc/categories/java/"/>
+    <category term="java" scheme="https://lison.cc/categories/java/"/>
     
     
-    <category term="设计模式" scheme="http://lison.cc/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <category term="设计模式" scheme="https://lison.cc/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
   </entry>
   
   <entry>
     <title>半途记●我是如何使用gitbook发布电子书的</title>
-    <link href="http://lison.cc/gitbook-giveup/"/>
-    <id>http://lison.cc/gitbook-giveup/</id>
+    <link href="https://lison.cc/gitbook-giveup/"/>
+    <id>https://lison.cc/gitbook-giveup/</id>
     <published>2020-03-22T11:37:46.000Z</published>
     <updated>2020-11-18T02:32:12.170Z</updated>
     
@@ -291,17 +291,17 @@
     
     
     
-    <category term="前端" scheme="http://lison.cc/categories/%E5%89%8D%E7%AB%AF/"/>
+    <category term="前端" scheme="https://lison.cc/categories/%E5%89%8D%E7%AB%AF/"/>
     
     
-    <category term="折腾" scheme="http://lison.cc/tags/%E6%8A%98%E8%85%BE/"/>
+    <category term="折腾" scheme="https://lison.cc/tags/%E6%8A%98%E8%85%BE/"/>
     
   </entry>
   
   <entry>
     <title>kotlin建造者模式(Builder)实践</title>
-    <link href="http://lison.cc/design-pattern-builder-with-kotlin/"/>
-    <id>http://lison.cc/design-pattern-builder-with-kotlin/</id>
+    <link href="https://lison.cc/design-pattern-builder-with-kotlin/"/>
+    <id>https://lison.cc/design-pattern-builder-with-kotlin/</id>
     <published>2019-07-23T11:32:20.000Z</published>
     <updated>2020-11-18T02:32:12.167Z</updated>
     
@@ -312,17 +312,17 @@
     
     
     
-    <category term="kotlin" scheme="http://lison.cc/categories/kotlin/"/>
+    <category term="kotlin" scheme="https://lison.cc/categories/kotlin/"/>
     
     
-    <category term="设计模式" scheme="http://lison.cc/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    <category term="设计模式" scheme="https://lison.cc/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
   </entry>
   
   <entry>
     <title>弃一道白泥 回灵山</title>
-    <link href="http://lison.cc/hui-lingshan/"/>
-    <id>http://lison.cc/hui-lingshan/</id>
+    <link href="https://lison.cc/hui-lingshan/"/>
+    <id>https://lison.cc/hui-lingshan/</id>
     <published>2019-06-13T11:25:20.000Z</published>
     <updated>2020-11-18T02:32:12.209Z</updated>
     
@@ -334,17 +334,17 @@
     
     
     
-    <category term="Literature Library" scheme="http://lison.cc/categories/Literature-Library/"/>
+    <category term="Literature Library" scheme="https://lison.cc/categories/Literature-Library/"/>
     
     
-    <category term="poem" scheme="http://lison.cc/tags/poem/"/>
+    <category term="poem" scheme="https://lison.cc/tags/poem/"/>
     
   </entry>
   
   <entry>
     <title>记java归并排序</title>
-    <link href="http://lison.cc/java-merge-sort/"/>
-    <id>http://lison.cc/java-merge-sort/</id>
+    <link href="https://lison.cc/java-merge-sort/"/>
+    <id>https://lison.cc/java-merge-sort/</id>
     <published>2019-05-15T11:22:00.000Z</published>
     <updated>2020-11-18T02:32:12.220Z</updated>
     
@@ -355,17 +355,17 @@
     
     
     
-    <category term="java" scheme="http://lison.cc/categories/java/"/>
+    <category term="java" scheme="https://lison.cc/categories/java/"/>
     
     
-    <category term="算法" scheme="http://lison.cc/tags/%E7%AE%97%E6%B3%95/"/>
+    <category term="算法" scheme="https://lison.cc/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>如果上天能够给你一个重新来过的机会，你还写不写代码了</title>
-    <link href="http://lison.cc/my-english-vocabulary/"/>
-    <id>http://lison.cc/my-english-vocabulary/</id>
+    <link href="https://lison.cc/my-english-vocabulary/"/>
+    <id>https://lison.cc/my-english-vocabulary/</id>
     <published>2019-05-05T09:48:38.000Z</published>
     <updated>2020-11-18T02:32:12.234Z</updated>
     
@@ -377,15 +377,15 @@
     
     
     
-    <category term="英语" scheme="http://lison.cc/categories/%E8%8B%B1%E8%AF%AD/"/>
+    <category term="英语" scheme="https://lison.cc/categories/%E8%8B%B1%E8%AF%AD/"/>
     
     
   </entry>
   
   <entry>
     <title>C语言假币问题（分治法）</title>
-    <link href="http://lison.cc/c-divide-and-conquer/"/>
-    <id>http://lison.cc/c-divide-and-conquer/</id>
+    <link href="https://lison.cc/c-divide-and-conquer/"/>
+    <id>https://lison.cc/c-divide-and-conquer/</id>
     <published>2019-04-13T09:39:58.000Z</published>
     <updated>2020-11-18T02:32:12.157Z</updated>
     
@@ -397,17 +397,17 @@
     
     
     
-    <category term="c" scheme="http://lison.cc/categories/c/"/>
+    <category term="c" scheme="https://lison.cc/categories/c/"/>
     
     
-    <category term="算法" scheme="http://lison.cc/tags/%E7%AE%97%E6%B3%95/"/>
+    <category term="算法" scheme="https://lison.cc/tags/%E7%AE%97%E6%B3%95/"/>
     
   </entry>
   
   <entry>
     <title>在ubuntu上搭建基于TrinityCore的魔兽私服的踩坑实践</title>
-    <link href="http://lison.cc/ubuntu-trinity-core/"/>
-    <id>http://lison.cc/ubuntu-trinity-core/</id>
+    <link href="https://lison.cc/ubuntu-trinity-core/"/>
+    <id>https://lison.cc/ubuntu-trinity-core/</id>
     <published>2019-01-16T09:37:49.000Z</published>
     <updated>2020-11-18T02:32:12.295Z</updated>
     
@@ -423,8 +423,8 @@
   
   <entry>
     <title>记●搭建魔兽私服TrinityCore的折腾实践</title>
-    <link href="http://lison.cc/build-wow-server-based-on-trinity-core/"/>
-    <id>http://lison.cc/build-wow-server-based-on-trinity-core/</id>
+    <link href="https://lison.cc/build-wow-server-based-on-trinity-core/"/>
+    <id>https://lison.cc/build-wow-server-based-on-trinity-core/</id>
     <published>2019-01-16T09:28:33.000Z</published>
     <updated>2020-11-18T02:32:12.157Z</updated>
     
@@ -440,10 +440,10 @@
     
     
     
-    <category term="山口山" scheme="http://lison.cc/categories/%E5%B1%B1%E5%8F%A3%E5%B1%B1/"/>
+    <category term="山口山" scheme="https://lison.cc/categories/%E5%B1%B1%E5%8F%A3%E5%B1%B1/"/>
     
     
-    <category term="折腾" scheme="http://lison.cc/tags/%E6%8A%98%E8%85%BE/"/>
+    <category term="折腾" scheme="https://lison.cc/tags/%E6%8A%98%E8%85%BE/"/>
     
   </entry>
   
