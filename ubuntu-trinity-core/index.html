@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>
+        在ubuntu上搭建基于TrinityCore的魔兽私服的踩坑实践 |
+        
+        LISON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="前人种树，后人乘凉。感谢大神“David栗子”的文章分享《在Ubuntu上搭建基于TrinityCore的魔兽私服》。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在ubuntu上搭建基于TrinityCore的魔兽私服的踩坑实践">
+<meta property="og:url" content="http://localhost:4000/ubuntu-trinity-core/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="前人种树，后人乘凉。感谢大神“David栗子”的文章分享《在Ubuntu上搭建基于TrinityCore的魔兽私服》。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-01-16T09:37:49.000Z">
+<meta property="article:modified_time" content="2020-11-18T02:32:12.295Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="找工作的安卓程序员">
+<meta name="twitter:card" content="summary">
+    
+    
+    
+        
+            <link rel="stylesheet" href="http://localhost:4000/css/markdown.css">
+        
+            <link rel="stylesheet" href="http://localhost:4000/css/july.css">
+        
+    
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
+</head>
+<body>
+
+<div id="banner-outer" class="hidden">
+    <div id="banner-image" style="background-image: url()"></div>
+    <img src="/img/avatar.jpeg" id="avatar">
+</div>
+
+<div id="menu-outer">
+    <div id="menu-inner">
+        
+            <a class="false" href="http://localhost:4000/index.html">Home</a>
+        
+            <a class="false" href="http://localhost:4000/archives/index.html">Archives</a>
+        
+            <a class="false" href="http://localhost:4000/about/index.html">About</a>
+        
+    </div>
+</div>
+
+<div id="content-outer" class="container">
+    <div id="content-inner">
+        <article id="post">
+    <h1 id="post-title">在ubuntu上搭建基于TrinityCore的魔兽私服的踩坑实践</h1>
+    <time id="post-date" datetime="2019-01-16T09:37:49.000Z">
+        January 16, 2019
+    </time>
+    <div id="post-content" class="markdown-body">
+        <p>前人种树，后人乘凉。<br>感谢大神“David栗子”的文章分享<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b442bb980117">《在Ubuntu上搭建基于TrinityCore的魔兽私服》。</a></p>
+<a id="more"></a>
+
+<ol>
+<li>一步一步照着大神的指引来搭建服务器，一切都很顺利，直到将代码clone下来make的时候，不管make多少遍最后100%的时候都会提示错误，最后在股沟的帮助下发现用的是ubuntu16，而官方支持的最低版本的ubuntu是17，ok怪我，我升级一个。</li>
+<li>我觉得没有必要抽取所有的地图文件，真心。。。（若不抽取，记得对应修改config文件）</li>
+<li>服务端准备就绪，客户端连接成功，服务器也没有显示离线状态，点击服务器之后过一会儿又返回又选择服务器，无线循环，卡在服务器选择页面。排错：修改auth数据库的realmlist表，将ip修改为你的服务器的ip（如果你挂在外网的话）。</li>
+<li>安全组要加入允许8085和3724</li>
+</ol>
+<p>参考资料：<br>1.<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/b442bb980117">在Ubuntu上搭建基于TrinityCore的魔兽私服</a><br>2.<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/a38864530275">Debian 9下安装测试基于TrinityCore的魔兽世界服务端</a><br>3.<a target="_blank" rel="noopener" href="http://happypeng.com/blog/%E5%9F%BA%E4%BA%8Etrinitycore%E5%9C%A8linux%E4%B8%8A%E6%90%AD%E5%BB%BAwow%E7%A7%81%E6%9C%8D/">基于TrinityCore在linux上搭建wow私服</a><br>4.<a target="_blank" rel="noopener" href="http://log4think.com/setup_wow_private_server/">魔兽世界私服Trinity，从源码开始</a></p>
+
+    </div>
+</article>
+
+<div id="paginator">
+    
+</div>
+
+    </div>
+</div>
+
+<div id="bottom-outer">
+    <div id="bottom-inner">
+        2019-2021 Lison Liou 闽ICP备16007301号-2
+    </div>
+</div>
+
+<div id="to-top">
+    <i class="iconfont icon-up"></i>
+</div>
+
+
+    
+        <script src="http://localhost:4000/js/jquery-3.4.1.min.js"></script>
+    
+        <script src="http://localhost:4000/js/highlight-9.13.1.min.js"></script>
+    
+        <script src="http://localhost:4000/js/transition.js"></script>
+    
+        <script src="http://localhost:4000/js/smooth-scroll.min.js"></script>
+    
+
+
+
+    <script>
+      $(function () {
+        $('#banner-outer').addClass('fade-out')
+        $('#menu-outer').addClass('fade-show')
+
+        $('pre').each(function (i, block) {
+          hljs.highlightBlock(block);
+        });
+      })
+    </script>
+
+
+<script>
+  $(function () {
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 150) {
+        $("#to-top").fadeIn();
+      } else {
+        $("#to-top").fadeOut();
+      }
+    });
+    $("#to-top").click(function () {
+      $("body,html").animate({scrollTop: 0}, 500);
+      return false;
+    })
+  })
+</script>
+</body>
+</html>

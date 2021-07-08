@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>
+        sqlserver生成字符串获取ASCII码 |
+        
+        LISON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="给APP上加个彩蛋，又不想那么明目张胆，用char吧，得生成ASCII码。 鱼饰就有了下面的代码，循环字符串长度并且substring，有点搓，还能用吧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sqlserver生成字符串获取ASCII码">
+<meta property="og:url" content="http://localhost:4000/sqlserver-ascii/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="给APP上加个彩蛋，又不想那么明目张胆，用char吧，得生成ASCII码。 鱼饰就有了下面的代码，循环字符串长度并且substring，有点搓，还能用吧。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-04-26T09:18:47.000Z">
+<meta property="article:modified_time" content="2020-11-18T02:32:12.287Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="找工作的安卓程序员">
+<meta name="twitter:card" content="summary">
+    
+    
+    
+        
+            <link rel="stylesheet" href="http://localhost:4000/css/markdown.css">
+        
+            <link rel="stylesheet" href="http://localhost:4000/css/july.css">
+        
+    
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
+</head>
+<body>
+
+<div id="banner-outer" class="hidden">
+    <div id="banner-image" style="background-image: url()"></div>
+    <img src="/img/avatar.jpeg" id="avatar">
+</div>
+
+<div id="menu-outer">
+    <div id="menu-inner">
+        
+            <a class="false" href="http://localhost:4000/index.html">Home</a>
+        
+            <a class="false" href="http://localhost:4000/archives/index.html">Archives</a>
+        
+            <a class="false" href="http://localhost:4000/about/index.html">About</a>
+        
+    </div>
+</div>
+
+<div id="content-outer" class="container">
+    <div id="content-inner">
+        <article id="post">
+    <h1 id="post-title">sqlserver生成字符串获取ASCII码</h1>
+    <time id="post-date" datetime="2016-04-26T09:18:47.000Z">
+        April 26, 2016
+    </time>
+    <div id="post-content" class="markdown-body">
+        <p>给APP上加个彩蛋，又不想那么明目张胆，用char吧，得生成ASCII码。</p>
+<p>鱼饰就有了下面的代码，循环字符串长度并且substring，有点搓，还能用吧。</p>
+<a id="more"></a>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">declare @msg varchar(255)</span><br><span class="line">set @msg&#x3D;&#39;Hey man, What is the fuck r u doing ?&#39;</span><br><span class="line"></span><br><span class="line">declare @i int</span><br><span class="line">set @i&#x3D;0</span><br><span class="line"></span><br><span class="line">declare @result varchar(255)</span><br><span class="line">while @i&lt;&#x3D;len(@msg)</span><br><span class="line">begin</span><br><span class="line">	print &#39;,&#39; + str(ASCII(substring(@msg,@i,1)))	</span><br><span class="line">	set @i&#x3D;@i+1</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+    </div>
+</article>
+
+<div id="paginator">
+    
+</div>
+
+    </div>
+</div>
+
+<div id="bottom-outer">
+    <div id="bottom-inner">
+        2019-2021 Lison Liou 闽ICP备16007301号-2
+    </div>
+</div>
+
+<div id="to-top">
+    <i class="iconfont icon-up"></i>
+</div>
+
+
+    
+        <script src="http://localhost:4000/js/jquery-3.4.1.min.js"></script>
+    
+        <script src="http://localhost:4000/js/highlight-9.13.1.min.js"></script>
+    
+        <script src="http://localhost:4000/js/transition.js"></script>
+    
+        <script src="http://localhost:4000/js/smooth-scroll.min.js"></script>
+    
+
+
+
+    <script>
+      $(function () {
+        $('#banner-outer').addClass('fade-out')
+        $('#menu-outer').addClass('fade-show')
+
+        $('pre').each(function (i, block) {
+          hljs.highlightBlock(block);
+        });
+      })
+    </script>
+
+
+<script>
+  $(function () {
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 150) {
+        $("#to-top").fadeIn();
+      } else {
+        $("#to-top").fadeOut();
+      }
+    });
+    $("#to-top").click(function () {
+      $("body,html").animate({scrollTop: 0}, 500);
+      return false;
+    })
+  })
+</script>
+</body>
+</html>

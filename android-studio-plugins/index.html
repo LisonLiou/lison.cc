@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>
+        Android Studio优秀插件最佳实践，不定期更新中 |
+        
+        LISON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="本来Intellij全家桶的东西已经够强大了，然而还有这么多优秀的插件，本文手记笔者开发过程中接触使用的插件，在此作记录，插件排名不分先后（当然eclipse也很经典）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Studio优秀插件最佳实践，不定期更新中">
+<meta property="og:url" content="http://localhost:4000/android-studio-plugins/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="本来Intellij全家桶的东西已经够强大了，然而还有这么多优秀的插件，本文手记笔者开发过程中接触使用的插件，在此作记录，插件排名不分先后（当然eclipse也很经典）">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-15T11:47:39.000Z">
+<meta property="article:modified_time" content="2020-11-18T02:32:12.116Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="找工作的安卓程序员">
+<meta name="twitter:card" content="summary">
+    
+    
+    
+        
+            <link rel="stylesheet" href="http://localhost:4000/css/markdown.css">
+        
+            <link rel="stylesheet" href="http://localhost:4000/css/july.css">
+        
+    
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
+</head>
+<body>
+
+<div id="banner-outer" class="hidden">
+    <div id="banner-image" style="background-image: url()"></div>
+    <img src="/img/avatar.jpeg" id="avatar">
+</div>
+
+<div id="menu-outer">
+    <div id="menu-inner">
+        
+            <a class="false" href="http://localhost:4000/index.html">Home</a>
+        
+            <a class="false" href="http://localhost:4000/archives/index.html">Archives</a>
+        
+            <a class="false" href="http://localhost:4000/about/index.html">About</a>
+        
+    </div>
+</div>
+
+<div id="content-outer" class="container">
+    <div id="content-inner">
+        <article id="post">
+    <h1 id="post-title">Android Studio优秀插件最佳实践，不定期更新中</h1>
+    <time id="post-date" datetime="2020-04-15T11:47:39.000Z">
+        April 15, 2020
+    </time>
+    <div id="post-content" class="markdown-body">
+        <p>本来Intellij全家桶的东西已经够强大了，然而还有这么多优秀的插件，本文手记笔者开发过程中接触使用的插件，在此作记录，插件排名不分先后（当然eclipse也很经典）</p>
+<a id="more"></a>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/8103-svg2vectordrawable">SVG2VectorDrawable</a> 字面意思可以看明白，svg转向量图Drawable对象，APP图片瘦身必备步骤，之前都是使用在线工具直接生成各种大小的Drawable对象，本质还是图片，这个工具将图片直接转为Vector。典型的使用场景是比如我们app底部的Tab选项卡使用的那一类小图标，形式比较固定，就是一个默认的icon，一个默认颜色，按下时变成其他颜色。关于Vetor对象的图标的高级使用方法详见 -&gt; <a target="_blank" rel="noopener" href="https://gist.github.com/pgq10240817/18acdb1c84bf9b142793562de1dcee0f%E3%80%82">https://gist.github.com/pgq10240817/18acdb1c84bf9b142793562de1dcee0f。</a></li>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/7742-lifecycle-sorter">Lifecycle Sorter</a>，这个翻译成生命周期整理器？没错，就是自动将Activity，Fragment的override方法比如onCreate，onResume等方法依次按照生命周期顺序从上到下重新排列，不用每次都费力去差sdk了吧。安装完成点击Code-&gt;Sort Lifecycle Methods。不过如果你都能记得住并且此时是一脸不屑的话，na当我没说。<a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/7742-lifecycle-sorter">传送门这里—&gt;</a></li>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/7354-innerbuilder">InnerBuilder</a>，将Bean转化为构造器与链式调用模式的代码，将原始的getter setter方式改造为Builder加链式调用，例如：User user = new User.Builder().firstName(“Lison”).lastName(“Liou”).age(32).phoneNo(“15066796811”).build();<br>而这之前通常的写法是：User user=new User(); user.setFirstName(“Lison”) … <a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/7354-innerbuilder">传送门</a></li>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/7332-android-parcelable-code-generator">Parcelable Code Generator</a>，要在Intent中传递序列化对象，一种方法是实现Serializeble接口，另外一种就是实现Parcelable接口；Parcelable的方式效率比较高，但需要重写一堆方法，本插件就是为此而生，自动生成describeContents，writeToParcelable等方法。<a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/7332-android-parcelable-code-generator">传送门</a></li>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/164-ideavim/">IdeaVim</a> 这个不用多做介绍，懂的自然懂，Android Studio的Vim模拟器，反正我在几乎所有的IDE上都装了Vim插件，Android Studio, Pycharm, VS2019，VScode bla，<a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/164-ideavim/">传送门</a></li>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/6317-lombok/versions">lombok</a> 帮助你减少重复代码编写的工作，比如重复的编写getter setter代码，重复的使用Builder插件生成代码（InnerBuilder没别的意思），简单化注解同步方法等等。使用很酷，很提高效率。需要注意的是有些版本的插件与当前Android Studio不兼容，需要自己尝试下。<a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/6317-lombok/versions">传门送。</a> <a target="_blank" rel="noopener" href="https://projectlombok.org/features/all">注解列表介绍。</a></li>
+</ul>
+<p>今天先放三个，后面慢慢更新。。。</p>
+<p>有句流行语怎么说来，乾坤未定，你我皆是黑马。虽然不再高考，但也没到认命的时候把。</p>
+
+    </div>
+</article>
+
+<div id="paginator">
+    
+</div>
+
+    </div>
+</div>
+
+<div id="bottom-outer">
+    <div id="bottom-inner">
+        2019-2021 Lison Liou 闽ICP备16007301号-2
+    </div>
+</div>
+
+<div id="to-top">
+    <i class="iconfont icon-up"></i>
+</div>
+
+
+    
+        <script src="http://localhost:4000/js/jquery-3.4.1.min.js"></script>
+    
+        <script src="http://localhost:4000/js/highlight-9.13.1.min.js"></script>
+    
+        <script src="http://localhost:4000/js/transition.js"></script>
+    
+        <script src="http://localhost:4000/js/smooth-scroll.min.js"></script>
+    
+
+
+
+    <script>
+      $(function () {
+        $('#banner-outer').addClass('fade-out')
+        $('#menu-outer').addClass('fade-show')
+
+        $('pre').each(function (i, block) {
+          hljs.highlightBlock(block);
+        });
+      })
+    </script>
+
+
+<script>
+  $(function () {
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 150) {
+        $("#to-top").fadeIn();
+      } else {
+        $("#to-top").fadeOut();
+      }
+    });
+    $("#to-top").click(function () {
+      $("body,html").animate({scrollTop: 0}, 500);
+      return false;
+    })
+  })
+</script>
+</body>
+</html>

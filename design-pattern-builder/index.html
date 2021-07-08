@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>
+        设计模式之我所使用的Builder模式 – 构建器模式 |
+        
+        LISON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Builder模式，翻译过来中文是构建器、建造器都可以。定义为：将一个复杂对象的构建与其表示分离，使得同样的构建过程可以创建不同的表示。同样的构建过程是指同样的构建方式，比如汽车组装的过程是 组装大架子(); 组装轮胎(); 喷漆(); 这样一个过程，那最后组装完成下线的是一辆本田还是一辆自行车，取决于你调用构建过程所传入的Builder类型。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式之我所使用的Builder模式 – 构建器模式">
+<meta property="og:url" content="http://localhost:4000/design-pattern-builder/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="Builder模式，翻译过来中文是构建器、建造器都可以。定义为：将一个复杂对象的构建与其表示分离，使得同样的构建过程可以创建不同的表示。同样的构建过程是指同样的构建方式，比如汽车组装的过程是 组装大架子(); 组装轮胎(); 喷漆(); 这样一个过程，那最后组装完成下线的是一辆本田还是一辆自行车，取决于你调用构建过程所传入的Builder类型。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-15T11:45:22.000Z">
+<meta property="article:modified_time" content="2020-11-18T02:32:12.167Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+    
+    
+    
+        
+            <link rel="stylesheet" href="http://localhost:4000/css/markdown.css">
+        
+            <link rel="stylesheet" href="http://localhost:4000/css/july.css">
+        
+    
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
+</head>
+<body>
+
+<div id="banner-outer" class="hidden">
+    <div id="banner-image" style="background-image: url()"></div>
+    <img src="/img/avatar.jpeg" id="avatar">
+</div>
+
+<div id="menu-outer">
+    <div id="menu-inner">
+        
+            <a class="false" href="http://localhost:4000/index.html">Home</a>
+        
+            <a class="false" href="http://localhost:4000/archives/index.html">Archives</a>
+        
+            <a class="false" href="http://localhost:4000/about/index.html">About</a>
+        
+    </div>
+</div>
+
+<div id="content-outer" class="container">
+    <div id="content-inner">
+        <article id="post">
+    <h1 id="post-title">设计模式之我所使用的Builder模式 – 构建器模式</h1>
+    <time id="post-date" datetime="2020-04-15T11:45:22.000Z">
+        April 15, 2020
+    </time>
+    <div id="post-content" class="markdown-body">
+        <p>Builder模式，翻译过来中文是构建器、建造器都可以。定义为：将一个复杂对象的构建与其表示分离，使得同样的构建过程可以创建不同的表示。同样的构建过程是指同样的构建方式，比如汽车组装的过程是 组装大架子(); 组装轮胎(); 喷漆(); 这样一个过程，那最后组装完成下线的是一辆本田还是一辆自行车，取决于你调用构建过程所传入的Builder类型。</p>
+<a id="more"></a>
+
+<p>经典的Builder模式主要有四个参与者：</p>
+<ul>
+<li>Product：被构造的复杂对象，ConcreteBuilder用来创建该对象的内部表示，并定义它的装配过程。</li>
+<li>Builder：抽象接口，用来定义创建Product对象的各个组成部件的操作。</li>
+<li>ConcreteBuilder：Builder接口的具体实现，可以定义多个，是实际构建Product对象的地方，同时会提供一个返回Product的接口。</li>
+<li>Director：Builder接口的构造器和使用者。</li>
+</ul>
+<p>直接代码说话</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">public class User &#123;</span><br><span class="line">    private final String firstName;</span><br><span class="line">    private final String lastName;</span><br><span class="line">    private final String gender;</span><br><span class="line">    private final int age;</span><br><span class="line">    private final String phoneNo;</span><br><span class="line"></span><br><span class="line">    private User(Builder builder) &#123;</span><br><span class="line">        firstName &#x3D; builder.firstName;</span><br><span class="line">        lastName &#x3D; builder.lastName;</span><br><span class="line">        gender &#x3D; builder.gender;</span><br><span class="line">        age &#x3D; builder.age;</span><br><span class="line">        phoneNo &#x3D; builder.phoneNo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static final class Builder &#123;</span><br><span class="line">        private int age;</span><br><span class="line">        private String firstName;</span><br><span class="line">        private String lastName;</span><br><span class="line">        private String gender;</span><br><span class="line">        private String phoneNo;</span><br><span class="line"></span><br><span class="line">        public Builder() &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public Builder age(int val) &#123;</span><br><span class="line">            age &#x3D; val;</span><br><span class="line">            return this;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public Builder firstName(String val) &#123;</span><br><span class="line">            firstName &#x3D; val;</span><br><span class="line">            return this;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public Builder lastName(String val) &#123;</span><br><span class="line">            lastName &#x3D; val;</span><br><span class="line">            return this;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public Builder gender(String val) &#123;</span><br><span class="line">            gender &#x3D; val;</span><br><span class="line">            return this;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public Builder phoneNo(String val) &#123;</span><br><span class="line">            phoneNo &#x3D; val;</span><br><span class="line">            return this;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        public User build() &#123;</span><br><span class="line">            return new User(this);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return &quot;User&#123;&quot; +</span><br><span class="line">                &quot;firstName&#x3D;&#39;&quot; + firstName + &#39;\&#39;&#39; +</span><br><span class="line">                &quot;, lastName&#x3D;&#39;&quot; + lastName + &#39;\&#39;&#39; +</span><br><span class="line">                &quot;, gender&#x3D;&#39;&quot; + gender + &#39;\&#39;&#39; +</span><br><span class="line">                &quot;, age&#x3D;&quot; + age +</span><br><span class="line">                &quot;, phoneNo&#x3D;&#39;&quot; + phoneNo + &#39;\&#39;&#39; +</span><br><span class="line">                &#39;&#125;&#39;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">使用方法：</span><br><span class="line">User user &#x3D; new User.Builder().firstName(&quot;Lison&quot;).lastName(&quot;Liou&quot;).age(32).phoneNo(&quot;15066796811&quot;).build();</span><br><span class="line">构造器与链式调用，得劲儿。</span><br><span class="line">如果用Android Studio等Intellij全家桶的话，推荐插件：InnerBuilder，自动对Bean生成构造器模式模式的代码，</span><br><span class="line">好东西。</span><br></pre></td></tr></table></figure>
+    </div>
+</article>
+
+<div id="paginator">
+    
+</div>
+
+    </div>
+</div>
+
+<div id="bottom-outer">
+    <div id="bottom-inner">
+        2019-2021 Lison Liou 闽ICP备16007301号-2
+    </div>
+</div>
+
+<div id="to-top">
+    <i class="iconfont icon-up"></i>
+</div>
+
+
+    
+        <script src="http://localhost:4000/js/jquery-3.4.1.min.js"></script>
+    
+        <script src="http://localhost:4000/js/highlight-9.13.1.min.js"></script>
+    
+        <script src="http://localhost:4000/js/transition.js"></script>
+    
+        <script src="http://localhost:4000/js/smooth-scroll.min.js"></script>
+    
+
+
+
+    <script>
+      $(function () {
+        $('#banner-outer').addClass('fade-out')
+        $('#menu-outer').addClass('fade-show')
+
+        $('pre').each(function (i, block) {
+          hljs.highlightBlock(block);
+        });
+      })
+    </script>
+
+
+<script>
+  $(function () {
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 150) {
+        $("#to-top").fadeIn();
+      } else {
+        $("#to-top").fadeOut();
+      }
+    });
+    $("#to-top").click(function () {
+      $("body,html").animate({scrollTop: 0}, 500);
+      return false;
+    })
+  })
+</script>
+</body>
+</html>

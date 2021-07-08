@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>
+        学习基于链表的栈Stack实现java版 |
+        
+        LISON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="“栈” 遵循先进后出的原则，基本操作有：初始化栈，判断栈空，入栈出栈，读取栈顶元素，代码实现如下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习基于链表的栈Stack实现java版">
+<meta property="og:url" content="http://localhost:4000/java-stack/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="“栈” 遵循先进后出的原则，基本操作有：初始化栈，判断栈空，入栈出栈，读取栈顶元素，代码实现如下">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAX4AAABZCAMAAAAO2r/0AAAAaVBMVEX///8AAACgoKD/AADb/////7YAOpBmAAD/25D/tmb/ADr/2/+Q2/8AADo6AAD/ZrYAZrb/kDrbkDr//9v/tv9mtv//kNs6kNv/OgCQOgD/ZgC2ZgD/OpC2////AGYAAGY6ADr/tpCQtpDPzvfZAAACf0lEQVR42u3b3XLaMBCGYW0VEjuF8GNIwk9I2/u/yGoJZsuAjyTZrvI+GVsOB9+YZZGczMj9wIAcAADAtyJi13I6tYMT5drXkIVV1upuA+XPTq7LH1x1v13zGeQg5yHQ0+X6Qmj/fKy0cjnpcPk09KD8JlP5rxpf/v2xlydPYXx8+AYX/bDyW7srEfuV7s9HbNaxwdZcR/kzstq2gz3qB9b9PPlkIXa2534rOd2f081Djy2150vKn4sV1Up/GkSP89eApRcAAAD43+n/99L8h68WkTcXby8ym5aXs5Jg4+5ptov46od7rF7i679ahGM2LS6nrVHHy5GarVZ+9fnhEqheNq7EnMnTJlPzV7+mepuz6Zje7thyVo8PyZvfMvazP2nuU7/sxeWsdA1J2/ymDqVfJGqTWpfwAnN0beyYN2LpvJMoqhZth/JyOmafvb4Wv6q8WXzkB7nQobgctb+NqpLN1xo1mnc7tpyORbbZWsdG/10RX/1mK+rzo7Act/9KAQAAAAD0TtjZOBRpD3Y2DsDKz87GAVj52dk4BGmxs3Eo4tjZeHPRH3HsbByG2Imdjf0TO7GzsX9iJ3Y29k8MOxsHwM5GAAAAoHxLH6xdvJ33zz8LzKm9968u1sSfHNwddYL7XM7DUWCO1qay+kdp3uf3P5q1S6EqL6d518ovjy5ad5svD24sb3dsOZVWrPJ6ztP8S2/hcfTLXlqONuzu+bdf52v+VHNbHWJKy6lD6ef2NYpv/myzT+1DfGk5X/NOpadY3SG7JDeqIaXlTPxrqvbcHbonpZG82/Hl6PqRYu7pCNl5748pJjavjqXlnB5N0sz8BwcAAAAAAAAAQBZ/AT9+Ic6/5z8FAAAAAElFTkSuQmCC">
+<meta property="article:published_time" content="2018-12-23T09:16:55.000Z">
+<meta property="article:modified_time" content="2020-11-18T02:32:12.221Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="找工作的安卓程序员">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAX4AAABZCAMAAAAO2r/0AAAAaVBMVEX///8AAACgoKD/AADb/////7YAOpBmAAD/25D/tmb/ADr/2/+Q2/8AADo6AAD/ZrYAZrb/kDrbkDr//9v/tv9mtv//kNs6kNv/OgCQOgD/ZgC2ZgD/OpC2////AGYAAGY6ADr/tpCQtpDPzvfZAAACf0lEQVR42u3b3XLaMBCGYW0VEjuF8GNIwk9I2/u/yGoJZsuAjyTZrvI+GVsOB9+YZZGczMj9wIAcAADAtyJi13I6tYMT5drXkIVV1upuA+XPTq7LH1x1v13zGeQg5yHQ0+X6Qmj/fKy0cjnpcPk09KD8JlP5rxpf/v2xlydPYXx8+AYX/bDyW7srEfuV7s9HbNaxwdZcR/kzstq2gz3qB9b9PPlkIXa2534rOd2f081Djy2150vKn4sV1Up/GkSP89eApRcAAAD43+n/99L8h68WkTcXby8ym5aXs5Jg4+5ptov46od7rF7i679ahGM2LS6nrVHHy5GarVZ+9fnhEqheNq7EnMnTJlPzV7+mepuz6Zje7thyVo8PyZvfMvazP2nuU7/sxeWsdA1J2/ymDqVfJGqTWpfwAnN0beyYN2LpvJMoqhZth/JyOmafvb4Wv6q8WXzkB7nQobgctb+NqpLN1xo1mnc7tpyORbbZWsdG/10RX/1mK+rzo7Act/9KAQAAAAD0TtjZOBRpD3Y2DsDKz87GAVj52dk4BGmxs3Eo4tjZeHPRH3HsbByG2Imdjf0TO7GzsX9iJ3Y29k8MOxsHwM5GAAAAoHxLH6xdvJ33zz8LzKm9968u1sSfHNwddYL7XM7DUWCO1qay+kdp3uf3P5q1S6EqL6d518ovjy5ad5svD24sb3dsOZVWrPJ6ztP8S2/hcfTLXlqONuzu+bdf52v+VHNbHWJKy6lD6ef2NYpv/myzT+1DfGk5X/NOpadY3SG7JDeqIaXlTPxrqvbcHbonpZG82/Hl6PqRYu7pCNl5748pJjavjqXlnB5N0sz8BwcAAAAAAAAAQBZ/AT9+Ic6/5z8FAAAAAElFTkSuQmCC">
+    
+    
+    
+        
+            <link rel="stylesheet" href="http://localhost:4000/css/markdown.css">
+        
+            <link rel="stylesheet" href="http://localhost:4000/css/july.css">
+        
+    
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
+</head>
+<body>
+
+<div id="banner-outer" class="hidden">
+    <div id="banner-image" style="background-image: url()"></div>
+    <img src="/img/avatar.jpeg" id="avatar">
+</div>
+
+<div id="menu-outer">
+    <div id="menu-inner">
+        
+            <a class="false" href="http://localhost:4000/index.html">Home</a>
+        
+            <a class="false" href="http://localhost:4000/archives/index.html">Archives</a>
+        
+            <a class="false" href="http://localhost:4000/about/index.html">About</a>
+        
+    </div>
+</div>
+
+<div id="content-outer" class="container">
+    <div id="content-inner">
+        <article id="post">
+    <h1 id="post-title">学习基于链表的栈Stack实现java版</h1>
+    <time id="post-date" datetime="2018-12-23T09:16:55.000Z">
+        December 23, 2018
+    </time>
+    <div id="post-content" class="markdown-body">
+        <p>“栈” 遵循先进后出的原则，基本操作有：初始化栈，判断栈空，入栈出栈，读取栈顶元素，代码实现如下</p>
+<a id="more"></a>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * 单个节点</span><br><span class="line"> * </span><br><span class="line"> * @author Lison-Liou</span><br><span class="line"> *</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class Node &#123;</span><br><span class="line">	int data &#x3D; 0;</span><br><span class="line">	Node next;</span><br><span class="line"></span><br><span class="line">	public Node() &#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Node(int data) &#123;</span><br><span class="line">		this.data &#x3D; data;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Node(int data, Node next) &#123;</span><br><span class="line">		this.data &#x3D; data;</span><br><span class="line">		this.next &#x3D; next;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;**</span><br><span class="line"> * 后进先出 LIFO LAST IN FIRST OUT</span><br><span class="line"> * </span><br><span class="line"> * @author Lison-Liou</span><br><span class="line"> *</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class MyStack &#123;</span><br><span class="line"></span><br><span class="line">	Node top;</span><br><span class="line">	int size;</span><br><span class="line"></span><br><span class="line">	public void initStack() &#123;</span><br><span class="line">		top &#x3D; null;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public boolean isEmpty() &#123;</span><br><span class="line">		return size &#x3D;&#x3D; 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void push(int x) &#123;</span><br><span class="line">		top &#x3D; new Node(x, top);</span><br><span class="line">		size++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public int pop() &#123;</span><br><span class="line"></span><br><span class="line">		Node t &#x3D; top;</span><br><span class="line">		top &#x3D; top.next;</span><br><span class="line">		size--;</span><br><span class="line">		return t.data;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public int top() &#123;</span><br><span class="line">		return top.data;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">MyStack stack &#x3D; new MyStack();</span><br><span class="line">		stack.initStack();</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;入栈操作--------------------------&quot;);</span><br><span class="line">		for (int i &#x3D; 0; i &lt; 6; i++) &#123;</span><br><span class="line">			int d &#x3D; random.nextInt(10);</span><br><span class="line">			System.out.print(d + &quot;\t&quot;);</span><br><span class="line"></span><br><span class="line">			stack.push(d);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;\r\n出栈操作--------------------------&quot;);</span><br><span class="line">		while (!stack.isEmpty())</span><br><span class="line">			System.err.print(stack.pop() + &quot;\t&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>输出结果</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAX4AAABZCAMAAAAO2r/0AAAAaVBMVEX///8AAACgoKD/AADb/////7YAOpBmAAD/25D/tmb/ADr/2/+Q2/8AADo6AAD/ZrYAZrb/kDrbkDr//9v/tv9mtv//kNs6kNv/OgCQOgD/ZgC2ZgD/OpC2////AGYAAGY6ADr/tpCQtpDPzvfZAAACf0lEQVR42u3b3XLaMBCGYW0VEjuF8GNIwk9I2/u/yGoJZsuAjyTZrvI+GVsOB9+YZZGczMj9wIAcAADAtyJi13I6tYMT5drXkIVV1upuA+XPTq7LH1x1v13zGeQg5yHQ0+X6Qmj/fKy0cjnpcPk09KD8JlP5rxpf/v2xlydPYXx8+AYX/bDyW7srEfuV7s9HbNaxwdZcR/kzstq2gz3qB9b9PPlkIXa2534rOd2f081Djy2150vKn4sV1Up/GkSP89eApRcAAAD43+n/99L8h68WkTcXby8ym5aXs5Jg4+5ptov46od7rF7i679ahGM2LS6nrVHHy5GarVZ+9fnhEqheNq7EnMnTJlPzV7+mepuz6Zje7thyVo8PyZvfMvazP2nuU7/sxeWsdA1J2/ymDqVfJGqTWpfwAnN0beyYN2LpvJMoqhZth/JyOmafvb4Wv6q8WXzkB7nQobgctb+NqpLN1xo1mnc7tpyORbbZWsdG/10RX/1mK+rzo7Act/9KAQAAAAD0TtjZOBRpD3Y2DsDKz87GAVj52dk4BGmxs3Eo4tjZeHPRH3HsbByG2Imdjf0TO7GzsX9iJ3Y29k8MOxsHwM5GAAAAoHxLH6xdvJ33zz8LzKm9968u1sSfHNwddYL7XM7DUWCO1qay+kdp3uf3P5q1S6EqL6d518ovjy5ad5svD24sb3dsOZVWrPJ6ztP8S2/hcfTLXlqONuzu+bdf52v+VHNbHWJKy6lD6ef2NYpv/myzT+1DfGk5X/NOpadY3SG7JDeqIaXlTPxrqvbcHbonpZG82/Hl6PqRYu7pCNl5748pJjavjqXlnB5N0sz8BwcAAAAAAAAAQBZ/AT9+Ic6/5z8FAAAAAElFTkSuQmCC"></p>
+
+    </div>
+</article>
+
+<div id="paginator">
+    
+</div>
+
+    </div>
+</div>
+
+<div id="bottom-outer">
+    <div id="bottom-inner">
+        2019-2021 Lison Liou 闽ICP备16007301号-2
+    </div>
+</div>
+
+<div id="to-top">
+    <i class="iconfont icon-up"></i>
+</div>
+
+
+    
+        <script src="http://localhost:4000/js/jquery-3.4.1.min.js"></script>
+    
+        <script src="http://localhost:4000/js/highlight-9.13.1.min.js"></script>
+    
+        <script src="http://localhost:4000/js/transition.js"></script>
+    
+        <script src="http://localhost:4000/js/smooth-scroll.min.js"></script>
+    
+
+
+
+    <script>
+      $(function () {
+        $('#banner-outer').addClass('fade-out')
+        $('#menu-outer').addClass('fade-show')
+
+        $('pre').each(function (i, block) {
+          hljs.highlightBlock(block);
+        });
+      })
+    </script>
+
+
+<script>
+  $(function () {
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 150) {
+        $("#to-top").fadeIn();
+      } else {
+        $("#to-top").fadeOut();
+      }
+    });
+    $("#to-top").click(function () {
+      $("body,html").animate({scrollTop: 0}, 500);
+      return false;
+    })
+  })
+</script>
+</body>
+</html>

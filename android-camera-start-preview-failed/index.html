@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>
+        Android Camera： start preview failed; API10. Android 2.3 startPreview失败解决方法 |
+        
+        LISON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="代码中使用了开源项目(OSChina 客户端2.0)的源码，zxing做二维码扫描识别。搬过来之后在Android 2.3机器运行报错：Unexpected error initializing camera java.lang.RuntimeException: startPreview failed">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Camera： start preview failed; API10. Android 2.3 startPreview失败解决方法">
+<meta property="og:url" content="http://localhost:4000/android-camera-start-preview-failed/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="代码中使用了开源项目(OSChina 客户端2.0)的源码，zxing做二维码扫描识别。搬过来之后在Android 2.3机器运行报错：Unexpected error initializing camera java.lang.RuntimeException: startPreview failed">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-03-11T04:06:10.000Z">
+<meta property="article:modified_time" content="2020-11-18T02:32:12.108Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="android camera">
+<meta name="twitter:card" content="summary">
+    
+    
+    
+        
+            <link rel="stylesheet" href="http://localhost:4000/css/markdown.css">
+        
+            <link rel="stylesheet" href="http://localhost:4000/css/july.css">
+        
+    
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
+</head>
+<body>
+
+<div id="banner-outer" class="hidden">
+    <div id="banner-image" style="background-image: url()"></div>
+    <img src="/img/avatar.jpeg" id="avatar">
+</div>
+
+<div id="menu-outer">
+    <div id="menu-inner">
+        
+            <a class="false" href="http://localhost:4000/index.html">Home</a>
+        
+            <a class="false" href="http://localhost:4000/archives/index.html">Archives</a>
+        
+            <a class="false" href="http://localhost:4000/about/index.html">About</a>
+        
+    </div>
+</div>
+
+<div id="content-outer" class="container">
+    <div id="content-inner">
+        <article id="post">
+    <h1 id="post-title">Android Camera： start preview failed; API10. Android 2.3 startPreview失败解决方法</h1>
+    <time id="post-date" datetime="2016-03-11T04:06:10.000Z">
+        March 11, 2016
+    </time>
+    <div id="post-content" class="markdown-body">
+        <p>代码中使用了开源项目(<a target="_blank" rel="noopener" href="http://www.oschina.net/app">OSChina 客户端2.0</a>)的源码，zxing做二维码扫描识别。搬过来之后在Android 2.3机器运行报错：<br>Unexpected error initializing camera java.lang.RuntimeException: startPreview failed</p>
+<a id="more"></a>
+
+<p>startPreview失败报错详细如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">Unexpected error initializing camera</span><br><span class="line"> java.lang.RuntimeException: startPreview failed</span><br><span class="line">     at android.hardware.Camera.startPreview(Native Method)</span><br><span class="line">     at com.dtr.zxing.camera.CameraManager.startPreview(CameraManager.java:149)</span><br><span class="line">     at com.dtr.zxing.utils.CaptureActivityHandler.&lt;init&gt;(CaptureActivityHandler.java:57)</span><br><span class="line">     at com.dtr.zxing.activity.CaptureActivity.initCamera(CaptureActivity.java:285)</span><br><span class="line">     at com.dtr.zxing.activity.CaptureActivity.surfaceCreated(CaptureActivity.java:179)</span><br><span class="line">     at android.view.SurfaceView.updateWindow(SurfaceView.java:574)</span><br><span class="line">     at android.view.SurfaceView.updateWindow(SurfaceView.java:411)</span><br><span class="line">     at android.view.SurfaceView.dispatchDraw(SurfaceView.java:355)</span><br><span class="line">     at android.view.ViewGroup.drawChild(ViewGroup.java:1644)</span><br><span class="line">     at android.view.ViewGroup.dispatchDraw(ViewGroup.java:1373)</span><br><span class="line">     at android.view.View.draw(View.java:6883)</span><br><span class="line">     at android.view.ViewGroup.drawChild(ViewGroup.java:1646)</span><br><span class="line">     at android.view.ViewGroup.dispatchDraw(ViewGroup.java:1373)</span><br><span class="line">     at android.view.View.draw(View.java:6883)</span><br><span class="line">     at android.widget.FrameLayout.draw(FrameLayout.java:357)</span><br><span class="line">     at android.view.ViewGroup.drawChild(ViewGroup.java:1646)</span><br><span class="line">     at android.view.ViewGroup.dispatchDraw(ViewGroup.java:1373)</span><br><span class="line">     at android.view.View.draw(View.java:6883)</span><br><span class="line">     at android.support.v7.widget.ActionBarOverlayLayout.draw(ActionBarOverlayLayout.java:442)</span><br><span class="line">     at android.view.ViewGroup.drawChild(ViewGroup.java:1646)</span><br><span class="line">     at android.view.ViewGroup.dispatchDraw(ViewGroup.java:1373)</span><br><span class="line">     at android.view.ViewGroup.drawChild(ViewGroup.java:1644)</span><br><span class="line">     at android.view.ViewGroup.dispatchDraw(ViewGroup.java:1373)</span><br><span class="line">     at android.view.View.draw(View.java:6883)</span><br><span class="line">     at android.widget.FrameLayout.draw(FrameLayout.java:357)</span><br><span class="line">     at com.android.internal.policy.impl.PhoneWindow$DecorView.draw(PhoneWindow.java:1921)</span><br><span class="line">     at android.view.ViewRoot.draw(ViewRoot.java:1526)</span><br><span class="line">     at android.view.ViewRoot.performTraversals(ViewRoot.java:1262)</span><br><span class="line">     at android.view.ViewRoot.handleMessage(ViewRoot.java:1863)</span><br><span class="line">     at android.os.Handler.dispatchMessage(Handler.java:99)</span><br><span class="line">     at android.os.Looper.loop(Looper.java:130)</span><br><span class="line">     at android.app.ActivityThread.main(ActivityThread.java:3687)</span><br><span class="line">     at java.lang.reflect.Method.invokeNative(Native Method)</span><br><span class="line">     at java.lang.reflect.Method.invoke(Method.java:507)</span><br><span class="line">     at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:878)</span><br><span class="line">     at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:636)</span><br><span class="line">     at dalvik.system.NativeStart.main(Native Method)</span><br></pre></td></tr></table></figure>
+
+<p>找到了一些文章，有的说Camera的open与startPreview不能多次调用，需要设置标记，查看OSChina的源码之后发现有标记，不是这个。</p>
+<p>后来找到说低版本的SDK需要setType一下，设置成：SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS，尝试后依然没有解决问题。</p>
+<p>最后是借鉴了<a target="_blank" rel="noopener" href="http://codego.net/373180/">这篇文章</a>（不知道是不是原始链接）解决了问题，holderView要放在holder的allCallback前面，完整如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    protected void onResume() &#123;</span><br><span class="line">        super.onResume();</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F; CameraManager must be initialized here, not in onCreate(). This is</span><br><span class="line">        &#x2F;&#x2F; necessary because we don&#39;t</span><br><span class="line">        &#x2F;&#x2F; want to open the camera driver and measure the screen size if we&#39;re</span><br><span class="line">        &#x2F;&#x2F; going to show the help on</span><br><span class="line">        &#x2F;&#x2F; first launch. That led to bugs where the scanning rectangle was the</span><br><span class="line">        &#x2F;&#x2F; wrong size and partially</span><br><span class="line">        &#x2F;&#x2F; off screen.</span><br><span class="line">        cameraManager &#x3D; new CameraManager(getApplication());</span><br><span class="line"></span><br><span class="line">        handler &#x3D; null;</span><br><span class="line"></span><br><span class="line">        if (isHasSurface) &#123;</span><br><span class="line">            &#x2F;&#x2F; The activity was paused but not stopped, so the surface still</span><br><span class="line">            &#x2F;&#x2F; exists. Therefore</span><br><span class="line">            &#x2F;&#x2F; surfaceCreated() won&#39;t be called, so init the camera here.</span><br><span class="line">            initCamera(scanPreview.getHolder());</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            &#x2F;&#x2F; Install the callback and wait for surfaceCreated() to init the</span><br><span class="line">            &#x2F;&#x2F; camera.</span><br><span class="line"></span><br><span class="line">            if (Build.VERSION.SDK_INT &lt; 11)</span><br><span class="line">                scanPreview.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);</span><br><span class="line"></span><br><span class="line">            scanPreview.getHolder().addCallback(this);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        inactivityTimer.onResume();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>就是这两句：</p>
+<p><strong>if(Build.VERSION.SDK_INT&lt;11)<br>**</strong>scanPreview.getHolder().setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);**</p>
+<p><strong>scanPreview.getHolder().addCallback(this);</strong></p>
+<p>OSChina客户端的2.0支持的最低版本是15，已经不再支持API10，不能PullRequest一下了。</p>
+
+    </div>
+</article>
+
+<div id="paginator">
+    
+</div>
+
+    </div>
+</div>
+
+<div id="bottom-outer">
+    <div id="bottom-inner">
+        2019-2021 Lison Liou 闽ICP备16007301号-2
+    </div>
+</div>
+
+<div id="to-top">
+    <i class="iconfont icon-up"></i>
+</div>
+
+
+    
+        <script src="http://localhost:4000/js/jquery-3.4.1.min.js"></script>
+    
+        <script src="http://localhost:4000/js/highlight-9.13.1.min.js"></script>
+    
+        <script src="http://localhost:4000/js/transition.js"></script>
+    
+        <script src="http://localhost:4000/js/smooth-scroll.min.js"></script>
+    
+
+
+
+    <script>
+      $(function () {
+        $('#banner-outer').addClass('fade-out')
+        $('#menu-outer').addClass('fade-show')
+
+        $('pre').each(function (i, block) {
+          hljs.highlightBlock(block);
+        });
+      })
+    </script>
+
+
+<script>
+  $(function () {
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 150) {
+        $("#to-top").fadeIn();
+      } else {
+        $("#to-top").fadeOut();
+      }
+    });
+    $("#to-top").click(function () {
+      $("body,html").animate({scrollTop: 0}, 500);
+      return false;
+    })
+  })
+</script>
+</body>
+</html>

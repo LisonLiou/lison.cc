@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>
+        問題排查與解決：Fragment null must be a public static class to be properly recreated from instance state |
+        
+        LISON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="前提條件： compileSdkVersion 29buildToolsVersion “29.0.2”將項目從android.support包升級到了androidx，升級過程很順利，沒有什麼異常，但是運行項目的時候出現了標題提到的錯誤。 問題分析：在用戶使用App的過程中，用戶切換App，返回主界面，又返回了App等操作時，Android Framework會重建Fragment，並且要求Fr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="問題排查與解決：Fragment null must be a public static class to be properly recreated from instance state">
+<meta property="og:url" content="http://localhost:4000/fragment-null-must-be-a-public-static-class-to-be-properly-recreated-from-instance-state/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="前提條件： compileSdkVersion 29buildToolsVersion “29.0.2”將項目從android.support包升級到了androidx，升級過程很順利，沒有什麼異常，但是運行項目的時候出現了標題提到的錯誤。 問題分析：在用戶使用App的過程中，用戶切換App，返回主界面，又返回了App等操作時，Android Framework會重建Fragment，並且要求Fr">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-15T12:06:28.000Z">
+<meta property="article:modified_time" content="2020-11-18T02:32:12.169Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="找工作的安卓程序员">
+<meta name="twitter:card" content="summary">
+    
+    
+    
+        
+            <link rel="stylesheet" href="http://localhost:4000/css/markdown.css">
+        
+            <link rel="stylesheet" href="http://localhost:4000/css/july.css">
+        
+    
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
+</head>
+<body>
+
+<div id="banner-outer" class="hidden">
+    <div id="banner-image" style="background-image: url()"></div>
+    <img src="/img/avatar.jpeg" id="avatar">
+</div>
+
+<div id="menu-outer">
+    <div id="menu-inner">
+        
+            <a class="false" href="http://localhost:4000/index.html">Home</a>
+        
+            <a class="false" href="http://localhost:4000/archives/index.html">Archives</a>
+        
+            <a class="false" href="http://localhost:4000/about/index.html">About</a>
+        
+    </div>
+</div>
+
+<div id="content-outer" class="container">
+    <div id="content-inner">
+        <article id="post">
+    <h1 id="post-title">問題排查與解決：Fragment null must be a public static class to be properly recreated from instance state</h1>
+    <time id="post-date" datetime="2020-09-15T12:06:28.000Z">
+        September 15, 2020
+    </time>
+    <div id="post-content" class="markdown-body">
+        <p><strong>前提條件：</strong></p>
+<p>compileSdkVersion 29<br>buildToolsVersion “29.0.2”<br>將項目從android.support包升級到了androidx，升級過程很順利，沒有什麼異常，但是運行項目的時候出現了標題提到的錯誤。</p>
+<p><strong>問題分析：<br>在用戶使用App的過程中，用戶切換App，返回主界面，又返回了App等操作時，Android Framework會重建Fragment，並且要求Fragment不能是匿名類型，具體見源碼：androidx\fragment\app\BackStackRecord.java</strong></p>
+<a id="more"></a>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">private void doAddOp(int containerViewId, Fragment fragment, </span><br><span class="line">@Nullable String tag, int opcmd) &#123;</span><br><span class="line">    final Class fragmentClass &#x3D; fragment.getClass();</span><br><span class="line">    final int modifiers &#x3D; fragmentClass.getModifiers();</span><br><span class="line">    if (fragmentClass.isAnonymousClass() || !Modifier.isPublic(modifiers)</span><br><span class="line">            || (fragmentClass.isMemberClass() &amp;&amp; !Modifier.isStatic(modifiers))) &#123;</span><br><span class="line">        throw new IllegalStateException(&quot;Fragment &quot; + </span><br><span class="line">fragmentClass.getCanonicalName()</span><br><span class="line">                + &quot; must be a public static class to be  properly recreated from&quot;</span><br><span class="line">                + &quot; instance state.&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">可以看到Fragment必須滿足：</span><br><span class="line">不能是匿名類，必須是Public，必須是成員方法，是否是靜態方法</span><br><span class="line"></span><br><span class="line">解決辦法：</span><br><span class="line">如果你的Fragment是abstract類型，也需要重新new一個Fragment，</span><br><span class="line">就這麼簡單。附上我的修改前（已註釋）和修改後的代碼：</span><br><span class="line">&#x2F;&#x2F;        mWebViewFragment &#x3D; new WebViewFragment() &#123;</span><br><span class="line">&#x2F;&#x2F;            @Override</span><br><span class="line">&#x2F;&#x2F;            protected String getLoadUrl() &#123;</span><br><span class="line">&#x2F;&#x2F;                return mUrl;</span><br><span class="line">&#x2F;&#x2F;            &#125;</span><br><span class="line">&#x2F;&#x2F;        &#125;;</span><br><span class="line">        </span><br><span class="line">        mWebViewFragment &#x3D; new WebviewFragmentImpl(mUrl);</span><br><span class="line">        mFragmentManager.beginTransaction()</span><br><span class="line">        .replace(R.id.fl_content, mWebViewFragment).commit();</span><br><span class="line">PS。看源碼是個好習慣</span><br></pre></td></tr></table></figure>
+
+<p>參考文章：<br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/52355079/">https://stackoverflow.com/questions/52355079/</a><br>illegalstateexception-fragment-must-be-public-static-class-to-be-properly-recrea<br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/39295458/fragment-must-be-a-public-static-class-to-be-properly-recreated-from-instance-st">https://stackoverflow.com/questions/39295458/fragment-must-be-a-public-static-class-to-be-properly-recreated-from-instance-st</a></p>
+
+    </div>
+</article>
+
+<div id="paginator">
+    
+</div>
+
+    </div>
+</div>
+
+<div id="bottom-outer">
+    <div id="bottom-inner">
+        2019-2021 Lison Liou 闽ICP备16007301号-2
+    </div>
+</div>
+
+<div id="to-top">
+    <i class="iconfont icon-up"></i>
+</div>
+
+
+    
+        <script src="http://localhost:4000/js/jquery-3.4.1.min.js"></script>
+    
+        <script src="http://localhost:4000/js/highlight-9.13.1.min.js"></script>
+    
+        <script src="http://localhost:4000/js/transition.js"></script>
+    
+        <script src="http://localhost:4000/js/smooth-scroll.min.js"></script>
+    
+
+
+
+    <script>
+      $(function () {
+        $('#banner-outer').addClass('fade-out')
+        $('#menu-outer').addClass('fade-show')
+
+        $('pre').each(function (i, block) {
+          hljs.highlightBlock(block);
+        });
+      })
+    </script>
+
+
+<script>
+  $(function () {
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 150) {
+        $("#to-top").fadeIn();
+      } else {
+        $("#to-top").fadeOut();
+      }
+    });
+    $("#to-top").click(function () {
+      $("body,html").animate({scrollTop: 0}, 500);
+      return false;
+    })
+  })
+</script>
+</body>
+</html>

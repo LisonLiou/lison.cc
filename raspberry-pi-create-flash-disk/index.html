@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>
+        为树莓派创建内存盘，减少对SD卡寿命的消耗 |
+        
+        LISON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="看到标题的时候我以为要加个硬件？长的跟小霸王游戏卡似的那种？或者跟windows似的加个U盘、硬盘转换为内存扩展盘？Oh no，我想多了。原来只有一块光棍板的我也可以为SD卡多考虑一下人生后面的事。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为树莓派创建内存盘，减少对SD卡寿命的消耗">
+<meta property="og:url" content="http://localhost:4000/raspberry-pi-create-flash-disk/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="看到标题的时候我以为要加个硬件？长的跟小霸王游戏卡似的那种？或者跟windows似的加个U盘、硬盘转换为内存扩展盘？Oh no，我想多了。原来只有一块光棍板的我也可以为SD卡多考虑一下人生后面的事。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-03-10T09:35:25.000Z">
+<meta property="article:modified_time" content="2020-11-18T02:32:12.256Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="折腾">
+<meta name="twitter:card" content="summary">
+    
+    
+    
+        
+            <link rel="stylesheet" href="http://localhost:4000/css/markdown.css">
+        
+            <link rel="stylesheet" href="http://localhost:4000/css/july.css">
+        
+    
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
+</head>
+<body>
+
+<div id="banner-outer" class="hidden">
+    <div id="banner-image" style="background-image: url()"></div>
+    <img src="/img/avatar.jpeg" id="avatar">
+</div>
+
+<div id="menu-outer">
+    <div id="menu-inner">
+        
+            <a class="false" href="http://localhost:4000/index.html">Home</a>
+        
+            <a class="false" href="http://localhost:4000/archives/index.html">Archives</a>
+        
+            <a class="false" href="http://localhost:4000/about/index.html">About</a>
+        
+    </div>
+</div>
+
+<div id="content-outer" class="container">
+    <div id="content-inner">
+        <article id="post">
+    <h1 id="post-title">为树莓派创建内存盘，减少对SD卡寿命的消耗</h1>
+    <time id="post-date" datetime="2014-03-10T09:35:25.000Z">
+        March 10, 2014
+    </time>
+    <div id="post-content" class="markdown-body">
+        <p>看到标题的时候我以为要加个硬件？长的跟小霸王游戏卡似的那种？或者跟windows似的加个U盘、硬盘转换为内存扩展盘？Oh no，我想多了。原来只有一块光棍板的我也可以为SD卡多考虑一下人生后面的事。</p>
+<a id="more"></a>
+
+<p><strong><font color=green>mkdir /ram</font></strong><br><strong><font color=green>mount -t tmpfs -o size=10m,mode=0777 tmpfs /ram</font></strong></p>
+<ol>
+<li><p>根目录下创建ram目录</p>
+</li>
+<li><p>挂载ram目录。mount没有用过，只知道这是个挂载命令，挂光驱、挂U盘、挂移动硬盘，有时间再戳它。</p>
+</li>
+<li><p>以上命令是创建10兆内存盘。根据自己的需求进行调整。</p>
+</li>
+</ol>
+<p>ok, 这篇文章是抄的，原文链接：<a target="_blank" rel="noopener" href="http://shumeipai.nxez.com/2013/10/04/raspberry-pi-come-in-to-create-a-memory-disk.html">http://shumeipai.nxez.com/2013/10/04/raspberry-pi-come-in-to-create-a-memory-disk.html</a></p>
+<p>极客范也有：</p>
+<p><a target="_blank" rel="noopener" href="http://www.geekfan.net/6283/">http://www.geekfan.net/6283/</a></p>
+
+    </div>
+</article>
+
+<div id="paginator">
+    
+</div>
+
+    </div>
+</div>
+
+<div id="bottom-outer">
+    <div id="bottom-inner">
+        2019-2021 Lison Liou 闽ICP备16007301号-2
+    </div>
+</div>
+
+<div id="to-top">
+    <i class="iconfont icon-up"></i>
+</div>
+
+
+    
+        <script src="http://localhost:4000/js/jquery-3.4.1.min.js"></script>
+    
+        <script src="http://localhost:4000/js/highlight-9.13.1.min.js"></script>
+    
+        <script src="http://localhost:4000/js/transition.js"></script>
+    
+        <script src="http://localhost:4000/js/smooth-scroll.min.js"></script>
+    
+
+
+
+    <script>
+      $(function () {
+        $('#banner-outer').addClass('fade-out')
+        $('#menu-outer').addClass('fade-show')
+
+        $('pre').each(function (i, block) {
+          hljs.highlightBlock(block);
+        });
+      })
+    </script>
+
+
+<script>
+  $(function () {
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 150) {
+        $("#to-top").fadeIn();
+      } else {
+        $("#to-top").fadeOut();
+      }
+    });
+    $("#to-top").click(function () {
+      $("body,html").animate({scrollTop: 0}, 500);
+      return false;
+    })
+  })
+</script>
+</body>
+</html>
