@@ -7,7 +7,7 @@
 
 ### [Hexo文档](https://hexo.io/zh-cn/docs/writing)
 
-### hexo g -d
+### hexo c && hexo g && hexo d
 
 ### hexo s
 

@@ -1,12 +1,29 @@
-# ANR产生的原因及其定位分析
-
-
+---
+title: Android ANR产生的原因及其定位分析
+tags:
+  - Android ANR
+categories:
+  - Android
+author: Lison
+img: ''
+top: false
+cover: false
+coverImg: ''
+toc: false
+mathjax: false
+summary: ''
+date: 2021-07-14 10:02:54
+desc:
+keywords: Android ANR原因分析
+---
 
 > ### ANR产生的原因：
 >
 > - **<u>KeyDispatchTimeout</u>** View的按键事件或者触摸事件在特定的时间（5秒）内无法得到响应。
 > - **<u>BroadcastTimeout</u>** 原因是BroadcastReceiver的onReceive()函数运行在主线程中，在特定的时间（10秒）内无法完成处理。
 > - **<u>ServiceTimeout</u>** 原因是Service的各个生命周期函数在特定时间（20秒）内无法完成处理。
+
+<!--more-->
 
 ### 典型的ANR问题场景
 
@@ -72,7 +89,7 @@ StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
 
 
 
-### BlockCanary UI卡顿检测
+### [BlockCanary UI卡顿检测](https://github.com/markzhai/AndroidPerformanceMonitor.git)
 
 BlockCanary是一个非嵌入式的性能监控函数库，它的用法和LeakCanary类似，只不过后者监控应用的内存泄漏，而BlockCanary主要用来监控应用主线程的卡顿。它的基本原理是利用主线程的消息队列处理机制，通过对比消息分发开始和结束时的时间点来判断是否超过设定的时间，如果是，则判断为主线程卡顿。代码如下：
 
@@ -104,4 +121,5 @@ public class AppBlockCanaryContext extends BlockCanaryContext{
 
 
 
-### LeakCanary 内存泄漏检测
+### [LeakCanary 内存泄漏检测](https://github.com/square/leakcanary)
+
