@@ -101,7 +101,8 @@ Service的生命周期图如下所示：
 
 ## 5. 什么是IntentService，典型使用场景？
 
-		IntentService是继承于Service并处理异步请求的一个类，在IntentService内有一个工作线程（Worker Thread）来处理耗时操作，启动IntentService的方式和启动传统Service一样，同时，当任务执行完后，IntentService会自动停止，而不需要我们手动去控制。另外，可以启动多次IntentService，而每一个耗时操作会以工作队列的方式在IntentService和onHandlerIntent回调方法中执行，并且，每次只会执行一个工作线程，执行完第一个再执行第二个，以此类推。
+IntentService是继承于Service并处理异步请求的一个类，在IntentService内有一个工作线程（Worker Thread）来处理耗时操作，启动IntentService的方式和启动传统Service一样，同时，当任务执行完后，IntentService会自动停止，而不需要我们手动去控制。另外，可以启动多次IntentService，而每一个耗时操作会以工作队列的方式在IntentService和onHandlerIntent回调方法中执行，并且，每次只会执行一个工作线程，执行完第一个再执行第二个，以此类推。
+
 还有一种说明是：所有请求都在一个单独的工作线程中，不会阻塞应用程序的主线程（UI Thread），同一时间之处理一个请求。使用IntentService省去了我们在Service中手动开线程的麻烦，并且当操作完成时，无需手动停止Service。
 
 ​		典型使用场景：比如一项任务分成几个子任务，子任务按照顺序先后执行，子任务全部执行完后，这项任务才算成功。那么，利用几个子线程顺序执行时可以达到这个目的，但是每个线程必须去手动控制，而且得在一个子线程执行完后，再开启另一个子线程。或者，全部放到一个线程中让其顺序执行，这样都可以做到。但是如果这是一个后台任务，就得放到Service里面，由于Service和Activity是同级的，所以，要执行耗时任务，就得在Service里开子线程来执行，此时最合适的方式就是使用IntentService。

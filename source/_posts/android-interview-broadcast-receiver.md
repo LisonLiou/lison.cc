@@ -362,6 +362,7 @@ adb shell am broadcast -a android.intent.action.BOOT_COMPLETED
            </receiver>  
    ```
 
+
 4. ```java
    public class BootBroadcastReceiver extends BroadcastReceiver  
    {  

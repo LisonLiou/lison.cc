@@ -166,8 +166,8 @@ class DownloadBinder extends Binder {
     }
 ```
 
-    ```java
-    
+```java
+
     public class MainActivity extends AppCompatActivity {
     
         private String TAG = MainActivity.class.getSimpleName();
@@ -227,6 +227,6 @@ class DownloadBinder extends Binder {
             Log.e(TAG, "onSaveInstanceState");
         }
     }
-    ```
+```
 
 2. 使用广播（略）

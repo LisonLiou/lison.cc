@@ -106,5 +106,6 @@ theme: july
 deploy:
   type: 'git'
   repo:
-    github: https://github.com/LisonLiou/lison.cc.git
+    github: git@github.com:LisonLiou/lison.cc.git
   branch: main
+  # token: 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
