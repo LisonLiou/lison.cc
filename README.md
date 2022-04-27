@@ -11,5 +11,5 @@
 
 ### hexo s
 
-
+### vscode markdown插件(Markdown Preview Enhanced)预览快捷键 Ctrl+Shift+V
 
