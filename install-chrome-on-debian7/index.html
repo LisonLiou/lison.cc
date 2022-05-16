@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>
+        debian安装google-chrome |
+        
+        LISON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="还是简单的记录下吧，两天前刚装的今天又忘了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="debian安装google-chrome">
+<meta property="og:url" content="https://lison.cc/install-chrome-on-debian7/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="还是简单的记录下吧，两天前刚装的今天又忘了。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-07-25T08:36:51.000Z">
+<meta property="article:modified_time" content="2022-02-14T01:37:06.661Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="折腾">
+<meta name="twitter:card" content="summary">
+    
+    
+    
+        
+            <link rel="stylesheet" href="https://lison.cc/css/markdown.css">
+        
+            <link rel="stylesheet" href="https://lison.cc/css/july.css">
+        
+    
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
+</head>
+<body>
+
+<div id="banner-outer" class="hidden">
+    <div id="banner-image" style="background-image: url()"></div>
+    <img src="https://www.gravatar.com/avatar/7a585313ed855e8d652cbb3154a6056e?s=300&amp;d=mm&amp;r=g" id="avatar">
+</div>
+
+<div id="menu-outer">
+    <div id="menu-inner">
+        
+            <a class="false" href="https://lison.cc/index.html">Home</a>
+        
+            <a class="false" href="https://lison.cc/archives/index.html">Archives</a>
+        
+            <a class="false" href="https://lison.cc/about/index.html">About</a>
+        
+    </div>
+</div>
+
+<div id="content-outer" class="container">
+    <div id="content-inner">
+        <article id="post">
+    <h1 id="post-title">debian安装google-chrome</h1>
+    <time id="post-date" datetime="2014-07-25T08:36:51.000Z">
+        July 25, 2014
+    </time>
+    <div id="post-content" class="markdown-body">
+        <p>还是简单的记录下吧，两天前刚装的今天又忘了。</p>
+<a id="more"></a>
+
+<ol>
+<li><p>首先得到*.deb的压缩包，无论是从google.com还是google.com.hk。其实比较靠谱的还是：</p>
+<p>For 32 bit:</p>
+</li>
+</ol>
+<blockquote>
+<p>wget <a target="_blank" rel="noopener" href="https://dl.google.com/linux/direct/google-chrome-stable_current_i386.deb">https://dl.google.com/linux/direct/google-chrome-stable_current_i386.deb</a></p>
+</blockquote>
+<p>​    For 64 bit:</p>
+<blockquote>
+<p>wget <a target="_blank" rel="noopener" href="https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb">https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb</a></p>
+</blockquote>
+<p>#通常，这个地址也能打开：<a target="_blank" rel="noopener" href="http://www.google.cn/chrome/%EF%BC%88%E6%89%8B%E5%8A%A8%E4%B8%8B%E8%BD%BD%E5%9C%B0%E5%9D%80%EF%BC%89">http://www.google.cn/chrome/（手动下载地址）</a></p>
+<ol start="2">
+<li>执行安装命令</li>
+</ol>
+<p><code> sudo dpkg -i ./google-chrome-stable_current_i386.deb</code></p>
+<ol start="3">
+<li>如果有遇到错误提示，直接执行以下命令来安装chrome浏览器需要的类库。</li>
+</ol>
+<p><code> sudo apt-get -f install</code></p>
+<p>文章出自：<a target="_blank" rel="noopener" href="http://www.freehao123.com/linux-chrome/">www.freehao123.com/linux-chrome/</a> 免费资源部落</p>
+
+    </div>
+</article>
+
+<div id="paginator">
+    
+</div>
+
+    </div>
+</div>
+
+<div id="bottom-outer">
+    <div id="bottom-inner">
+        2019-2022 Lison Liou 皖ICP备16011445号
+    </div>
+</div>
+
+<div id="to-top">
+    <i class="iconfont icon-up"></i>
+</div>
+
+
+    
+        <script src="https://lison.cc/js/jquery-3.4.1.min.js"></script>
+    
+        <script src="https://lison.cc/js/highlight-9.13.1.min.js"></script>
+    
+        <script src="https://lison.cc/js/transition.js"></script>
+    
+        <script src="https://lison.cc/js/smooth-scroll.min.js"></script>
+    
+
+
+
+    <script>
+      $(function () {
+        $('#banner-outer').addClass('fade-out')
+        $('#menu-outer').addClass('fade-show')
+
+        $('pre').each(function (i, block) {
+          hljs.highlightBlock(block);
+        });
+      })
+    </script>
+
+
+<script>
+  $(function () {
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 150) {
+        $("#to-top").fadeIn();
+      } else {
+        $("#to-top").fadeOut();
+      }
+    });
+    $("#to-top").click(function () {
+      $("body,html").animate({scrollTop: 0}, 500);
+      return false;
+    })
+  })
+</script>
+</body>
+</html>

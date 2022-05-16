@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>
+        java中的观察者/订阅者模式实践 - Observable、Observer |
+        
+        LISON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="这方面的资料搜索一下很多，但是自己一直没有实践过。今天用到了，做下记录。名词解释： 观察者，Observer被观察者，Observable 举例，过年放烟花，烟花放在中间一直燃烧，就是被观察者；而大家在周围看，就是观察者（哇~猴赛雷）直接上代码：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java中的观察者&#x2F;订阅者模式实践 - Observable、Observer">
+<meta property="og:url" content="https://lison.cc/java-observer-observable/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="这方面的资料搜索一下很多，但是自己一直没有实践过。今天用到了，做下记录。名词解释： 观察者，Observer被观察者，Observable 举例，过年放烟花，烟花放在中间一直燃烧，就是被观察者；而大家在周围看，就是观察者（哇~猴赛雷）直接上代码：">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-01-28T04:02:08.000Z">
+<meta property="article:modified_time" content="2022-02-14T01:37:06.666Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+    
+    
+    
+        
+            <link rel="stylesheet" href="https://lison.cc/css/markdown.css">
+        
+            <link rel="stylesheet" href="https://lison.cc/css/july.css">
+        
+    
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
+</head>
+<body>
+
+<div id="banner-outer" class="hidden">
+    <div id="banner-image" style="background-image: url()"></div>
+    <img src="https://www.gravatar.com/avatar/7a585313ed855e8d652cbb3154a6056e?s=300&amp;d=mm&amp;r=g" id="avatar">
+</div>
+
+<div id="menu-outer">
+    <div id="menu-inner">
+        
+            <a class="false" href="https://lison.cc/index.html">Home</a>
+        
+            <a class="false" href="https://lison.cc/archives/index.html">Archives</a>
+        
+            <a class="false" href="https://lison.cc/about/index.html">About</a>
+        
+    </div>
+</div>
+
+<div id="content-outer" class="container">
+    <div id="content-inner">
+        <article id="post">
+    <h1 id="post-title">java中的观察者/订阅者模式实践 - Observable、Observer</h1>
+    <time id="post-date" datetime="2016-01-28T04:02:08.000Z">
+        January 28, 2016
+    </time>
+    <div id="post-content" class="markdown-body">
+        <p>这方面的资料搜索一下很多，但是自己一直没有实践过。今天用到了，做下记录。名词解释：</p>
+<p>观察者，Observer<br>被观察者，Observable</p>
+<p>举例，过年放烟花，烟花放在中间一直燃烧，就是被观察者；<br>而大家在周围看，就是观察者（哇<del>~</del>猴赛雷）<br>直接上代码：</p>
+<a id="more"></a>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line">	 * 作为被观察者也作为被订阅源</span><br><span class="line">	 * </span><br><span class="line">	 * @author Administrator</span><br><span class="line">	 * </span><br><span class="line">	 *&#x2F;</span><br><span class="line">	static class Fireworks extends Observable &#123;</span><br><span class="line"></span><br><span class="line">		void setFire() &#123;</span><br><span class="line">			System.out.println(&quot;I am fired, check on that&quot;);</span><br><span class="line">			</span><br><span class="line">			&#x2F;&#x2F;事件變化,通知所有觀察者</span><br><span class="line">			super.setChanged();</span><br><span class="line">			this.notifyObservers(&quot;qiu...qiu...qiu...&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	&#x2F;**</span><br><span class="line">	 * 觀察者</span><br><span class="line">	 * </span><br><span class="line">	 * @author Administrator</span><br><span class="line">	 * </span><br><span class="line">	 *&#x2F;</span><br><span class="line">	static class People implements Observer &#123;</span><br><span class="line"></span><br><span class="line">		String name &#x3D; &quot;&quot;;</span><br><span class="line"></span><br><span class="line">		public People(String name) &#123;</span><br><span class="line">			this.name &#x3D; name;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		public void update(Observable o, Object arg) &#123;</span><br><span class="line">			System.out.println(name + &quot; watched: &quot; + arg);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Fireworks f &#x3D; new Fireworks();</span><br><span class="line"></span><br><span class="line">		&#x2F;&#x2F; 注冊觀察者</span><br><span class="line">		f.addObserver(new People(&quot;XiaoMing&quot;));</span><br><span class="line">		f.addObserver(new People(&quot;XiaoQiang&quot;));</span><br><span class="line">		f.addObserver(new People(&quot;XiaoHong&quot;));</span><br><span class="line">		f.addObserver(new People(&quot;XiaoLi&quot;));</span><br><span class="line"></span><br><span class="line">		f.setFire();</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<p>I am fired, check on that<br>XiaoLi watched: qiu…qiu…qiu…<br>XiaoHong watched: qiu…qiu…qiu…<br>XiaoQiang watched: qiu…qiu…qiu…<br>XiaoMing watched: qiu…qiu…qiu…</p>
+<p>之前使用的是直接new一个Observable对象，导致无法调用父类的setChanged方法。</p>
+<p>见-&gt;<a target="_blank" rel="noopener" href="http://www.oschina.net/question/1160643_2150413?fromerr=AhhXLMI3#tags_nav">java 订阅者模式不执行update</a></p>
+
+    </div>
+</article>
+
+<div id="paginator">
+    
+</div>
+
+    </div>
+</div>
+
+<div id="bottom-outer">
+    <div id="bottom-inner">
+        2019-2022 Lison Liou 皖ICP备16011445号
+    </div>
+</div>
+
+<div id="to-top">
+    <i class="iconfont icon-up"></i>
+</div>
+
+
+    
+        <script src="https://lison.cc/js/jquery-3.4.1.min.js"></script>
+    
+        <script src="https://lison.cc/js/highlight-9.13.1.min.js"></script>
+    
+        <script src="https://lison.cc/js/transition.js"></script>
+    
+        <script src="https://lison.cc/js/smooth-scroll.min.js"></script>
+    
+
+
+
+    <script>
+      $(function () {
+        $('#banner-outer').addClass('fade-out')
+        $('#menu-outer').addClass('fade-show')
+
+        $('pre').each(function (i, block) {
+          hljs.highlightBlock(block);
+        });
+      })
+    </script>
+
+
+<script>
+  $(function () {
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 150) {
+        $("#to-top").fadeIn();
+      } else {
+        $("#to-top").fadeOut();
+      }
+    });
+    $("#to-top").click(function () {
+      $("body,html").animate({scrollTop: 0}, 500);
+      return false;
+    })
+  })
+</script>
+</body>
+</html>

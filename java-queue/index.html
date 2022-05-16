@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>
+        学习基于链表的队列Queue实现java版 |
+        
+        LISON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="队列Queue，先进先出 First In First Out (FIFO) 的线性表, 只允许在表的一端插入元素(队尾Rear), 表的另一端删除元素(队首Front)，基本操作有初始化队列，判断空，入队，出队，读取队首元素。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习基于链表的队列Queue实现java版">
+<meta property="og:url" content="https://lison.cc/java-queue/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="队列Queue，先进先出 First In First Out (FIFO) 的线性表, 只允许在表的一端插入元素(队尾Rear), 表的另一端删除元素(队首Front)，基本操作有初始化队列，判断空，入队，出队，读取队首元素。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAckAAABhCAMAAACK2ap0AAAAS1BMVEX///8AAAD//7ZmAAD/25Db//8AOpCQ2///tmZmtv86AgC2//8AAGYAADo6kNvbkDoAZrY6ADq2ZgD//9uQOgCQtpA6kJBmOpA6AGYoCV3+AAADU0lEQVR42u2d23KjMAxALUjS3Bqy7PX/v3TtCiKC6WY6wIzMntOmgMuohoMM9EEOAACwFiLjhtGmfiTRNUgAl0i/jPSb8sHDpC4w6R01Y76sUcY5aevodMgLk8/ahKR0i9iwOfQaMbki+gnpg0mnTJpUYWbSvuyOWtVxedj/ByuF8DCp3ybRTCaC6iMn3dKrMZMmWLftIRaTnpk2adsqVel25dnVI2I6ZfTe+MHAHjnpmWECjjPUzHVjLSb9IrbWOzKtjzyVroUnHgAAAAAAAOg5isjNUZzQyN3RcTUSOfmJ8/kJOr6/hd15xiEvHKeqf9Wxo27608VyFGf37Tx1gr7/uCXL10uYh8WZSXuqPkx66Y9eXafgJk48svY+Kfgt/jjPvlgszmzUpJ/+hNAc9sFNnHh1mslRwrfvP88zLxaL48Tkcv1pRNL14CVOyutPTP6Mo+5uvkmN48ik9Wc26X7rJU60OGVSByAdi+ZgcdyMrn1//AyLi8Q5Xi+fmKzq2xJ/weI4MblQfywRnMRpRZlI7ub9bYFByOI4Mdn3x9Hbg8ZZ8YJoZryxrhCnkcRh76U/KQmuFz9xOpMAAAAAAAAAADlia9QBKZSooqdroA5IoYjpE4M6ICUiypMq6oAUijwthTogBTK8T5pQ6oAUWAdEzFYHdUBKRRRdU6gDUiQyvlVSB6RITIyZpA5IgchkTlIHpEjUSRL0gDogAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABb5igi95Cq2mpJ/9iQuOUtUxOZtN2vqlpEA2U7Z7OxwCo010vUcB96iy2JvMVorSXuMFzNds5mY0HlKlT1SU/xl0xqlXHTZ7OtqMlXs7HAwuh5VzNfMJmcTOXk8bB/NtnIaXo2FlgYzRDNlvFd8RTylmFSShRifiy9bWczmc3GAmFtk69z0tJSXZrJ9m5Z/q/ZWDCpLG9S0+lrJtXlYW8mdakmX8zGwui6OKpLx70oUzU8VOQt+VWgBu1xJjeZz8biuaZNycT3CT3F7WEfddxNRd6Sz9BiJo8qaPqJx2ZjYXBdj1bf1nUlurFX+7zFJGpD9p+BqMp2NpOmVgSRq7H7wwveNkh3uOo3N68NUNWMeQBeoC7SVsDkVsDkVsDkJvgLAXcjURaKPhEAAAAASUVORK5CYII=">
+<meta property="article:published_time" content="2018-12-23T09:19:18.000Z">
+<meta property="article:modified_time" content="2022-02-14T01:37:06.666Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="找工作的安卓程序员">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAckAAABhCAMAAACK2ap0AAAAS1BMVEX///8AAAD//7ZmAAD/25Db//8AOpCQ2///tmZmtv86AgC2//8AAGYAADo6kNvbkDoAZrY6ADq2ZgD//9uQOgCQtpA6kJBmOpA6AGYoCV3+AAADU0lEQVR42u2d23KjMAxALUjS3Bqy7PX/v3TtCiKC6WY6wIzMntOmgMuohoMM9EEOAACwFiLjhtGmfiTRNUgAl0i/jPSb8sHDpC4w6R01Y76sUcY5aevodMgLk8/ahKR0i9iwOfQaMbki+gnpg0mnTJpUYWbSvuyOWtVxedj/ByuF8DCp3ybRTCaC6iMn3dKrMZMmWLftIRaTnpk2adsqVel25dnVI2I6ZfTe+MHAHjnpmWECjjPUzHVjLSb9IrbWOzKtjzyVroUnHgAAAAAAAOg5isjNUZzQyN3RcTUSOfmJ8/kJOr6/hd15xiEvHKeqf9Wxo27608VyFGf37Tx1gr7/uCXL10uYh8WZSXuqPkx66Y9eXafgJk48svY+Kfgt/jjPvlgszmzUpJ/+hNAc9sFNnHh1mslRwrfvP88zLxaL48Tkcv1pRNL14CVOyutPTP6Mo+5uvkmN48ik9Wc26X7rJU60OGVSByAdi+ZgcdyMrn1//AyLi8Q5Xi+fmKzq2xJ/weI4MblQfywRnMRpRZlI7ub9bYFByOI4Mdn3x9Hbg8ZZ8YJoZryxrhCnkcRh76U/KQmuFz9xOpMAAAAAAAAAADlia9QBKZSooqdroA5IoYjpE4M6ICUiypMq6oAUijwthTogBTK8T5pQ6oAUWAdEzFYHdUBKRRRdU6gDUiQyvlVSB6RITIyZpA5IgchkTlIHpEjUSRL0gDogAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABb5igi95Cq2mpJ/9iQuOUtUxOZtN2vqlpEA2U7Z7OxwCo010vUcB96iy2JvMVorSXuMFzNds5mY0HlKlT1SU/xl0xqlXHTZ7OtqMlXs7HAwuh5VzNfMJmcTOXk8bB/NtnIaXo2FlgYzRDNlvFd8RTylmFSShRifiy9bWczmc3GAmFtk69z0tJSXZrJ9m5Z/q/ZWDCpLG9S0+lrJtXlYW8mdakmX8zGwui6OKpLx70oUzU8VOQt+VWgBu1xJjeZz8biuaZNycT3CT3F7WEfddxNRd6Sz9BiJo8qaPqJx2ZjYXBdj1bf1nUlurFX+7zFJGpD9p+BqMp2NpOmVgSRq7H7wwveNkh3uOo3N68NUNWMeQBeoC7SVsDkVsDkVsDkJvgLAXcjURaKPhEAAAAASUVORK5CYII=">
+    
+    
+    
+        
+            <link rel="stylesheet" href="https://lison.cc/css/markdown.css">
+        
+            <link rel="stylesheet" href="https://lison.cc/css/july.css">
+        
+    
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
+</head>
+<body>
+
+<div id="banner-outer" class="hidden">
+    <div id="banner-image" style="background-image: url()"></div>
+    <img src="https://www.gravatar.com/avatar/7a585313ed855e8d652cbb3154a6056e?s=300&amp;d=mm&amp;r=g" id="avatar">
+</div>
+
+<div id="menu-outer">
+    <div id="menu-inner">
+        
+            <a class="false" href="https://lison.cc/index.html">Home</a>
+        
+            <a class="false" href="https://lison.cc/archives/index.html">Archives</a>
+        
+            <a class="false" href="https://lison.cc/about/index.html">About</a>
+        
+    </div>
+</div>
+
+<div id="content-outer" class="container">
+    <div id="content-inner">
+        <article id="post">
+    <h1 id="post-title">学习基于链表的队列Queue实现java版</h1>
+    <time id="post-date" datetime="2018-12-23T09:19:18.000Z">
+        December 23, 2018
+    </time>
+    <div id="post-content" class="markdown-body">
+        <p>队列Queue，先进先出 First In First Out (FIFO) 的线性表, 只允许在表的一端插入元素(队尾Rear), 表的另一端删除元素(队首Front)，基本操作有初始化队列，判断空，入队，出队，读取队首元素。</p>
+<a id="more"></a>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line"> * 单个节点</span><br><span class="line"> * </span><br><span class="line"> * @author Lison-Liou</span><br><span class="line"> *</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class Node&lt;E&gt; &#123;</span><br><span class="line">	E data &#x3D; null;</span><br><span class="line">	Node&lt;E&gt; next;</span><br><span class="line"></span><br><span class="line">	public Node() &#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Node(E data) &#123;</span><br><span class="line">		this.data &#x3D; data;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Node(E data, Node&lt;E&gt; next) &#123;</span><br><span class="line">		this.data &#x3D; data;</span><br><span class="line">		this.next &#x3D; next;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;**</span><br><span class="line"> * 链表队列实现</span><br><span class="line"> * @author Lison-Liou</span><br><span class="line"> *</span><br><span class="line"> * @param &lt;E&gt;</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class MyQueue&lt;E&gt; &#123;</span><br><span class="line"></span><br><span class="line">	int size;</span><br><span class="line">	Node&lt;E&gt; front, rear;</span><br><span class="line"></span><br><span class="line">	public void initQueue() &#123;</span><br><span class="line">		front &#x3D; rear &#x3D; null;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public boolean isEmpty() &#123;</span><br><span class="line">		return size &#x3D;&#x3D; 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void enQueue(int data) &#123;</span><br><span class="line"></span><br><span class="line">		if (isEmpty()) &#123;</span><br><span class="line">			front &#x3D; new Node(data);</span><br><span class="line">			rear &#x3D; front;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			Node newRear &#x3D; new Node(data);</span><br><span class="line">			rear.next &#x3D; newRear;</span><br><span class="line">			rear &#x3D; newRear;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		size++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public E deQueue() &#123;</span><br><span class="line"></span><br><span class="line">		if (!isEmpty()) &#123;</span><br><span class="line"></span><br><span class="line">			Node&lt;E&gt; f0 &#x3D; front;</span><br><span class="line">			Node&lt;E&gt; f &#x3D; f0.next;</span><br><span class="line">			front &#x3D; f;</span><br><span class="line"></span><br><span class="line">			size--;</span><br><span class="line">			return f0.data;</span><br><span class="line">		&#125;</span><br><span class="line">		return null;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public E frontQueue() &#123;</span><br><span class="line">		return front.data;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void clear() &#123;</span><br><span class="line">		while (!isEmpty()) &#123;</span><br><span class="line">			deQueue();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;&#x2F;&#x2F;&#x2F; 链表队列测试代码&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"></span><br><span class="line">		MyQueue&lt;Integer&gt; queue &#x3D; new MyQueue&lt;Integer&gt;();</span><br><span class="line">		queue.initQueue();</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;入队列操作--------------------------&quot;);</span><br><span class="line">		for (int i &#x3D; 0; i &lt; 7; i++) &#123;</span><br><span class="line">			int d &#x3D; random.nextInt(i + 1);</span><br><span class="line">			System.out.print(d + &quot;\t&quot;);</span><br><span class="line">			queue.enQueue(d);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;		System.out.println(&quot;\r\n出队列操作--------------------------&quot;);</span><br><span class="line">&#x2F;&#x2F;		while (!queue.isEmpty()) &#123;</span><br><span class="line">&#x2F;&#x2F;			System.err.print(queue.deQueue() + &quot;\t&quot;);</span><br><span class="line">&#x2F;&#x2F;		&#125;</span><br><span class="line">		</span><br><span class="line">		System.out.println(&quot;\r\n清空队列操作--------------------------&quot;);</span><br><span class="line">		queue.clear();</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;\r\nQUEUE SIZE: &quot; + queue.size);</span><br></pre></td></tr></table></figure>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAckAAABhCAMAAACK2ap0AAAAS1BMVEX///8AAAD//7ZmAAD/25Db//8AOpCQ2///tmZmtv86AgC2//8AAGYAADo6kNvbkDoAZrY6ADq2ZgD//9uQOgCQtpA6kJBmOpA6AGYoCV3+AAADU0lEQVR42u2d23KjMAxALUjS3Bqy7PX/v3TtCiKC6WY6wIzMntOmgMuohoMM9EEOAACwFiLjhtGmfiTRNUgAl0i/jPSb8sHDpC4w6R01Y76sUcY5aevodMgLk8/ahKR0i9iwOfQaMbki+gnpg0mnTJpUYWbSvuyOWtVxedj/ByuF8DCp3ybRTCaC6iMn3dKrMZMmWLftIRaTnpk2adsqVel25dnVI2I6ZfTe+MHAHjnpmWECjjPUzHVjLSb9IrbWOzKtjzyVroUnHgAAAAAAAOg5isjNUZzQyN3RcTUSOfmJ8/kJOr6/hd15xiEvHKeqf9Wxo27608VyFGf37Tx1gr7/uCXL10uYh8WZSXuqPkx66Y9eXafgJk48svY+Kfgt/jjPvlgszmzUpJ/+hNAc9sFNnHh1mslRwrfvP88zLxaL48Tkcv1pRNL14CVOyutPTP6Mo+5uvkmN48ik9Wc26X7rJU60OGVSByAdi+ZgcdyMrn1//AyLi8Q5Xi+fmKzq2xJ/weI4MblQfywRnMRpRZlI7ub9bYFByOI4Mdn3x9Hbg8ZZ8YJoZryxrhCnkcRh76U/KQmuFz9xOpMAAAAAAAAAADlia9QBKZSooqdroA5IoYjpE4M6ICUiypMq6oAUijwthTogBTK8T5pQ6oAUWAdEzFYHdUBKRRRdU6gDUiQyvlVSB6RITIyZpA5IgchkTlIHpEjUSRL0gDogAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABb5igi95Cq2mpJ/9iQuOUtUxOZtN2vqlpEA2U7Z7OxwCo010vUcB96iy2JvMVorSXuMFzNds5mY0HlKlT1SU/xl0xqlXHTZ7OtqMlXs7HAwuh5VzNfMJmcTOXk8bB/NtnIaXo2FlgYzRDNlvFd8RTylmFSShRifiy9bWczmc3GAmFtk69z0tJSXZrJ9m5Z/q/ZWDCpLG9S0+lrJtXlYW8mdakmX8zGwui6OKpLx70oUzU8VOQt+VWgBu1xJjeZz8biuaZNycT3CT3F7WEfddxNRd6Sz9BiJo8qaPqJx2ZjYXBdj1bf1nUlurFX+7zFJGpD9p+BqMp2NpOmVgSRq7H7wwveNkh3uOo3N68NUNWMeQBeoC7SVsDkVsDkVsDkJvgLAXcjURaKPhEAAAAASUVORK5CYII="></p>
+
+    </div>
+</article>
+
+<div id="paginator">
+    
+</div>
+
+    </div>
+</div>
+
+<div id="bottom-outer">
+    <div id="bottom-inner">
+        2019-2022 Lison Liou 皖ICP备16011445号
+    </div>
+</div>
+
+<div id="to-top">
+    <i class="iconfont icon-up"></i>
+</div>
+
+
+    
+        <script src="https://lison.cc/js/jquery-3.4.1.min.js"></script>
+    
+        <script src="https://lison.cc/js/highlight-9.13.1.min.js"></script>
+    
+        <script src="https://lison.cc/js/transition.js"></script>
+    
+        <script src="https://lison.cc/js/smooth-scroll.min.js"></script>
+    
+
+
+
+    <script>
+      $(function () {
+        $('#banner-outer').addClass('fade-out')
+        $('#menu-outer').addClass('fade-show')
+
+        $('pre').each(function (i, block) {
+          hljs.highlightBlock(block);
+        });
+      })
+    </script>
+
+
+<script>
+  $(function () {
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 150) {
+        $("#to-top").fadeIn();
+      } else {
+        $("#to-top").fadeOut();
+      }
+    });
+    $("#to-top").click(function () {
+      $("body,html").animate({scrollTop: 0}, 500);
+      return false;
+    })
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>
+        java强软弱虚四大引用 |
+        
+        LISON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="强软弱虚四大引用 - JAVA1. 强引用（GC: 不回收，死都不回收）​    当内存不足时，JVM开始垃圾回收，对于强引用的对象，就算是出现了OOM也不会对该对象进行回收，死也不收。 ​    强引用是我们最常见的普遍对象引用，只要还有强引用指向一个对象，就能表明对象还活着，垃圾收集器不会碰这种对象。JAVA中最常见的就是强引用，把一个对象付给另一个引用变量就是一个强引用。当一个对象被强引">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java强软弱虚四大引用">
+<meta property="og:url" content="https://lison.cc/android-interview-java-reference/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="强软弱虚四大引用 - JAVA1. 强引用（GC: 不回收，死都不回收）​    当内存不足时，JVM开始垃圾回收，对于强引用的对象，就算是出现了OOM也不会对该对象进行回收，死也不收。 ​    强引用是我们最常见的普遍对象引用，只要还有强引用指向一个对象，就能表明对象还活着，垃圾收集器不会碰这种对象。JAVA中最常见的就是强引用，把一个对象付给另一个引用变量就是一个强引用。当一个对象被强引">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-08-14T09:08:23.000Z">
+<meta property="article:modified_time" content="2022-02-14T01:37:06.545Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="java强软弱虚四大引用">
+<meta name="twitter:card" content="summary">
+    
+    
+    
+        
+            <link rel="stylesheet" href="https://lison.cc/css/markdown.css">
+        
+            <link rel="stylesheet" href="https://lison.cc/css/july.css">
+        
+    
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
+</head>
+<body>
+
+<div id="banner-outer" class="hidden">
+    <div id="banner-image" style="background-image: url()"></div>
+    <img src="https://www.gravatar.com/avatar/7a585313ed855e8d652cbb3154a6056e?s=300&amp;d=mm&amp;r=g" id="avatar">
+</div>
+
+<div id="menu-outer">
+    <div id="menu-inner">
+        
+            <a class="false" href="https://lison.cc/index.html">Home</a>
+        
+            <a class="false" href="https://lison.cc/archives/index.html">Archives</a>
+        
+            <a class="false" href="https://lison.cc/about/index.html">About</a>
+        
+    </div>
+</div>
+
+<div id="content-outer" class="container">
+    <div id="content-inner">
+        <article id="post">
+    <h1 id="post-title">java强软弱虚四大引用</h1>
+    <time id="post-date" datetime="2021-08-14T09:08:23.000Z">
+        August 14, 2021
+    </time>
+    <div id="post-content" class="markdown-body">
+        <a id="more"></a>
+
+<h1 id="强软弱虚四大引用-JAVA"><a href="#强软弱虚四大引用-JAVA" class="headerlink" title="强软弱虚四大引用 - JAVA"></a>强软弱虚四大引用 - JAVA</h1><h2 id="1-强引用（GC-不回收，死都不回收）"><a href="#1-强引用（GC-不回收，死都不回收）" class="headerlink" title="1. 强引用（GC: 不回收，死都不回收）"></a>1. 强引用（GC: 不回收，死都不回收）</h2><p>​    当内存不足时，JVM开始垃圾回收，对于强引用的对象，就算是出现了OOM也不会对该对象进行回收，死也不收。</p>
+<p>​    强引用是我们最常见的普遍对象引用，只要还有强引用指向一个对象，就能表明对象还活着，垃圾收集器不会碰这种对象。JAVA中最常见的就是强引用，把一个对象付给另一个引用变量就是一个强引用。当一个对象被强引用变量引用时，它处于科大状态，它是不可能被垃圾回收机制回收的，即使该对象以后永远都不会被用到JVM也不会回收，因此强引用是造成JAVA内存泄漏的主要原因之一。</p>
+<p>​    对于一个普通对象，如果没有其他的引用关系，只要超过了引用的作用域或者显示地将相应的（强）引用赋值为null，一般认为就是可以被垃圾收集了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StrongR</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Object obj1 = <span class="keyword">new</span> Object();</span><br><span class="line">		Object obj2 = obj1;</span><br><span class="line">		</span><br><span class="line">		obj1=<span class="keyword">null</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">		</span><br><span class="line">		System.out.println(obj1);</span><br><span class="line">		System.out.println(obj2);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 輸出</span></span><br><span class="line"><span class="keyword">null</span></span><br><span class="line">java.lang.Object@<span class="number">15d</span>b9742</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-軟引用（GC：JVM内存不夠就回收）"><a href="#2-軟引用（GC：JVM内存不夠就回收）" class="headerlink" title="2. 軟引用（GC：JVM内存不夠就回收）"></a>2. 軟引用（GC：JVM内存不夠就回收）</h2><p>​    软引用是一种相对强引用弱化了一些的引用，需要用java.lang.ref.SoftReference类来实现，可以让对象豁免一些垃圾收集，对于只有软引用的对象来说：当JVM内存充足时它不会被回收，当JVM内存不足时它会被回收。</p>
+<p>​    软引用通常用在对内存敏感的程序中，比如高速缓存就有用到软引用，内存够用时就保留，不够用就回收。下面的代码展示了系统内存足够跟不足时软引用对象的GC情况。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SoftR</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Object o1 = <span class="keyword">new</span> Object();</span><br><span class="line">		SoftReference&lt;Object&gt; softReference = <span class="keyword">new</span> SoftReference&lt;Object&gt;(o1);</span><br><span class="line">		System.out.println(o1);</span><br><span class="line">		System.out.println(softReference.get());</span><br><span class="line">		</span><br><span class="line">		o1 = <span class="keyword">null</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">30</span>*<span class="number">1024</span>*<span class="number">1024</span>];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">finally</span> &#123;</span><br><span class="line">			System.out.println(o1);</span><br><span class="line">			System.out.println(softReference.get());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认输出</span></span><br><span class="line">java.lang.Object@<span class="number">15d</span>b9742</span><br><span class="line">java.lang.Object@<span class="number">15d</span>b9742</span><br><span class="line"><span class="keyword">null</span></span><br><span class="line">java.lang.Object@<span class="number">15d</span>b9742</span><br><span class="line">    </span><br><span class="line"><span class="comment">// 使用-Xms5m -Xmx5m  -XX:+PrintGCDetails 启动参数后输出</span></span><br><span class="line">java.lang.Object@<span class="number">15d</span>b9742</span><br><span class="line">java.lang.Object@<span class="number">15d</span>b9742</span><br><span class="line">[GC (System.gc()) [PSYoungGen: <span class="number">764</span>K-&gt;<span class="number">496</span>K(<span class="number">1536</span>K)] <span class="number">764</span>K-&gt;<span class="number">680</span>K(<span class="number">5632</span>K), <span class="number">0.0027296</span> secs] [Times: user=<span class="number">0.00</span> sys=<span class="number">0.00</span>, real=<span class="number">0.00</span> secs] </span><br><span class="line">[<span class="function">Full <span class="title">GC</span> <span class="params">(System.gc()</span>) [PSYoungGen: 496K-&gt;0<span class="title">K</span><span class="params">(<span class="number">1536</span>K)</span>] [ParOldGen: 184K-&gt;537<span class="title">K</span><span class="params">(<span class="number">4096</span>K)</span>] 680K-&gt;537<span class="title">K</span><span class="params">(<span class="number">5632</span>K)</span>, [Metaspace: 2656K-&gt;2656<span class="title">K</span><span class="params">(<span class="number">1056768</span>K)</span>], 0.0046556 secs] [Times: user</span>=<span class="number">0.00</span> sys=<span class="number">0.00</span>, real=<span class="number">0.01</span> secs] </span><br><span class="line">[GC (Allocation Failure) [PSYoungGen: <span class="number">0</span>K-&gt;<span class="number">0</span>K(<span class="number">1536</span>K)] <span class="number">537</span>K-&gt;<span class="number">537</span>K(<span class="number">5632</span>K), <span class="number">0.0005369</span> secs] [Times: user=<span class="number">0.00</span> sys=<span class="number">0.00</span>, real=<span class="number">0.00</span> secs] </span><br><span class="line">[GC (Allocation Failure) [PSYoungGen: <span class="number">0</span>K-&gt;<span class="number">0</span>K(<span class="number">1536</span>K)] <span class="number">537</span>K-&gt;<span class="number">537</span>K(<span class="number">5632</span>K), <span class="number">0.0003787</span> secs] [Times: user=<span class="number">0.00</span> sys=<span class="number">0.00</span>, real=<span class="number">0.00</span> secs] </span><br><span class="line">[<span class="function">Full <span class="title">GC</span> <span class="params">(Allocation Failure)</span> [PSYoungGen: 0K-&gt;0<span class="title">K</span><span class="params">(<span class="number">1536</span>K)</span>] [ParOldGen: 537K-&gt;537<span class="title">K</span><span class="params">(<span class="number">4096</span>K)</span>] 537K-&gt;537<span class="title">K</span><span class="params">(<span class="number">5632</span>K)</span>, [Metaspace: 2656K-&gt;2656<span class="title">K</span><span class="params">(<span class="number">1056768</span>K)</span>], 0.0017620 secs] [Times: user</span>=<span class="number">0.00</span> sys=<span class="number">0.00</span>, real=<span class="number">0.00</span> secs] </span><br><span class="line">[GC (Allocation Failure) [PSYoungGen: <span class="number">0</span>K-&gt;<span class="number">0</span>K(<span class="number">1536</span>K)] <span class="number">537</span>K-&gt;<span class="number">537</span>K(<span class="number">5632</span>K), <span class="number">0.0004040</span> secs] [Times: user=<span class="number">0.00</span> sys=<span class="number">0.00</span>, real=<span class="number">0.00</span> secs] </span><br><span class="line">[<span class="function">Full <span class="title">GC</span> <span class="params">(Allocation Failure)</span> [PSYoungGen: 0K-&gt;0<span class="title">K</span><span class="params">(<span class="number">1536</span>K)</span>] [ParOldGen: 537K-&gt;525<span class="title">K</span><span class="params">(<span class="number">4096</span>K)</span>] 537K-&gt;525<span class="title">K</span><span class="params">(<span class="number">5632</span>K)</span>, [Metaspace: 2656K-&gt;2656<span class="title">K</span><span class="params">(<span class="number">1056768</span>K)</span>], 0.0047294 secs] [Times: user</span>=<span class="number">0.11</span> sys=<span class="number">0.00</span>, real=<span class="number">0.00</span> secs] </span><br><span class="line"><span class="keyword">null</span></span><br><span class="line"><span class="keyword">null</span></span><br><span class="line">Exception in thread <span class="string">&quot;main&quot;</span> java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">	at reference.SoftR.main(SoftR.java:<span class="number">16</span>)</span><br><span class="line">Heap</span><br><span class="line"> PSYoungGen      total <span class="number">1536</span>K, used <span class="number">30</span>K [<span class="number">0x00000000ffe00000</span>, <span class="number">0x0000000100000000</span>, <span class="number">0x0000000100000000</span>)</span><br><span class="line">  eden space <span class="number">1024</span>K, <span class="number">2</span>% used [<span class="number">0x00000000ffe00000</span>,<span class="number">0x00000000ffe07ad0</span>,<span class="number">0x00000000fff00000</span>)</span><br><span class="line">  from space <span class="number">512</span>K, <span class="number">0</span>% used [<span class="number">0x00000000fff80000</span>,<span class="number">0x00000000fff80000</span>,<span class="number">0x0000000100000000</span>)</span><br><span class="line">  to   space <span class="number">512</span>K, <span class="number">0</span>% used [<span class="number">0x00000000fff00000</span>,<span class="number">0x00000000fff00000</span>,<span class="number">0x00000000fff80000</span>)</span><br><span class="line"> ParOldGen       total <span class="number">4096</span>K, used <span class="number">525</span>K [<span class="number">0x00000000ffa00000</span>, <span class="number">0x00000000ffe00000</span>, <span class="number">0x00000000ffe00000</span>)</span><br><span class="line">  object space <span class="number">4096</span>K, <span class="number">12</span>% used [<span class="number">0x00000000ffa00000</span>,<span class="number">0x00000000ffa834d0</span>,<span class="number">0x00000000ffe00000</span>)</span><br><span class="line"> Metaspace       used <span class="number">2687</span>K, capacity <span class="number">4486</span>K, committed <span class="number">4864</span>K, reserved <span class="number">1056768</span>K</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">space</span>    <span class="title">used</span> 291<span class="title">K</span>, <span class="title">capacity</span> 386<span class="title">K</span>, <span class="title">committed</span> 512<span class="title">K</span>, <span class="title">reserved</span> 1048576<span class="title">K</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-弱引用（GC-只要我被调用，我就回收，不用JVM内存够还是不够）"><a href="#3-弱引用（GC-只要我被调用，我就回收，不用JVM内存够还是不够）" class="headerlink" title="3.弱引用（GC: 只要我被调用，我就回收，不用JVM内存够还是不够）"></a>3.弱引用（GC: 只要我被调用，我就回收，不用JVM内存够还是不够）</h2><p>​    弱引用需要用java.lang.ref.WeakReference类来实现，它比弱引用的生存区更短。对于只有弱引用的对象来说，只要垃圾回收机制一运行，不管JVM的内存空间是否足够，都会回收该对象占用的内存。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeakR</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		Object o1 = <span class="keyword">new</span> Object();</span><br><span class="line">		WeakReference&lt;Object&gt; weakReference = <span class="keyword">new</span> WeakReference&lt;Object&gt;(o1);</span><br><span class="line">		</span><br><span class="line">		System.out.println(o1);</span><br><span class="line">		System.out.println(weakReference.get());</span><br><span class="line">		</span><br><span class="line">		o1 = <span class="keyword">null</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">		</span><br><span class="line">		System.out.println(o1);</span><br><span class="line">		System.out.println(weakReference.get());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line">java.lang.Object@<span class="number">15d</span>b9742</span><br><span class="line">java.lang.Object@<span class="number">15d</span>b9742</span><br><span class="line"><span class="keyword">null</span></span><br><span class="line"><span class="keyword">null</span></span><br><span class="line">    </span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">myHashmap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		HashMap&lt;Integer,String&gt; map =<span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">		Integer key= <span class="keyword">new</span> Integer(<span class="number">1</span>);</span><br><span class="line">		String value=<span class="string">&quot;hashmap&quot;</span>;</span><br><span class="line">		map.put(key, value);</span><br><span class="line">		System.out.println(map);</span><br><span class="line">		</span><br><span class="line">		key = <span class="keyword">null</span>;</span><br><span class="line">		System.out.println(map);</span><br><span class="line">		</span><br><span class="line">		System.gc();</span><br><span class="line">		System.out.println(map);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出    </span></span><br><span class="line">&#123;<span class="number">1</span>=hashmap&#125;</span><br><span class="line">&#123;<span class="number">1</span>=hashmap&#125;</span><br><span class="line">&#123;<span class="number">1</span>=hashmap&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">myWeakHashmap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		WeakHashMap&lt;Integer,String&gt; map = <span class="keyword">new</span> WeakHashMap&lt;&gt;();</span><br><span class="line">		Integer key = <span class="keyword">new</span> Integer(<span class="number">2</span>);</span><br><span class="line">		String value = <span class="string">&quot;weakHashmap&quot;</span>;</span><br><span class="line">		map.put(key, value);		</span><br><span class="line">		System.out.println(map);</span><br><span class="line">		</span><br><span class="line">		key = <span class="keyword">null</span>;</span><br><span class="line">		System.out.println(map);</span><br><span class="line">		</span><br><span class="line">		System.gc();</span><br><span class="line">		System.out.println(map);</span><br><span class="line">	&#125;</span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line">&#123;<span class="number">2</span>=weakHashmap&#125;</span><br><span class="line">&#123;<span class="number">2</span>=weakHashmap&#125;</span><br><span class="line">&#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-虚引用"><a href="#4-虚引用" class="headerlink" title="4. 虚引用"></a>4. 虚引用</h2><p>​        虚引用需要java.lang.ref.PhantomReference类来实现。顾名思义，就是形同虚设，与其他几种引用都不同，虚引用并不会决定对象的生命周期。如果一个对象持有虚引用，那么它就和没有任何引用一样，在任何时间都可能被垃圾回收器回收，它不能单点使用也不能通过它访问对象，虚引用必须和引用队列（ReferenceQueue）联合使用。<br>​        虚引用的主要作用是跟踪对象被垃圾回收的状态，仅仅提供了一种确保对象被finalize以后，做某些事情的机制。PhantomReference的get()方法总是返回null，因此无法访问对应的引用对象，其意义在于说明一个对象已经进入了finalization阶段，可以被GC回收，用来实现比finalization机制更灵活的回收操作。<br>​        换句话说，设置虚引用关联的唯一目的，就是在这个对象被收集器回收的时候收到一个系统通知或者后续添加进一步的处理。Java技术允许使用finalize()方法在垃圾收集器将对象从内存中清除出去之前做必要的清理工作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PhantomR</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">		Object o1 = <span class="keyword">new</span> Object();</span><br><span class="line">		ReferenceQueue&lt;Override&gt; referenceQueue=<span class="keyword">new</span> ReferenceQueue&lt;&gt;();</span><br><span class="line">		PhantomReference&lt;Object&gt; phantomReference = <span class="keyword">new</span> PhantomReference(o1, referenceQueue);</span><br><span class="line">		System.out.println(o1);</span><br><span class="line">		System.out.println(phantomReference.get());</span><br><span class="line">		System.out.println(referenceQueue.poll());</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">&quot;------------------------------&quot;</span>);</span><br><span class="line">		o1 = <span class="keyword">null</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">		Thread.sleep(<span class="number">500</span>);</span><br><span class="line">		</span><br><span class="line">		System.out.println(o1);</span><br><span class="line">		System.out.println(phantomReference.get());</span><br><span class="line">		System.out.println(referenceQueue.poll());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line">java.lang.Object@<span class="number">15d</span>b9742</span><br><span class="line"><span class="keyword">null</span></span><br><span class="line"><span class="keyword">null</span></span><br><span class="line">------------------------------</span><br><span class="line"><span class="keyword">null</span></span><br><span class="line"><span class="keyword">null</span></span><br><span class="line">java.lang.ref.PhantomReference@<span class="number">6d</span>06d69c</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+</article>
+
+<div id="paginator">
+    
+</div>
+
+    </div>
+</div>
+
+<div id="bottom-outer">
+    <div id="bottom-inner">
+        2019-2022 Lison Liou 皖ICP备16011445号
+    </div>
+</div>
+
+<div id="to-top">
+    <i class="iconfont icon-up"></i>
+</div>
+
+
+    
+        <script src="https://lison.cc/js/jquery-3.4.1.min.js"></script>
+    
+        <script src="https://lison.cc/js/highlight-9.13.1.min.js"></script>
+    
+        <script src="https://lison.cc/js/transition.js"></script>
+    
+        <script src="https://lison.cc/js/smooth-scroll.min.js"></script>
+    
+
+
+
+    <script>
+      $(function () {
+        $('#banner-outer').addClass('fade-out')
+        $('#menu-outer').addClass('fade-show')
+
+        $('pre').each(function (i, block) {
+          hljs.highlightBlock(block);
+        });
+      })
+    </script>
+
+
+<script>
+  $(function () {
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 150) {
+        $("#to-top").fadeIn();
+      } else {
+        $("#to-top").fadeOut();
+      }
+    });
+    $("#to-top").click(function () {
+      $("body,html").animate({scrollTop: 0}, 500);
+      return false;
+    })
+  })
+</script>
+</body>
+</html>

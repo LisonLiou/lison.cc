@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>
+        java byte[] 字节数组按份分割拆分成多个数组 |
+        
+        LISON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="java byte[] split 简单的字节数组分割方法，输入要拆分的数组及要按几个拆成一份即可，返回二维数组byte[]，做记录直接上代码了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java byte[] 字节数组按份分割拆分成多个数组">
+<meta property="og:url" content="https://lison.cc/java-split-byte/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="java byte[] split 简单的字节数组分割方法，输入要拆分的数组及要按几个拆成一份即可，返回二维数组byte[]，做记录直接上代码了。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-05-24T09:31:44.000Z">
+<meta property="article:modified_time" content="2022-02-14T01:37:06.666Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="找工作的安卓程序员">
+<meta name="twitter:card" content="summary">
+    
+    
+    
+        
+            <link rel="stylesheet" href="https://lison.cc/css/markdown.css">
+        
+            <link rel="stylesheet" href="https://lison.cc/css/july.css">
+        
+    
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
+</head>
+<body>
+
+<div id="banner-outer" class="hidden">
+    <div id="banner-image" style="background-image: url()"></div>
+    <img src="https://www.gravatar.com/avatar/7a585313ed855e8d652cbb3154a6056e?s=300&amp;d=mm&amp;r=g" id="avatar">
+</div>
+
+<div id="menu-outer">
+    <div id="menu-inner">
+        
+            <a class="false" href="https://lison.cc/index.html">Home</a>
+        
+            <a class="false" href="https://lison.cc/archives/index.html">Archives</a>
+        
+            <a class="false" href="https://lison.cc/about/index.html">About</a>
+        
+    </div>
+</div>
+
+<div id="content-outer" class="container">
+    <div id="content-inner">
+        <article id="post">
+    <h1 id="post-title">java byte[] 字节数组按份分割拆分成多个数组</h1>
+    <time id="post-date" datetime="2016-05-24T09:31:44.000Z">
+        May 24, 2016
+    </time>
+    <div id="post-content" class="markdown-body">
+        <p>java byte[] split</p>
+<p>简单的字节数组分割方法，输入要拆分的数组及要按几个拆成一份即可，返回二维数组byte[]，做记录直接上代码了。</p>
+<a id="more"></a>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line">	 * 拆分byte数组</span><br><span class="line">	 * </span><br><span class="line">	 * @param bytes</span><br><span class="line">	 *            要拆分的数组</span><br><span class="line">	 * @param copies</span><br><span class="line">	 *            要按几个组成一份</span><br><span class="line">	 * @return</span><br><span class="line">	 *&#x2F;</span><br><span class="line">	static byte[][] split_bytes(byte[] bytes, int copies) &#123;</span><br><span class="line"></span><br><span class="line">		double split_length &#x3D; Double.parseDouble(copies + &quot;&quot;);</span><br><span class="line"></span><br><span class="line">		int array_length &#x3D; (int) Math.ceil(bytes.length &#x2F; split_length);</span><br><span class="line">		byte[][] result &#x3D; new byte[array_length][];</span><br><span class="line"></span><br><span class="line">		int from, to;</span><br><span class="line"></span><br><span class="line">		for (int i &#x3D; 0; i &lt; array_length; i++) &#123;</span><br><span class="line"></span><br><span class="line">			from &#x3D; (int) (i * split_length);</span><br><span class="line">			to &#x3D; (int) (from + split_length);</span><br><span class="line"></span><br><span class="line">			if (to &gt; bytes.length)</span><br><span class="line">				to &#x3D; bytes.length;</span><br><span class="line"></span><br><span class="line">			result[i] &#x3D; Arrays.copyOfRange(bytes, from, to);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		return result;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">byte[] sum &#x3D; &#123; 23, 4, 23, 42, 34, 2, 34, 2, 34, 2, 54, 3, 4, 56, 4, 7, 56, 7, 8, 5, 15, 2, 34, 2, 41, 2, 32, 3,</span><br><span class="line">				3, 3, 33 &#125;;</span><br><span class="line">		</span><br><span class="line">		&#x2F;&#x2F;按四个分成一组</span><br><span class="line">		byte[][] bytes &#x3D; split_bytes(sum, 4);</span><br><span class="line"></span><br><span class="line">		System.out.println(bytes.length);</span><br><span class="line"></span><br><span class="line">		System.out.print(&quot;\r\n\r\n&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;\r\n&quot;);</span><br><span class="line"></span><br><span class="line">		for (int i &#x3D; 0; i &lt; bytes.length; i++) &#123;</span><br><span class="line">			for (int j &#x3D; 0; j &lt; bytes[i].length; j++) &#123;</span><br><span class="line">				System.out.print(bytes[i][j] + &quot; &quot;);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			System.out.println(&quot;&quot;);</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<h1 id="8"><a href="#8" class="headerlink" title="8"></a>8</h1><p>23 4 23 42<br>34 2 34 2<br>34 2 54 3<br>4 56 4 7<br>56 7 8 5<br>15 2 34 2<br>41 2 32 3<br>3 3 33</p>
+
+    </div>
+</article>
+
+<div id="paginator">
+    
+</div>
+
+    </div>
+</div>
+
+<div id="bottom-outer">
+    <div id="bottom-inner">
+        2019-2022 Lison Liou 皖ICP备16011445号
+    </div>
+</div>
+
+<div id="to-top">
+    <i class="iconfont icon-up"></i>
+</div>
+
+
+    
+        <script src="https://lison.cc/js/jquery-3.4.1.min.js"></script>
+    
+        <script src="https://lison.cc/js/highlight-9.13.1.min.js"></script>
+    
+        <script src="https://lison.cc/js/transition.js"></script>
+    
+        <script src="https://lison.cc/js/smooth-scroll.min.js"></script>
+    
+
+
+
+    <script>
+      $(function () {
+        $('#banner-outer').addClass('fade-out')
+        $('#menu-outer').addClass('fade-show')
+
+        $('pre').each(function (i, block) {
+          hljs.highlightBlock(block);
+        });
+      })
+    </script>
+
+
+<script>
+  $(function () {
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 150) {
+        $("#to-top").fadeIn();
+      } else {
+        $("#to-top").fadeOut();
+      }
+    });
+    $("#to-top").click(function () {
+      $("body,html").animate({scrollTop: 0}, 500);
+      return false;
+    })
+  })
+</script>
+</body>
+</html>

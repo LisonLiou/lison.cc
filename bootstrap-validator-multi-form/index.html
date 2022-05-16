@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>
+        BootstrapValidator 页面验证多个form |
+        
+        LISON</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="只做记录，没什么技术含量。 每个页面多个form，没问题，form id不同，name不同，然后“标识”不同，所谓标识就是放一个&lt;input type&#x3D;”hidden” 指定比如name&#x3D;”type” ，那么多个form在action到同一个method的时候，就使用type判断当前提交的是哪个form；那bootstrapValidator里绑定的内容如下：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BootstrapValidator 页面验证多个form">
+<meta property="og:url" content="https://lison.cc/bootstrap-validator-multi-form/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="只做记录，没什么技术含量。 每个页面多个form，没问题，form id不同，name不同，然后“标识”不同，所谓标识就是放一个&lt;input type&#x3D;”hidden” 指定比如name&#x3D;”type” ，那么多个form在action到同一个method的时候，就使用type判断当前提交的是哪个form；那bootstrapValidator里绑定的内容如下：">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-10-25T07:11:34.000Z">
+<meta property="article:modified_time" content="2022-02-14T01:37:06.598Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="bootstrap">
+<meta name="twitter:card" content="summary">
+    
+    
+    
+        
+            <link rel="stylesheet" href="https://lison.cc/css/markdown.css">
+        
+            <link rel="stylesheet" href="https://lison.cc/css/july.css">
+        
+    
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
+</head>
+<body>
+
+<div id="banner-outer" class="hidden">
+    <div id="banner-image" style="background-image: url()"></div>
+    <img src="https://www.gravatar.com/avatar/7a585313ed855e8d652cbb3154a6056e?s=300&amp;d=mm&amp;r=g" id="avatar">
+</div>
+
+<div id="menu-outer">
+    <div id="menu-inner">
+        
+            <a class="false" href="https://lison.cc/index.html">Home</a>
+        
+            <a class="false" href="https://lison.cc/archives/index.html">Archives</a>
+        
+            <a class="false" href="https://lison.cc/about/index.html">About</a>
+        
+    </div>
+</div>
+
+<div id="content-outer" class="container">
+    <div id="content-inner">
+        <article id="post">
+    <h1 id="post-title">BootstrapValidator 页面验证多个form</h1>
+    <time id="post-date" datetime="2017-10-25T07:11:34.000Z">
+        October 25, 2017
+    </time>
+    <div id="post-content" class="markdown-body">
+        <p>只做记录，没什么技术含量。</p>
+<p>每个页面多个form，没问题，form id不同，name不同，然后“标识”不同，所谓标识就是放一个&lt;input type=”hidden” 指定比如name=”type” ，那么多个form在action到同一个method的时候，就使用type判断当前提交的是哪个form；那bootstrapValidator里绑定的内容如下：</p>
+<a id="more"></a>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">$(&quot;form&quot;).bootstrapValidator(validator_config).on(&#39;success.form.bv&#39;, function (e) &#123;</span><br><span class="line">        e.preventDefault();</span><br><span class="line">        $(&quot;button[id*&#x3D;&#39;submit_&#39;]&quot;).attr(&quot;disabled&quot;, &quot;disabled&quot;);</span><br><span class="line"></span><br><span class="line">        $.scojs_message.delay &#x3D; $.scojs_message.delay * 10;</span><br><span class="line">        $.scojs_message(&#39;请稍候...&#39;, $.scojs_message.TYPE_WAIT);</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            type: &quot;POST&quot;,</span><br><span class="line">            data: $(this).serialize(),</span><br><span class="line">            success: function (response) &#123;</span><br><span class="line">                var dataObj &#x3D; $.parseJSON(response);</span><br><span class="line">                if (dataObj.status) &#123;</span><br><span class="line">                    $.scojs_message(&#39;操作成功,3秒后将返回...&#39;, $.scojs_message.TYPE_OK);</span><br><span class="line">                    aci.GoUrl(SITE_URL + folder_name + &#39;&#x2F;resource&#x2F;edit&#x2F;&#39; + movie_id);</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    $.scojs_message(dataObj.tips, $.scojs_message.TYPE_ERROR);</span><br><span class="line">                    $(&quot;button[id*&#x3D;&#39;submit_&#39;]&quot;).removeAttr(&quot;disabled&quot;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            error: function (request, status, error) &#123;</span><br><span class="line">                $.scojs_message(request.responseText, $.scojs_message.TYPE_ERROR);</span><br><span class="line">                $(&quot;button[id*&#x3D;&#39;submit_&#39;]&quot;).removeAttr(&quot;disabled&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;).on(&#39;error.form.bv&#39;, function (e) &#123;</span><br><span class="line">        $.scojs_message(&#39;带*号不能为空&#39;, $.scojs_message.TYPE_ERROR);</span><br><span class="line">        $(&quot;button[id*&#x3D;&#39;submit_cover&#39;]&quot;).removeAttr(&quot;disabled&quot;);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>第一行jQuery选择器匹配所有form并添加bootstrapValidator，然后post时使用this传递form data，其他的form处理都一样，就四酱。</p>
+
+    </div>
+</article>
+
+<div id="paginator">
+    
+</div>
+
+    </div>
+</div>
+
+<div id="bottom-outer">
+    <div id="bottom-inner">
+        2019-2022 Lison Liou 皖ICP备16011445号
+    </div>
+</div>
+
+<div id="to-top">
+    <i class="iconfont icon-up"></i>
+</div>
+
+
+    
+        <script src="https://lison.cc/js/jquery-3.4.1.min.js"></script>
+    
+        <script src="https://lison.cc/js/highlight-9.13.1.min.js"></script>
+    
+        <script src="https://lison.cc/js/transition.js"></script>
+    
+        <script src="https://lison.cc/js/smooth-scroll.min.js"></script>
+    
+
+
+
+    <script>
+      $(function () {
+        $('#banner-outer').addClass('fade-out')
+        $('#menu-outer').addClass('fade-show')
+
+        $('pre').each(function (i, block) {
+          hljs.highlightBlock(block);
+        });
+      })
+    </script>
+
+
+<script>
+  $(function () {
+    $(window).scroll(function () {
+      if ($(window).scrollTop() > 150) {
+        $("#to-top").fadeIn();
+      } else {
+        $("#to-top").fadeOut();
+      }
+    });
+    $("#to-top").click(function () {
+      $("body,html").animate({scrollTop: 0}, 500);
+      return false;
+    })
+  })
+</script>
+</body>
+</html>
