@@ -6,7 +6,7 @@
   <link href="https://lison.cc/atom.xml" rel="self"/>
   
   <link href="https://lison.cc/"/>
-  <updated>2022-06-08T05:15:02.185Z</updated>
+  <updated>2022-06-08T05:40:15.776Z</updated>
   <id>https://lison.cc/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>QT应用程序内存泄漏问题排查方式</title>
+    <link href="https://lison.cc/qt-how-to-find-memoryleak/"/>
+    <id>https://lison.cc/qt-how-to-find-memoryleak/</id>
+    <published>2022-06-08T05:38:29.000Z</published>
+    <updated>2022-06-08T05:40:15.776Z</updated>
+    
+    <content type="html"><![CDATA[<a id="more"></a><h3 id="占位"><a href="#占位" class="headerlink" title="占位"></a>占位</h3>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+
+&lt;h3 id=&quot;占位&quot;&gt;&lt;a href=&quot;#占位&quot; class=&quot;headerlink&quot; title=&quot;占位&quot;&gt;&lt;/a&gt;占位&lt;/h3&gt;</summary>
+      
+    
+    
+    
+    <category term="qt" scheme="https://lison.cc/categories/qt/"/>
+    
+    
+    <category term="内存泄漏" scheme="https://lison.cc/tags/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>Qt、C++与C#动态调用C语言封装的dll</title>
@@ -486,25 +512,6 @@
     
     
     <category term="android" scheme="https://lison.cc/categories/android/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>這世上真話本就不多，一位女子的臉紅勝過一大段對白</title>
-    <link href="https://lison.cc/dont-lie-to-me/"/>
-    <id>https://lison.cc/dont-lie-to-me/</id>
-    <published>2020-08-12T08:29:50.000Z</published>
-    <updated>2022-02-14T01:37:06.611Z</updated>
-    
-    <content type="html"><![CDATA[<p>駱駝祥子</p><a id="more"></a><p>可惜後來有了胭脂，便分不清真情還是假意</p>]]></content>
-    
-    
-    <summary type="html">&lt;p&gt;駱駝祥子&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="water under the bridge" scheme="https://lison.cc/categories/water-under-the-bridge/"/>
     
     
   </entry>
