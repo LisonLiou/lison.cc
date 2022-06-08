@@ -11,5 +11,12 @@
 
 ### hexo s
 
+### 图片markdown
+![这是图片](/assets/img/philly-magic-garden.jpg "Magic Gardens")
+
 ### vscode markdown插件(Markdown Preview Enhanced)预览快捷键 Ctrl+Shift+V
+
+
+### Markdown 教程
+[https://markdown.com.cn/intro.html]()
 
