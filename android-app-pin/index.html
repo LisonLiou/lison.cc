@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang=en>
 <head>
-    <meta charset="UTF-8">
-    
-    <title>
-        Android5.0屏幕固定功能，如何开机只能运行当前app不能退出 |
-        
-        LISON</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="description" content="需求接上回，还是那台小米平板4，终于拿到了root权限。并且实现了开机启动某app，现在的需求是：要求只能运行这个app，不能退出，不能回退到主屏幕，不能Home键，重启之后还是我的app，你不能退出，除非你输入万能密码。。。 背景然而之前用的是ScreenPin功能（也有翻译成报刊亭模式），这是Android自5.0开始系统内置的一个功能，主要用作商场演示等的场景，就是设定好之后，手机只能运行这">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android5.0屏幕固定功能，如何开机只能运行当前app不能退出">
@@ -26,43 +24,140 @@
 <meta name="twitter:image" content="data:image/jpeg;base64,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">
     
     
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
     
-        
-            <link rel="stylesheet" href="https://lison.cc/css/markdown.css">
-        
-            <link rel="stylesheet" href="https://lison.cc/css/july.css">
-        
+    <!-- title -->
+    <title>Android5.0屏幕固定功能，如何开机只能运行当前app不能退出</title>
+    <!-- styles -->
     
-<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
-</head>
-<body>
+<link rel="stylesheet" href="/css/style.css">
 
-<div id="banner-outer" class="hidden">
-    <div id="banner-image" style="background-image: url()"></div>
-    <img src="https://www.gravatar.com/avatar/7a585313ed855e8d652cbb3154a6056e?s=300&amp;d=mm&amp;r=g" id="avatar">
-</div>
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="LISON" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
 
-<div id="menu-outer">
-    <div id="menu-inner">
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
         
-            <a class="false" href="https://lison.cc/index.html">Home</a>
+        <li><a class="icon" aria-label="Previous post" href="/android-xn-rootkit-magisk-manager-get-root/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
-            <a class="false" href="https://lison.cc/archives/index.html">Archives</a>
         
-            <a class="false" href="https://lison.cc/about/index.html">About</a>
+        <li><a class="icon" aria-label="Next post" href="/xiaomi-root/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/android-app-pin/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/android-app-pin/&text=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/android-app-pin/&title=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/android-app-pin/&is_video=false&description=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出&body=Check out this article: https://lison.cc/android-app-pin/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/android-app-pin/&title=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/android-app-pin/&title=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/android-app-pin/&title=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/android-app-pin/&title=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/android-app-pin/&name=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出&description=&lt;h3 id=&#34;需求&#34;&gt;&lt;a href=&#34;#需求&#34; class=&#34;headerlink&#34; title=&#34;需求&#34;&gt;&lt;/a&gt;需求&lt;/h3&gt;&lt;p&gt;接上回，还是那台小米平板4，终于拿到了root权限。并且实现了开机启动某app，现在的需求是：要求只能运行这个app，不能退出，不能回退到主屏幕，不能Home键，重启之后还是我的app，你不能退出，除非你输入万能密码。。。&lt;/p&gt;
+&lt;h3 id=&#34;背景&#34;&gt;&lt;a href=&#34;#背景&#34; class=&#34;headerlink&#34; title=&#34;背景&#34;&gt;&lt;/a&gt;背景&lt;/h3&gt;&lt;p&gt;然而之前用的是ScreenPin功能（也有翻译成报刊亭模式），这是Android自5.0开始系统内置的一个功能，主要用作商场演示等的场景，就是设定好之后，手机只能运行这个app（比如这个app是介绍手机的一个广告app，或者某工厂内的一个办公app，比如扫码，只能扫码用，别的干不了，因为你不能回到主屏幕，只能操作这一个）。这个系统内置功能长这个样子&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/android-app-pin/&t=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
     </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E6%B1%82"><span class="toc-number">1.</span> <span class="toc-text">需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">2.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4%E4%B8%80"><span class="toc-number">3.</span> <span class="toc-text">步骤一</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E5%81%9A%E6%8A%98%E8%85%BE%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%8C%E4%B8%8D%E5%AF%B9%E4%BB%BB%E4%BD%95%E5%8F%98%E7%A0%96%E4%B8%8E%E5%BC%82%E5%B8%B8%E8%B4%9F%E8%B4%A3"><span class="toc-number"></span> <span class="toc-text">#文章做折腾过程记录，不对任何变砖与异常负责</span></a>
+    </div>
+  </span>
 </div>
 
-<div id="content-outer" class="container">
-    <div id="content-inner">
-        <article id="post">
-    <h1 id="post-title">Android5.0屏幕固定功能，如何开机只能运行当前app不能退出</h1>
-    <time id="post-date" datetime="2018-10-17T07:58:36.000Z">
-        October 17, 2018
-    </time>
-    <div id="post-content" class="markdown-body">
-        <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>接上回，还是那台小米平板4，终于拿到了root权限。并且实现了开机启动某app，现在的需求是：要求只能运行这个app，不能退出，不能回退到主屏幕，不能Home键，重启之后还是我的app，你不能退出，除非你输入万能密码。。。</p>
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Android5.0屏幕固定功能，如何开机只能运行当前app不能退出
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Lison</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2018-10-17T07:58:36.000Z" itemprop="datePublished">2018-10-17</time>
+        
+        (Updated: <time datetime="2022-02-14T01:37:06.540Z" itemprop="dateModified">2022-02-14</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h3><p>接上回，还是那台小米平板4，终于拿到了root权限。并且实现了开机启动某app，现在的需求是：要求只能运行这个app，不能退出，不能回退到主屏幕，不能Home键，重启之后还是我的app，你不能退出，除非你输入万能密码。。。</p>
 <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>然而之前用的是ScreenPin功能（也有翻译成报刊亭模式），这是Android自5.0开始系统内置的一个功能，主要用作商场演示等的场景，就是设定好之后，手机只能运行这个app（比如这个app是介绍手机的一个广告app，或者某工厂内的一个办公app，比如扫码，只能扫码用，别的干不了，因为你不能回到主屏幕，只能操作这一个）。这个系统内置功能长这个样子</p>
 <a id="more"></a>
 
@@ -96,65 +191,175 @@
 <p>后来的故事大家都知道了，白雪公主和七个小矮人从此过上了幸福快乐的生阿活。。。</p>
 <p>参考链接：<br>1.<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/28437529/how-to-pin-an-app-without-a-dialog-android#">How to pin an app without a dialog android</a><br>2.<a target="_blank" rel="noopener" href="https://snow.dog/blog/kiosk-mode-android">HOW TO TURN YOUR ANDROID APPLICATION INTO A KIOSK</a><br>3.<a target="_blank" rel="noopener" href="http://www.sureshjoshi.com/mobile/android-kiosk-mode-without-root/">Android Kiosk Mode Without Root</a><br>4.<a target="_blank" rel="noopener" href="http://floatingmuseum.github.io/2016/07/device-admin-practice">DeviceAdmin简单实践</a></p>
 <h2 id="文章做折腾过程记录，不对任何变砖与异常负责"><a href="#文章做折腾过程记录，不对任何变砖与异常负责" class="headerlink" title="#文章做折腾过程记录，不对任何变砖与异常负责"></a>#文章做折腾过程记录，不对任何变砖与异常负责</h2>
-    </div>
+  </div>
 </article>
 
-<div id="paginator">
-    
-</div>
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E6%B1%82"><span class="toc-number">1.</span> <span class="toc-text">需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">2.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4%E4%B8%80"><span class="toc-number">3.</span> <span class="toc-text">步骤一</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E5%81%9A%E6%8A%98%E8%85%BE%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%8C%E4%B8%8D%E5%AF%B9%E4%BB%BB%E4%BD%95%E5%8F%98%E7%A0%96%E4%B8%8E%E5%BC%82%E5%B8%B8%E8%B4%9F%E8%B4%A3"><span class="toc-number"></span> <span class="toc-text">#文章做折腾过程记录，不对任何变砖与异常负责</span></a>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/android-app-pin/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/android-app-pin/&text=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/android-app-pin/&title=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/android-app-pin/&is_video=false&description=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出&body=Check out this article: https://lison.cc/android-app-pin/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/android-app-pin/&title=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/android-app-pin/&title=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/android-app-pin/&title=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/android-app-pin/&title=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/android-app-pin/&name=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出&description=&lt;h3 id=&#34;需求&#34;&gt;&lt;a href=&#34;#需求&#34; class=&#34;headerlink&#34; title=&#34;需求&#34;&gt;&lt;/a&gt;需求&lt;/h3&gt;&lt;p&gt;接上回，还是那台小米平板4，终于拿到了root权限。并且实现了开机启动某app，现在的需求是：要求只能运行这个app，不能退出，不能回退到主屏幕，不能Home键，重启之后还是我的app，你不能退出，除非你输入万能密码。。。&lt;/p&gt;
+&lt;h3 id=&#34;背景&#34;&gt;&lt;a href=&#34;#背景&#34; class=&#34;headerlink&#34; title=&#34;背景&#34;&gt;&lt;/a&gt;背景&lt;/h3&gt;&lt;p&gt;然而之前用的是ScreenPin功能（也有翻译成报刊亭模式），这是Android自5.0开始系统内置的一个功能，主要用作商场演示等的场景，就是设定好之后，手机只能运行这个app（比如这个app是介绍手机的一个广告app，或者某工厂内的一个办公app，比如扫码，只能扫码用，别的干不了，因为你不能回到主屏幕，只能操作这一个）。这个系统内置功能长这个样子&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/android-app-pin/&t=Android5.0屏幕固定功能，如何开机只能运行当前app不能退出"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
 
     </div>
-</div>
 
-<div id="bottom-outer">
-    <div id="bottom-inner">
-        2019-2022 Lison Liou 皖ICP备16011445号
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
     </div>
+
+  </div>
 </div>
 
-<div id="to-top">
-    <i class="iconfont icon-up"></i>
-</div>
-
-
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
     
-        <script src="https://lison.cc/js/jquery-3.4.1.min.js"></script>
     
-        <script src="https://lison.cc/js/highlight-9.13.1.min.js"></script>
-    
-        <script src="https://lison.cc/js/transition.js"></script>
-    
-        <script src="https://lison.cc/js/smooth-scroll.min.js"></script>
-    
+    2014-2022
+    Lison Liou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
 
 
 
-    <script>
-      $(function () {
-        $('#banner-outer').addClass('fade-out')
-        $('#menu-outer').addClass('fade-show')
-
-        $('pre').each(function (i, block) {
-          hljs.highlightBlock(block);
-        });
-      })
-    </script>
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
 
 
-<script>
-  $(function () {
-    $(window).scroll(function () {
-      if ($(window).scrollTop() > 150) {
-        $("#to-top").fadeIn();
-      } else {
-        $("#to-top").fadeOut();
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
       }
     });
-    $("#to-top").click(function () {
-      $("body,html").animate({scrollTop: 0}, 500);
-      return false;
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
     })
   })
-</script>
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?487d03fcccff80b996cf94eaf236695e";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'LisonLiou/lison.cc';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
 </body>
 </html>

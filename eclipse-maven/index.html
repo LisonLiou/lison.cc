@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang=en>
 <head>
-    <meta charset="UTF-8">
-    
-    <title>
-        记@我也来篇eclipse – Maven配置实战-_- |
-        
-        LISON</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="description" content="为了实现一个不可告人的秘密，我在github找到了一个maven项目，我以为pull本地或者import之后就能运行看到效果（因为我是典型的windows程序猿），结果发现，我不能run它。。。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="记@我也来篇eclipse – Maven配置实战-_-">
@@ -26,43 +24,144 @@
 <meta name="twitter:image" content="data:image/png;base64,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">
     
     
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
     
-        
-            <link rel="stylesheet" href="https://lison.cc/css/markdown.css">
-        
-            <link rel="stylesheet" href="https://lison.cc/css/july.css">
-        
+    <!-- title -->
+    <title>记@我也来篇eclipse – Maven配置实战-_-</title>
+    <!-- styles -->
     
-<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
-</head>
-<body>
+<link rel="stylesheet" href="/css/style.css">
 
-<div id="banner-outer" class="hidden">
-    <div id="banner-image" style="background-image: url()"></div>
-    <img src="https://www.gravatar.com/avatar/7a585313ed855e8d652cbb3154a6056e?s=300&amp;d=mm&amp;r=g" id="avatar">
-</div>
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="LISON" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
 
-<div id="menu-outer">
-    <div id="menu-inner">
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
         
-            <a class="false" href="https://lison.cc/index.html">Home</a>
+        <li><a class="icon" aria-label="Previous post" href="/sayonara-qingdao/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
-            <a class="false" href="https://lison.cc/archives/index.html">Archives</a>
         
-            <a class="false" href="https://lison.cc/about/index.html">About</a>
+        <li><a class="icon" aria-label="Next post" href="/android-studio-helloworld/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/eclipse-maven/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/eclipse-maven/&text=记@我也来篇eclipse – Maven配置实战-_-"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/eclipse-maven/&title=记@我也来篇eclipse – Maven配置实战-_-"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/eclipse-maven/&is_video=false&description=记@我也来篇eclipse – Maven配置实战-_-"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=记@我也来篇eclipse – Maven配置实战-_-&body=Check out this article: https://lison.cc/eclipse-maven/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/eclipse-maven/&title=记@我也来篇eclipse – Maven配置实战-_-"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/eclipse-maven/&title=记@我也来篇eclipse – Maven配置实战-_-"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/eclipse-maven/&title=记@我也来篇eclipse – Maven配置实战-_-"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/eclipse-maven/&title=记@我也来篇eclipse – Maven配置实战-_-"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/eclipse-maven/&name=记@我也来篇eclipse – Maven配置实战-_-&description=&lt;p&gt;为了实现一个不可告人的秘密，我在github找到了一个maven项目，我以为pull本地或者import之后就能运行看到效果（因为我是典型的windows程序猿），结果发现，我不能run它。。。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/eclipse-maven/&t=记@我也来篇eclipse – Maven配置实战-_-"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
     </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Maven%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">Maven到底是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E7%8E%A9Maven%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">怎么玩Maven？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Maven"><span class="toc-number">3.</span> <span class="toc-text">使用Maven</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">引用</span></a></li></ol>
+    </div>
+  </span>
 </div>
 
-<div id="content-outer" class="container">
-    <div id="content-inner">
-        <article id="post">
-    <h1 id="post-title">记@我也来篇eclipse – Maven配置实战-_-</h1>
-    <time id="post-date" datetime="2015-10-22T03:09:41.000Z">
-        October 22, 2015
-    </time>
-    <div id="post-content" class="markdown-body">
-        <p>为了实现一个不可告人的秘密，我在github找到了一个maven项目，我以为pull本地或者import之后就能运行看到效果（因为我是典型的windows程序猿），结果发现，我不能run它。。。</p>
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        记@我也来篇eclipse – Maven配置实战-_-
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Lison</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2015-10-22T03:09:41.000Z" itemprop="datePublished">2015-10-22</time>
+        
+        (Updated: <time datetime="2022-02-14T01:37:06.611Z" itemprop="dateModified">2022-02-14</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/java/">java</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/maven/" rel="tag">maven</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>为了实现一个不可告人的秘密，我在github找到了一个maven项目，我以为pull本地或者import之后就能运行看到效果（因为我是典型的windows程序猿），结果发现，我不能run它。。。</p>
 <a id="more"></a>
 
 <h3 id="Maven到底是什么"><a href="#Maven到底是什么" class="headerlink" title="Maven到底是什么"></a>Maven到底是什么</h3><p>百科和度娘上解释的都太大牛话，我是看的云里雾里，什么事情我喜欢用一句话解释：Maven就是以前你引用jar都是拷贝到lib目录，或者从项目属性的Build Path中添加jar包，现在不用，你可以从Maven的中央仓库中添加依赖项（dependencies），适合团队协作，各种项目如果都使用某一个版本的jar包，则可以使用对应的dependency。还是不懂？也难怪，谁让我们都在代码作坊中工作，而且本身又是码畜呢。。。</p>
@@ -81,65 +180,174 @@
 <p>如果出现找不到Goles错误的话，就在Goles里填入clean或者test。之后就可以新建class extends或者implements maven项目中的包了，OK，Enjoy it。</p>
 <h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>借鉴了的几篇文章，感谢互联网上的大神们。<br><a target="_blank" rel="noopener" href="http://www.cnblogs.com/yjmyzz/p/3495762.html">http://www.cnblogs.com/yjmyzz/p/3495762.html</a><br><a target="_blank" rel="noopener" href="http://www.iteye.com/topic/1123225">http://www.iteye.com/topic/1123225</a></p>
 
-    </div>
+  </div>
 </article>
 
-<div id="paginator">
-    
-</div>
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Maven%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">Maven到底是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%8E%E4%B9%88%E7%8E%A9Maven%EF%BC%9F"><span class="toc-number">2.</span> <span class="toc-text">怎么玩Maven？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Maven"><span class="toc-number">3.</span> <span class="toc-text">使用Maven</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8"><span class="toc-number">4.</span> <span class="toc-text">引用</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/eclipse-maven/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/eclipse-maven/&text=记@我也来篇eclipse – Maven配置实战-_-"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/eclipse-maven/&title=记@我也来篇eclipse – Maven配置实战-_-"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/eclipse-maven/&is_video=false&description=记@我也来篇eclipse – Maven配置实战-_-"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=记@我也来篇eclipse – Maven配置实战-_-&body=Check out this article: https://lison.cc/eclipse-maven/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/eclipse-maven/&title=记@我也来篇eclipse – Maven配置实战-_-"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/eclipse-maven/&title=记@我也来篇eclipse – Maven配置实战-_-"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/eclipse-maven/&title=记@我也来篇eclipse – Maven配置实战-_-"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/eclipse-maven/&title=记@我也来篇eclipse – Maven配置实战-_-"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/eclipse-maven/&name=记@我也来篇eclipse – Maven配置实战-_-&description=&lt;p&gt;为了实现一个不可告人的秘密，我在github找到了一个maven项目，我以为pull本地或者import之后就能运行看到效果（因为我是典型的windows程序猿），结果发现，我不能run它。。。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/eclipse-maven/&t=记@我也来篇eclipse – Maven配置实战-_-"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
 
     </div>
-</div>
 
-<div id="bottom-outer">
-    <div id="bottom-inner">
-        2019-2022 Lison Liou 皖ICP备16011445号
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
     </div>
+
+  </div>
 </div>
 
-<div id="to-top">
-    <i class="iconfont icon-up"></i>
-</div>
-
-
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
     
-        <script src="https://lison.cc/js/jquery-3.4.1.min.js"></script>
     
-        <script src="https://lison.cc/js/highlight-9.13.1.min.js"></script>
-    
-        <script src="https://lison.cc/js/transition.js"></script>
-    
-        <script src="https://lison.cc/js/smooth-scroll.min.js"></script>
-    
+    2014-2022
+    Lison Liou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
 
 
 
-    <script>
-      $(function () {
-        $('#banner-outer').addClass('fade-out')
-        $('#menu-outer').addClass('fade-show')
-
-        $('pre').each(function (i, block) {
-          hljs.highlightBlock(block);
-        });
-      })
-    </script>
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
 
 
-<script>
-  $(function () {
-    $(window).scroll(function () {
-      if ($(window).scrollTop() > 150) {
-        $("#to-top").fadeIn();
-      } else {
-        $("#to-top").fadeOut();
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
       }
     });
-    $("#to-top").click(function () {
-      $("body,html").animate({scrollTop: 0}, 500);
-      return false;
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
     })
   })
-</script>
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?487d03fcccff80b996cf94eaf236695e";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'LisonLiou/lison.cc';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
 </body>
 </html>

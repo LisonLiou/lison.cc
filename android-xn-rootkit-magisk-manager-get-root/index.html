@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang=en>
 <head>
-    <meta charset="UTF-8">
-    
-    <title>
-        使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户 |
-        
-        LISON</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="description" content="按照之前写的root小米平板4的文章进行后续设备的root，无论怎么尝试，使用Magisk还是SuperSu，切换各种版本，都会最终卡在开机界面，无奈只能另辟蹊径。使用XN Rootkit配合Magisk实现小米平板4的root工作。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户">
@@ -35,43 +33,144 @@
 <meta name="twitter:image" content="data:image/jpeg;base64,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AQCAQCAQCAQCAQC//8QAJBEAAgIDAAEEAgMAAAAAAAAAERIBAgADYAQFEBNwMJAgQFD/2gAIAQIBAQIA4acjDw85GTlPwgAAAAAAAAAAAAAAAAAAAAAAAAflAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD+AAAH0zX3jJytrWi02tZptFv8Adr7xlvecjLZOTleDAVYrFVXhCcJP0EzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzf1DxMzOziN+wapjh91X05EcNNZ0VrxM8QWiZnht22K6ZPDeVrrtpHD2rPj69U/qKteNtZ4Y+tWpHg04aY9Z3X8v0ueGPk+NHpejwf1LRWavETXhIjZnyVy23XE14Kc1Zea+JPiz4MZtjgpzVk1iTsnVm7g5ykzExlciNs8HE0vMLWt7zPCRkbPmm/En6K/8QAJREBAQACAgIBBAIDAAAAAAAAAQACERJgAyExBBATcCCQIkGA/9oACAECAQM/AP8AsjX2+b0dI93tvR+zyIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiJmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZnr4R0lXjL/AI3G30fTzgOVybXRxhtfpLVjHSc2d6eke93HHVyytHR+ZDGNv+orHD5sD1uxHWL0f22eBjq8mezc+L6nAyej7xZwzwvH4sOWB7Z8n1uPR+LYec930vvZeHxJnif1L84wvBw57scj18WrfRfxX5BLI8/4X4sfABc8bT0XD/d4XHnj83D6i8a8suj44eycXll8W3neTzfD0vXRdW/476Lq19n9q//EACQRAAEEAgICAgMBAAAAAAAAABIBAgMUBGAABRFwEyAQUJAV/9oACAEDAQECAPbxERERERERERERERERERERERERERERERERERERERERERERERERF6WarVTkv0iTMxalVmPWdjxQTY/7pqt4iSp+YOOSR7GP45Cc3KX955+iL83ypk42TPlpO6Zs3oIREREREREREQARERERERERERERERERERERERERERERERERERERqVKlSpUqVKlSpUqVKlSpUqVKlSpUqVKlSpUqVKlSpUqVKlSpUqVKlSpUqVKlSpUqVKlSpUqVKlSpUqVKlSpUqVNeVyzouj5ciRwro+S1ZYW+NGVFxWM0fzzzpCY+kdViNy8zGTR+omkw8iVV0aKZnc5GV/IofC6OnMJr+Su0fDb8OWmjJyKay+f+Sqcln/0bMfZMm0NeTyHLiosWIcMmhLzt5MJs8t2CXNZ1E+h9tzCfNIyLGly16bRO1gXmFPGzMyF51cehLx7MvDY52a5cHBZormS9WvTQ9e1ui+OeOJxfRP8A/8QAKhEAAgICAQMDAwQDAAAAAAAAAAECAxFSEiExYAQTIiBBcFBRYZAUMnH/2gAIAQMBAz8A/CiEIQhCF+poQhCEIQhCEIQhDGMYxjGMYxjGMYxjGMYxjGMYxjGMYxjGMYxjGMYxjGMYxjGMYxjGMYxjGMYxjH+F1+xHQhoR+yx9GZCpxKP3E6Ob7liWYrJZMsTxJdCfu8YLocbErF3GpycV0X62yWxPYl/36Pkj3nKD+2D3apqP8Djxz1JSU1EfGKkuo1ZJJHJxk2KdTUH28Dl3GSSOLfI5dESzkkyXg2DP4Gp1KdSnUp1KdSnUp1KdSnUp1KdSnUp1KdSnUp1KdSnUp1KdSrUp1KtSnUp1KdSnUp1KdSnUp1KdSnUp1KdSnUp1KdSnUp1KdSnUp1KdSnUp1KdSnUp1KdSnUp1KdSnUp1KdSnUp1KdSnUp1KdSnUp1KdSnUp1KdSnUp1KdSnUp1KdfH0hGfCG3wG1xOLMrwfD5iS5DlIwvB+RFnHwl+Ev8A1RbjCRKMuMjD8HVsnOX2KYxba6ojdT70VhmOr8HXBwXcvuk7uzQo+k5Wdzkung8qHyj0ZbD+SV7+XYz1j/UVnwnocmJV9jNPbwfqckyXLqz4d/B8sdaeC39yyaw3/UvCiDlJk7UuCPXRscCUJKFi6kbesDPgntxyS9ZeoTZCmPCKK4+mdz7sXq1wS6k/RW8c9BWw5R8E7I53rqOUE5vsL/G4FkasQfVnG1obzDwP4mZHt3KWOxH1CUYro+56dWOGejIemTUlnHY52OZiUn4H1OcTg8oVyxIUqvcYq8VxMscY9fBFNYY6SVbyjFPFDfykO6XJkYLivBYT6MqsIbFMe6yJdvBkIj+DP//Z">
     
     
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
     
-        
-            <link rel="stylesheet" href="https://lison.cc/css/markdown.css">
-        
-            <link rel="stylesheet" href="https://lison.cc/css/july.css">
-        
+    <!-- title -->
+    <title>使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户</title>
+    <!-- styles -->
     
-<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
-</head>
-<body>
+<link rel="stylesheet" href="/css/style.css">
 
-<div id="banner-outer" class="hidden">
-    <div id="banner-image" style="background-image: url()"></div>
-    <img src="https://www.gravatar.com/avatar/7a585313ed855e8d652cbb3154a6056e?s=300&amp;d=mm&amp;r=g" id="avatar">
-</div>
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="LISON" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
 
-<div id="menu-outer">
-    <div id="menu-inner">
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
         
-            <a class="false" href="https://lison.cc/index.html">Home</a>
+        <li><a class="icon" aria-label="Previous post" href="/penicillin-say-it-again/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
-            <a class="false" href="https://lison.cc/archives/index.html">Archives</a>
         
-            <a class="false" href="https://lison.cc/about/index.html">About</a>
+        <li><a class="icon" aria-label="Next post" href="/android-app-pin/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/&text=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/&title=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/&is_video=false&description=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户&body=Check out this article: https://lison.cc/android-xn-rootkit-magisk-manager-get-root/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/&title=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/&title=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/&title=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/&title=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/&name=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户&description=&lt;p&gt;按照之前写的&lt;a href=&#34;http://lison.cc/725.html&#34;&gt;root小米平板4&lt;/a&gt;的文章进行后续设备的root，无论怎么尝试，使用Magisk还是SuperSu，切换各种版本，都会最终卡在开机界面，无奈只能另辟蹊径。使用XN Rootkit配合Magisk实现小米平板4的root工作。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/&t=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
     </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E6%96%87%E4%BD%BF%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7%E5%88%97%E8%A1%A8"><span class="toc-number">1.</span> <span class="toc-text">本文使用的工具列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E5%BA%94%E5%8E%8B%E7%BC%A9%E5%8C%85%E9%87%8C%E7%9A%84%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">对应压缩包里的文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.</span> <span class="toc-text">步骤</span></a></li></ol>
+    </div>
+  </span>
 </div>
 
-<div id="content-outer" class="container">
-    <div id="content-inner">
-        <article id="post">
-    <h1 id="post-title">使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户</h1>
-    <time id="post-date" datetime="2018-12-17T08:36:23.000Z">
-        December 17, 2018
-    </time>
-    <div id="post-content" class="markdown-body">
-        <p>按照之前写的<a href="http://lison.cc/725.html">root小米平板4</a>的文章进行后续设备的root，无论怎么尝试，使用Magisk还是SuperSu，切换各种版本，都会最终卡在开机界面，无奈只能另辟蹊径。使用XN Rootkit配合Magisk实现小米平板4的root工作。</p>
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Lison</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2018-12-17T08:36:23.000Z" itemprop="datePublished">2018-12-17</time>
+        
+        (Updated: <time datetime="2022-02-14T01:37:06.556Z" itemprop="dateModified">2022-02-14</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E5%88%B7%E6%9C%BA/">刷机</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/root/" rel="tag">root</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>按照之前写的<a href="http://lison.cc/725.html">root小米平板4</a>的文章进行后续设备的root，无论怎么尝试，使用Magisk还是SuperSu，切换各种版本，都会最终卡在开机界面，无奈只能另辟蹊径。使用XN Rootkit配合Magisk实现小米平板4的root工作。</p>
 <a id="more"></a>
 
 <h3 id="本文使用的工具列表"><a href="#本文使用的工具列表" class="headerlink" title="本文使用的工具列表"></a>本文使用的工具列表</h3><ul>
@@ -143,65 +242,174 @@
 <p><a target="_blank" rel="noopener" href="https://romprovider.com/2017/11/xn-rootkit-universal-systemless-root/">XN Rootkit Universal Systemless Root for any android Phone</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=c48ISLPjn4Q">XN Rootkit universal Systemless Root for Android with twrp Porter</a></p>
 
-    </div>
+  </div>
 </article>
 
-<div id="paginator">
-    
-</div>
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E6%96%87%E4%BD%BF%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7%E5%88%97%E8%A1%A8"><span class="toc-number">1.</span> <span class="toc-text">本文使用的工具列表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E5%BA%94%E5%8E%8B%E7%BC%A9%E5%8C%85%E9%87%8C%E7%9A%84%E6%96%87%E4%BB%B6"><span class="toc-number">2.</span> <span class="toc-text">对应压缩包里的文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-number">4.</span> <span class="toc-text">步骤</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/&text=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/&title=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/&is_video=false&description=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户&body=Check out this article: https://lison.cc/android-xn-rootkit-magisk-manager-get-root/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/&title=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/&title=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/&title=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/&title=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/&name=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户&description=&lt;p&gt;按照之前写的&lt;a href=&#34;http://lison.cc/725.html&#34;&gt;root小米平板4&lt;/a&gt;的文章进行后续设备的root，无论怎么尝试，使用Magisk还是SuperSu，切换各种版本，都会最终卡在开机界面，无奈只能另辟蹊径。使用XN Rootkit配合Magisk实现小米平板4的root工作。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/android-xn-rootkit-magisk-manager-get-root/&t=使用XN Rootkit配合Magisk Manager为小米平板4 Plus获取Root超级用户"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
 
     </div>
-</div>
 
-<div id="bottom-outer">
-    <div id="bottom-inner">
-        2019-2022 Lison Liou 皖ICP备16011445号
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
     </div>
+
+  </div>
 </div>
 
-<div id="to-top">
-    <i class="iconfont icon-up"></i>
-</div>
-
-
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
     
-        <script src="https://lison.cc/js/jquery-3.4.1.min.js"></script>
     
-        <script src="https://lison.cc/js/highlight-9.13.1.min.js"></script>
-    
-        <script src="https://lison.cc/js/transition.js"></script>
-    
-        <script src="https://lison.cc/js/smooth-scroll.min.js"></script>
-    
+    2014-2022
+    Lison Liou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
 
 
 
-    <script>
-      $(function () {
-        $('#banner-outer').addClass('fade-out')
-        $('#menu-outer').addClass('fade-show')
-
-        $('pre').each(function (i, block) {
-          hljs.highlightBlock(block);
-        });
-      })
-    </script>
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
 
 
-<script>
-  $(function () {
-    $(window).scroll(function () {
-      if ($(window).scrollTop() > 150) {
-        $("#to-top").fadeIn();
-      } else {
-        $("#to-top").fadeOut();
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
       }
     });
-    $("#to-top").click(function () {
-      $("body,html").animate({scrollTop: 0}, 500);
-      return false;
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
     })
   })
-</script>
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?487d03fcccff80b996cf94eaf236695e";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'LisonLiou/lison.cc';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
 </body>
 </html>

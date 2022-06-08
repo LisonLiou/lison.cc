@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang=en>
 <head>
-    <meta charset="UTF-8">
-    
-    <title>
-        记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的 |
-        
-        LISON</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="description" content="需求实现一个app在小米平板4（MIUI9.6）上开机自动启动，如此而已。然鹅，折腾的路确很长。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的">
@@ -26,43 +24,144 @@
 <meta name="twitter:image" content="data:image/jpeg;base64,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VRexFz5msNjXkf3I+JksqDlcg0qcKV1eUCQ2Gt7WN+lqJxHGicK7PZuRsLcqhSLIihixBQWvY2H4m+ugqDNJxf8AzN+dwbyH52JFQo8REivNmtoctmt6tKezqw/iRGxaxuDUsyLnHvtMraX9OSpIkOIQJIJFvy0BFSEw4FToebG1gaaB44V9yKZSQH9WhqNJsWUCEBsq2B8L3tSKOO7syq17Am41rFAxjErPlKa6LbnWGSKCESEZXuXLHytpWAixV0meRZGACszg+RrBrgY3gCBoHB1zH5VPjeLCCRGhW4O1DEs0kpeOKWXIfkSVrDFpyb3OOfKPkB5VCYplnEjCWQvk0YczSQg8dZ1jBuxIAFr6DUXpZonVFCxxZbtqT0GWliOjGVjCrWNtL3517PEkciIvETKrZtdvmaAlEs4mdY9DE1rDXxW1QxFXmM8Mv/DN9CfP6dah4k02pxKEZDbkLc1rCAZGYsDKgJvf+4ai4ZMzEC4On5W/5RKWIqJulRN0qJulRN0qJulRN0qJulRN0qJulRN0oEEcwfhP1t+5/l+g/uPhP1t+/wBkoieKMuXIvlAFzXtp+EIeJzi//dHDSl4A9zh5mMpPJbjQEiniTKxCwxwSl5SAL6kWFcKHFF04HuX0J1D6kAioOJx8WEhLJa8Vh6MwBJuBQjyiKXiyCKUxhwyAe9l+b0Qbi9xy+z0H9x8J+tv3+yHjGaMxlPkRY1CTEYeGRxn2/HWFiHCCK10U8NUB87k3qKHPHDieIiGwDOUygfprGS8LIjsVCZc/ptbUVK5xiPDIyCXhKCLZtUAvQh4XBmh4buc54rZmbyuLC1cwoH2eg/uPhP1t+/8AL9B/cfCZKk87GpJP1VJJ+qpJP1VJJvUkm9SSfqqST9VSSb1JJ+qpJP1VqTzJ/wAX9eppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppeppep+HZApPIeJqX3vSdD/O41oiGtFKYydbcxT+25okiiZOA8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">
     
     
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
     
-        
-            <link rel="stylesheet" href="https://lison.cc/css/markdown.css">
-        
-            <link rel="stylesheet" href="https://lison.cc/css/july.css">
-        
+    <!-- title -->
+    <title>记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的</title>
+    <!-- styles -->
     
-<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="LISON" type="application/atom+xml">
-</head>
-<body>
+<link rel="stylesheet" href="/css/style.css">
 
-<div id="banner-outer" class="hidden">
-    <div id="banner-image" style="background-image: url()"></div>
-    <img src="https://www.gravatar.com/avatar/7a585313ed855e8d652cbb3154a6056e?s=300&amp;d=mm&amp;r=g" id="avatar">
-</div>
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="LISON" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.2.0"></head>
 
-<div id="menu-outer">
-    <div id="menu-inner">
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
         
-            <a class="false" href="https://lison.cc/index.html">Home</a>
+        <li><a class="icon" aria-label="Previous post" href="/android-app-pin/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
-            <a class="false" href="https://lison.cc/archives/index.html">Archives</a>
         
-            <a class="false" href="https://lison.cc/about/index.html">About</a>
+        <li><a class="icon" aria-label="Next post" href="/ios-detour/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/xiaomi-root/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/xiaomi-root/&text=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/xiaomi-root/&title=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/xiaomi-root/&is_video=false&description=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的&body=Check out this article: https://lison.cc/xiaomi-root/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/xiaomi-root/&title=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/xiaomi-root/&title=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/xiaomi-root/&title=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/xiaomi-root/&title=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/xiaomi-root/&name=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的&description=&lt;h3 id=&#34;需求&#34;&gt;&lt;a href=&#34;#需求&#34; class=&#34;headerlink&#34; title=&#34;需求&#34;&gt;&lt;/a&gt;&lt;strong&gt;需求&lt;/strong&gt;&lt;/h3&gt;&lt;p&gt;实现一个app在小米平板4（MIUI9.6）上开机自动启动，如此而已。&lt;br&gt;然鹅，折腾的路确很长。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/xiaomi-root/&t=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
     </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E6%B1%82"><span class="toc-number">1.</span> <span class="toc-text">需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E4%B8%80"><span class="toc-number">2.</span> <span class="toc-text">尝试一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E4%BA%8C"><span class="toc-number">3.</span> <span class="toc-text">尝试二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%B7%E8%8C%AB%E6%97%B6%E5%88%BB"><span class="toc-number">4.</span> <span class="toc-text">迷茫时刻</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E4%B8%89-%E5%88%B7%E5%85%A5TWRP"><span class="toc-number">5.</span> <span class="toc-text">尝试三 刷入TWRP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E5%9B%9B-%E6%80%8E%E4%B9%88%E6%A0%B7%E6%8A%8Aapp%E5%AE%89%E8%A3%85%E5%88%B0-system-app%E4%B8%AD"><span class="toc-number">6.</span> <span class="toc-text">尝试四 怎么样把app安装到&#x2F;system&#x2F;app中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E4%BA%94"><span class="toc-number">7.</span> <span class="toc-text">尝试五</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E5%81%9A%E6%8A%98%E8%85%BE%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%8C%E4%B8%8D%E5%AF%B9%E4%BB%BB%E4%BD%95%E5%8F%98%E7%A0%96%E4%B8%8E%E5%BC%82%E5%B8%B8%E8%B4%9F%E8%B4%A3"><span class="toc-number"></span> <span class="toc-text"># 文章做折腾过程记录，不对任何变砖与异常负责</span></a>
+    </div>
+  </span>
 </div>
 
-<div id="content-outer" class="container">
-    <div id="content-inner">
-        <article id="post">
-    <h1 id="post-title">记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的</h1>
-    <time id="post-date" datetime="2018-10-15T07:43:53.000Z">
-        October 15, 2018
-    </time>
-    <div id="post-content" class="markdown-body">
-        <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a><strong>需求</strong></h3><p>实现一个app在小米平板4（MIUI9.6）上开机自动启动，如此而已。<br>然鹅，折腾的路确很长。</p>
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Lison</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2018-10-15T07:43:53.000Z" itemprop="datePublished">2018-10-15</time>
+        
+        (Updated: <time datetime="2022-02-14T01:37:06.754Z" itemprop="dateModified">2022-02-14</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E5%88%B7%E6%9C%BA/">刷机</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/root/" rel="tag">root</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="需求"><a href="#需求" class="headerlink" title="需求"></a><strong>需求</strong></h3><p>实现一个app在小米平板4（MIUI9.6）上开机自动启动，如此而已。<br>然鹅，折腾的路确很长。</p>
 <a id="more"></a>
 
 <h3 id="尝试一"><a href="#尝试一" class="headerlink" title="尝试一"></a><strong>尝试一</strong></h3><p>作为一个半生熟的Android开发狗，那么开机启动一个app还不简单？我新建一个BootReceiver，我再申请权限android.permission.RECEIVE_BOOT_COMPLETED，我再声明Activity、Service、Intent什么的blablabla，整个流程做安卓开发的你一定不会不清楚，反正度娘是妥妥儿的告诉我。但是折腾完发现，无论如何就是不好死？开机app不启动，于是打开百度我会搜索这样的关键字“Android app 开机启动”，然后会找到这样的文章: <a target="_blank" rel="noopener" href="https://blog.csdn.net/mmmccc000/article/details/52626075/">https://blog.csdn.net/mmmccc000/article/details/52626075/</a> 其中你反复验证启动失败的原因：是不是Fast Boot模式？是不是权限添加的不对？是不是应用默认装到了sd卡里，我怎么样才能不装到sd卡而装到系统空间？各种各样的疑问，各种各样的尝试，但最后的结果就一个：还是不行。</p>
@@ -82,65 +181,174 @@
 <h3 id="尝试五"><a href="#尝试五" class="headerlink" title="尝试五"></a>尝试五</h3><p>**这一步尝试已经忘了搜索百度的什么关键字，总之是摸石头过河摸到了石头，详参这里：<a target="_blank" rel="noopener" href="https://www.androidauthority.com/install-user-app-as-system-app-how-to-93522/">https://www.androidauthority.com/install-user-app-as-system-app-how-to-93522/</a><br>既然已经拿到了root权限，adb root + adb remount却不行，但是直接adb shell，然后切换su却可以（adb进入shell之后无法使用vi等工具），这是前提条件。于是又下载了一个ES 文件浏览器，安卓玩家对这个肯定不陌生，Magisk对其进行root授权（好像打开进入app就自动授权root权限），打开ES文件浏览器，把你要开机启动的app拷贝到/system/app目录，然后点击安装，世界就如此美好了。。。</p>
 <p>PS。如果要删除安装在/system/app的app的话，只需要删除这个apk文件即可。</p>
 <h2 id="文章做折腾过程记录，不对任何变砖与异常负责"><a href="#文章做折腾过程记录，不对任何变砖与异常负责" class="headerlink" title="# 文章做折腾过程记录，不对任何变砖与异常负责"></a># 文章做折腾过程记录，不对任何变砖与异常负责</h2>
-    </div>
+  </div>
 </article>
 
-<div id="paginator">
-    
-</div>
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E6%B1%82"><span class="toc-number">1.</span> <span class="toc-text">需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E4%B8%80"><span class="toc-number">2.</span> <span class="toc-text">尝试一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E4%BA%8C"><span class="toc-number">3.</span> <span class="toc-text">尝试二</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%B7%E8%8C%AB%E6%97%B6%E5%88%BB"><span class="toc-number">4.</span> <span class="toc-text">迷茫时刻</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E4%B8%89-%E5%88%B7%E5%85%A5TWRP"><span class="toc-number">5.</span> <span class="toc-text">尝试三 刷入TWRP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E5%9B%9B-%E6%80%8E%E4%B9%88%E6%A0%B7%E6%8A%8Aapp%E5%AE%89%E8%A3%85%E5%88%B0-system-app%E4%B8%AD"><span class="toc-number">6.</span> <span class="toc-text">尝试四 怎么样把app安装到&#x2F;system&#x2F;app中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E4%BA%94"><span class="toc-number">7.</span> <span class="toc-text">尝试五</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E7%AB%A0%E5%81%9A%E6%8A%98%E8%85%BE%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95%EF%BC%8C%E4%B8%8D%E5%AF%B9%E4%BB%BB%E4%BD%95%E5%8F%98%E7%A0%96%E4%B8%8E%E5%BC%82%E5%B8%B8%E8%B4%9F%E8%B4%A3"><span class="toc-number"></span> <span class="toc-text"># 文章做折腾过程记录，不对任何变砖与异常负责</span></a>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/xiaomi-root/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/xiaomi-root/&text=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/xiaomi-root/&title=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/xiaomi-root/&is_video=false&description=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的&body=Check out this article: https://lison.cc/xiaomi-root/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/xiaomi-root/&title=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/xiaomi-root/&title=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/xiaomi-root/&title=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/xiaomi-root/&title=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/xiaomi-root/&name=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的&description=&lt;h3 id=&#34;需求&#34;&gt;&lt;a href=&#34;#需求&#34; class=&#34;headerlink&#34; title=&#34;需求&#34;&gt;&lt;/a&gt;&lt;strong&gt;需求&lt;/strong&gt;&lt;/h3&gt;&lt;p&gt;实现一个app在小米平板4（MIUI9.6）上开机自动启动，如此而已。&lt;br&gt;然鹅，折腾的路确很长。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/xiaomi-root/&t=记录我是怎样把小米平板4（MIUI9.6）刷成开发板+获取root的"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
 
     </div>
-</div>
 
-<div id="bottom-outer">
-    <div id="bottom-inner">
-        2019-2022 Lison Liou 皖ICP备16011445号
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
     </div>
+
+  </div>
 </div>
 
-<div id="to-top">
-    <i class="iconfont icon-up"></i>
-</div>
-
-
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
     
-        <script src="https://lison.cc/js/jquery-3.4.1.min.js"></script>
     
-        <script src="https://lison.cc/js/highlight-9.13.1.min.js"></script>
-    
-        <script src="https://lison.cc/js/transition.js"></script>
-    
-        <script src="https://lison.cc/js/smooth-scroll.min.js"></script>
-    
+    2014-2022
+    Lison Liou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
 
 
 
-    <script>
-      $(function () {
-        $('#banner-outer').addClass('fade-out')
-        $('#menu-outer').addClass('fade-show')
-
-        $('pre').each(function (i, block) {
-          hljs.highlightBlock(block);
-        });
-      })
-    </script>
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
 
 
-<script>
-  $(function () {
-    $(window).scroll(function () {
-      if ($(window).scrollTop() > 150) {
-        $("#to-top").fadeIn();
-      } else {
-        $("#to-top").fadeOut();
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
       }
     });
-    $("#to-top").click(function () {
-      $("body,html").animate({scrollTop: 0}, 500);
-      return false;
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
     })
   })
-</script>
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?487d03fcccff80b996cf94eaf236695e";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'LisonLiou/lison.cc';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
 </body>
 </html>
