@@ -89,7 +89,7 @@ int main()
 }
 ```
 
-###3. Qt调用方式
+### 3. Qt调用方式
 
 ```
 #include <QtCore/QCoreApplication>
