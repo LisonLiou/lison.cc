@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://lison.cc/qt-windows-IPC/</loc>
+    
+    <lastmod>2022-06-09</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://lison.cc/qt-how-to-find-memoryleak/</loc>
     
     <lastmod>2022-06-09</lastmod>
@@ -1363,6 +1370,13 @@
   
   <url>
     <loc>https://lison.cc/tags/%E6%97%A5%E5%BF%97/</loc>
+    <lastmod>2022-06-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://lison.cc/tags/IPC/</loc>
     <lastmod>2022-06-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
