@@ -139,7 +139,7 @@ free(p2);
 
 可以明显看到指针地址为：0000026BBC3FA130的对象只有申请，并未释放。因windows平台无法使用mcheck.h头文件，所以只能采取类似mtrace的内存分配与释放配对排查方式。
 
-<p style="background-color:yellow">对上述实现宏逻辑部分的改进，直接将未释放的对象写入到文件，在怀疑有内存泄漏的代码中将特定的宏开关打开，则运行申请内存与释放内存的逻辑的代码时，若不存在配对现象，则运行时在离开代码上下文时，可以在对应的路径中找到没有释放的内存对象所在的代码文件及具体的行数。完整代码如下：</p>
+<p style="background-color:yellow;color:black">对上述实现宏逻辑部分的改进，直接将未释放的对象写入到文件，在怀疑有内存泄漏的代码中将特定的宏开关打开，则运行申请内存与释放内存的逻辑的代码时，若不存在配对现象，则运行时在离开代码上下文时，可以在对应的路径中找到没有释放的内存对象所在的代码文件及具体的行数。完整代码如下：</p>
 
 ```
 void *_malloc(size_t size, const char *file, int line) {
@@ -195,7 +195,7 @@ int main(int argc, char *argv[])
 
 运行后如果存在申请对象并未释放的情形，则会在当前路径打印.mem结尾的文件，可以通过文件内容定位到具体的问题代码行。
 
-现有QT编程中已很少使用C语言的malloc方式，<font style="background-color:yellow">转而使用new与delete配对申请与释放资源的方式，上述方法是做一个指引，可以在怀疑有内存泄漏的代码逻辑中重写operator new操作符</font>，同样达到上述目的，做法如下：
+现有QT编程中已很少使用C语言的malloc方式，<font style="background-color:yellow;color:black">转而使用new与delete配对申请与释放资源的方式，上述方法是做一个指引，可以在怀疑有内存泄漏的代码逻辑中重写operator new操作符</font>，同样达到上述目的，做法如下：
 1.	首先定义一个分配指标的结构AllocationMetrics
 ```
 struct AllocationMetrics {
