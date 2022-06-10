@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>LISON - 吾等采石之人, 当心怀大教堂之愿景.</title>
+  <title>LISON</title>
   
-  
+  <subtitle>吾等采石之人, 当心怀大教堂之愿景.</subtitle>
   <link href="https://lison.cc/atom.xml" rel="self"/>
   
   <link href="https://lison.cc/"/>
