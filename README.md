@@ -1,3 +1,6 @@
+# 使用Github Pages托管fanqieju.com，基于Hexo；使用之前的数据流程.jar或AutoJs尝试，图片与缩略图使用base64
+
+
 # 使用Github Pages托管的个人博客lison.cc，基于Hexo
 > Hexo source code for lison.cc
 
