@@ -146,12 +146,13 @@ typedef struct Message{
 ### 扩大范围，使用Msg的地方
 ```
 if(msgQueue.contains(msg)) return;
-    msgQueue.enqueue(msg);
 
-    emit signal_msg_got();
+msgQueue.enqueue(msg);
+
+emit signal_msg_got();
 ```
 
-if处使用了contains判断，contains根据什么判断？详情请按F1得到的答复如下，[https://doc.qt.io/qt-5/qlist.html#contains](原文地址)
+if处使用了contains判断，contains根据什么判断？详情请按F1得到的答复如下，[原文地址](https://doc.qt.io/qt-5/qlist.html#contains)
 ```
 bool QList::contains(const T &value) const
 Returns true if the list contains an occurrence of value; otherwise returns false.
@@ -173,7 +174,7 @@ typedef struct Message{
 }Msg;
 ```
 
-再点小锤子，不报错了吧。为什么要用小锤子呢，厮之前是个铁匠吗？？
+再点小锤子，不报错了吧。为什么要用小锤子呢，之前是铁匠吗？？
 
 
 
