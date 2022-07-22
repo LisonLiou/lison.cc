@@ -25,6 +25,8 @@ keywords:
 
 见到了水底的发光乌贼 跟着摄像头很美丽 午夜入睡 没有宵夜
 
+<iframe src="//player.bilibili.com/player.html?aid=601014203&bvid=BV1vB4y1a7Vh&cid=776663837&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
 船长脾气很大 音量高 40大几岁 短头发金链子手链不抽烟 个头不高 不工作时候声音正常 很多时候晚上一个人钓鱼 我猜些许他孤独 当你只面对天空和深蓝还有摇摆 似乎什么都不在重要 脑袋空
 
 船员大概20几号人 除了我们好像没有北方口音 工作之外说说笑笑
