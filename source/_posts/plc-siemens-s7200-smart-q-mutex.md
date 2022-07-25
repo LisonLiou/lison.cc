@@ -1,5 +1,5 @@
 ---
-title: 西门子PLC S7-200 Smart互锁电路电路记录
+title: 西门子PLC S7-200 Smart互锁电路记录
 tags:
   - null
 categories:
