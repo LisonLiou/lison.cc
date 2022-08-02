@@ -19,13 +19,13 @@ keywords:
 
 
 <!--more-->
-<iframe src="//player.bilibili.com/player.html?aid=513550614&bvid=BV1dg411o74x&cid=776658852&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+<iframe height=400 src="//player.bilibili.com/player.html?aid=513550614&bvid=BV1dg411o74x&cid=776658852&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 是的 没网络我又开始写航海日记了 7月13号 周三晴 早上开舱门 远处两艘军舰 视线里有一艘邮轮 手机无信号 昨晚上看船长钓鱼 大假鱼饵 不用铅坠和浮漂 钓组很简单 70米水深到底 间断往上收线 半个多小时没有鱼获 整套装备目测接近10k 昨晚加班作业测试   
 
 见到了水底的发光乌贼 跟着摄像头很美丽 午夜入睡 没有宵夜
 
-<iframe src="//player.bilibili.com/player.html?aid=601014203&bvid=BV1vB4y1a7Vh&cid=776663837&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+<iframe height=400 src="//player.bilibili.com/player.html?aid=601014203&bvid=BV1vB4y1a7Vh&cid=776663837&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 船长脾气很大 音量高 40大几岁 短头发金链子手链不抽烟 个头不高 不工作时候声音正常 很多时候晚上一个人钓鱼 我猜些许他孤独 当你只面对天空和深蓝还有摇摆 似乎什么都不在重要 脑袋空
 
