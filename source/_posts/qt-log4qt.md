@@ -1,7 +1,7 @@
 ---
 title: Log4Qt的配置及使用方法
 tags:
-  - 日志
+  - Log4Qt
 categories:
   - Qt
 author: Lison
