@@ -29,8 +29,6 @@ keywords:
 1. 目前首先需要编译linux4.19内核
 2. 似乎进行到：F:\rk3288\软件开发文档\RockChip_Uboot开发文档V1.0.pdf 其中的编译步骤
 3. 似乎又进行到：F:\rk3288\DLT-RK3288B_V03用户手册.pdf 其中的4.1 编译 Android 5.1 源码
-4. 进行到 
-
 ```
 alias mgcc='make CROSS_COMPILE=../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-' ##指定自己的编译器
 mgcc ARCH=arm64 rockcchip_linux_defconfig ## config
@@ -38,8 +36,13 @@ mgcc ARCH=arm64 rk3399-evb-ind-lpddr4-linux.img -j8 ##这个改成你们自己�
 ```
 
 dtb文件报语法错误，猜测需要重新生成设备树文件？
+4. [keystone] - 将上述编译之前的编译调通即可得到.bin和uboot.img文件
+5. 进行到 大骆驼的源码使用的linux kernel是3.x版本；而caesar wang 源码仓库中rk3288适配的是4.19.x版本，
+6. 尝试单独使用rockchip-kernel4.4.x编译boot.img, 然后与大骆驼生成的img合并，再尝试刷机。。
 
-5. [keystone] - 将上述编译之前的编译调通即可得到.bin和uboot.img文件
+7. 使用OpenHarmony4.0Release版本源码配合官网步骤进行，尝试编源代码(https://docs.openharmony.cn/pages/v4.0/zh-cn/device-dev/quick-start/quickstart-pkg-sourcecode.md/)
+8. 同步使用github中的Rockchip-kernel4.4版本（含rk3288芯片支持）linux内核源码，尝试编译boot.img(https://github.com/rockchip-linux/kernel/tree/develop-4.4)
+9. 
 
 
 
