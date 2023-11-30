@@ -1,5 +1,5 @@
 ---
-title: Blind Man的鸿蒙系统移植rk3288过程记录
+title: OpenHarmony鸿蒙系统移植rk3288过程记录
 tags:
   - linux kernel 编译
   - 鸿蒙系统移植
@@ -28,14 +28,7 @@ keywords:
 ### todo 
 1. 目前首先需要编译linux4.19内核
 2. 似乎进行到：F:\rk3288\软件开发文档\RockChip_Uboot开发文档V1.0.pdf 其中的编译步骤
-3. 似乎又进行到：F:\rk3288\DLT-RK3288B_V03用户手册.pdf 其中的4.1 编译 Android 5.1 源码
-```
-alias mgcc='make CROSS_COMPILE=../prebuilts/gcc/linux-x86/aarch64/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-' ##指定自己的编译器
-mgcc ARCH=arm64 rockcchip_linux_defconfig ## config
-mgcc ARCH=arm64 rk3399-evb-ind-lpddr4-linux.img -j8 ##这个改成你们自己的路径
-```
-
-dtb文件报语法错误，猜测需要重新生成设备树文件？
+3. 似乎又进行到：F:\rk3288\DLT-RK3288B_V03用户手册.pdf 其中的4.1 编译 Android 5.1 源码。dtb文件报语法错误，猜测需要重新生成设备树文件？
 4. [keystone] - 将上述编译之前的编译调通即可得到.bin和uboot.img文件
 5. 进行到 大骆驼的源码使用的linux kernel是3.x版本；而caesar wang 源码仓库中rk3288适配的是4.19.x版本，
 6. 尝试单独使用rockchip-kernel4.4.x编译boot.img, 然后与大骆驼生成的img合并，再尝试刷机。。
@@ -75,4 +68,4 @@ dtb文件报语法错误，猜测需要重新生成设备树文件？
 13. [ARM-Linux 交叉编译工具链安装](https://blog.csdn.net/Qiuhongim/article/details/124137192#:~:text=%E5%AE%89%E8%A3%85%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7%E9%93%BE%20%281%29%20%E5%B0%86gcc-linaro-12.0.1-2022.02-x86_64_arm-linux-gnueabihf.tar.xz%E7%A7%BB%E5%8A%A8%E5%88%B0,%2Fusr%2Flocal%2Farm%20%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%EF%BC%8C%E6%B3%A8%EF%BC%9A%E6%B2%A1%E6%9C%89%E8%AF%A5%E6%96%87%E4%BB%B6%E5%A4%B9%E5%B0%B1%E6%96%B0%E5%BB%BA%E4%B8%80%E4%B8%AA%EF%BC%8C%E8%AF%A5%E6%96%87%E4%BB%B6%E5%A4%B9%E5%9C%A8%E5%90%8E%E9%9D%A2%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%97%B6%E4%B9%9F%E4%BC%9A%E7%94%A8%E5%88%B0%E7%9A%84%20%282%29%20%E8%A7%A3%E5%8E%8B%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7%E9%93%BE%E5%8E%8B%E7%BC%A9%E5%8C%85%EF%BC%8C%E6%B3%A8%EF%BC%9A%E8%A7%A3%E5%8E%8B%E5%87%BA%E6%9D%A5%E5%90%8E%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9%E5%AD%98%E6%94%BE%E7%9A%84%E5%B0%B1%E6%98%AF%E4%BA%A4%E5%8F%89%E7%BC%96%E8%AF%91%E5%B7%A5%E5%85%B7%E9%93%BE%E6%96%87%E4%BB%B6)
 14. [瑞芯微芯片 RK3036, RK3066, RK312X, RK3188, RK322X,RK3288, RK3328, RK3368, RK3399, PX30使用的linux kernel官方编译手册及代码仓库](https://opensource.rock-chips.com/wiki_Rockchip_Kernel)
 15. [内核移植开发板通用流程 - 移植Linux 6.3.5系统到imx6ull开发板](https://zhuanlan.zhihu.com/p/637950608)
-16. 
+16. [arm 交叉编译器各种gcc 傻傻分不清楚：gnueabi,gnueabhf,none-eaib](https://zhuanlan.zhihu.com/p/133779123)
