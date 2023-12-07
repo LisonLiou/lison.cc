@@ -69,3 +69,5 @@ keywords:
 14. [瑞芯微芯片 RK3036, RK3066, RK312X, RK3188, RK322X,RK3288, RK3328, RK3368, RK3399, PX30使用的linux kernel官方编译手册及代码仓库](https://opensource.rock-chips.com/wiki_Rockchip_Kernel)
 15. [内核移植开发板通用流程 - 移植Linux 6.3.5系统到imx6ull开发板](https://zhuanlan.zhihu.com/p/637950608)
 16. [arm 交叉编译器各种gcc 傻傻分不清楚：gnueabi,gnueabhf,none-eaib](https://zhuanlan.zhihu.com/p/133779123)
+17. [ARM工具链选择参考](https://www.cnblogs.com/arnoldlu/p/14243491.html)
+18. 
