@@ -70,4 +70,5 @@ keywords:
 15. [内核移植开发板通用流程 - 移植Linux 6.3.5系统到imx6ull开发板](https://zhuanlan.zhihu.com/p/637950608)
 16. [arm 交叉编译器各种gcc 傻傻分不清楚：gnueabi,gnueabhf,none-eaib](https://zhuanlan.zhihu.com/p/133779123)
 17. [ARM工具链选择参考](https://www.cnblogs.com/arnoldlu/p/14243491.html)
-18. 
+18. [嵌入式Linux系统移植的四大步骤](https://z.itpub.net/article/detail/A4D4995A2035757F82E1F38BDDFC2F57)
+
