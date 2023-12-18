@@ -71,4 +71,5 @@ keywords:
 16. [arm 交叉编译器各种gcc 傻傻分不清楚：gnueabi,gnueabhf,none-eaib](https://zhuanlan.zhihu.com/p/133779123)
 17. [ARM工具链选择参考](https://www.cnblogs.com/arnoldlu/p/14243491.html)
 18. [嵌入式Linux系统移植的四大步骤](https://z.itpub.net/article/detail/A4D4995A2035757F82E1F38BDDFC2F57)
+19. [详解三大编译器：gcc、llvm 和 clang](https://zhuanlan.zhihu.com/p/357803433)
 
