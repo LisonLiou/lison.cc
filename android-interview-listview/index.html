@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="ListView优化1.ListView如何提高效率​        当convertView为空时，用setTag()方法为每个View绑定一个存放控件的ViewHolder对象。当convertView不为空时，重复利用已经创建的view的时候，使用getTag()方法获取绑定的ViewHolder对象，这样就避免了findViewById对控件的层层查询，二十快速定位到控件。 12345">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android开发之 ListView优化策略">
+<meta property="og:url" content="https://lison.cc/android-interview-listview/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="ListView优化1.ListView如何提高效率​        当convertView为空时，用setTag()方法为每个View绑定一个存放控件的ViewHolder对象。当convertView不为空时，重复利用已经创建的view的时候，使用getTag()方法获取绑定的ViewHolder对象，这样就避免了findViewById对控件的层层查询，二十快速定位到控件。 12345">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-08-14T07:30:14.000Z">
+<meta property="article:modified_time" content="2023-11-16T06:15:51.360Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="安卓架构师面试题">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>android开发之 ListView优化策略 - 吾等采石之人, 当心怀大教堂之愿景.</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="LISON" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/android-interview-java-reference/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/android-interview-contentprovider/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/android-interview-listview/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/android-interview-listview/&text=android开发之 ListView优化策略"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/android-interview-listview/&title=android开发之 ListView优化策略"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/android-interview-listview/&is_video=false&description=android开发之 ListView优化策略"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=android开发之 ListView优化策略&body=Check out this article: https://lison.cc/android-interview-listview/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/android-interview-listview/&title=android开发之 ListView优化策略"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/android-interview-listview/&title=android开发之 ListView优化策略"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/android-interview-listview/&title=android开发之 ListView优化策略"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/android-interview-listview/&title=android开发之 ListView优化策略"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/android-interview-listview/&name=android开发之 ListView优化策略&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/android-interview-listview/&t=android开发之 ListView优化策略"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ListView%E4%BC%98%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">ListView优化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-ListView%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E6%95%88%E7%8E%87"><span class="toc-number">1.1.</span> <span class="toc-text">1.ListView如何提高效率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-ListView%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%88%86%E9%A1%B5%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.2.</span> <span class="toc-text">2. ListView如何实现分页加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%A6%82%E4%BD%95%E5%9C%A8ScrollView%E4%B8%AD%E5%B5%8C%E5%85%A5ListView"><span class="toc-number">1.3.</span> <span class="toc-text">3. 如何在ScrollView中嵌入ListView</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-ListView%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E9%94%99%E4%BD%8D%E9%97%AE%E9%A2%98%E6%98%AF%E5%A6%82%E4%BD%95%E4%BA%A7%E7%94%9F%E7%9A%84%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">4.ListView中的图片错位问题是如何产生的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%85%B3%E4%BA%8EListView%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5"><span class="toc-number">1.5.</span> <span class="toc-text">5.关于ListView中的图片优化策略</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        android开发之 ListView优化策略
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Lison</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-08-14T07:30:14.000Z" itemprop="datePublished">2021-08-14</time>
+        
+        (Updated: <time datetime="2023-11-16T06:15:51.360Z" itemprop="dateModified">2023-11-16</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95/">安卓面试</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E5%AE%89%E5%8D%93%E6%9E%B6%E6%9E%84%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">安卓架构师面试题</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <span id="more"></span>
+
+<h1 id="ListView优化"><a href="#ListView优化" class="headerlink" title="ListView优化"></a>ListView优化</h1><h2 id="1-ListView如何提高效率"><a href="#1-ListView如何提高效率" class="headerlink" title="1.ListView如何提高效率"></a>1.ListView如何提高效率</h2><p>​        当convertView为空时，用setTag()方法为每个View绑定一个存放控件的ViewHolder对象。当convertView不为空时，重复利用已经创建的view的时候，使用getTag()方法获取绑定的ViewHolder对象，这样就避免了findViewById对控件的层层查询，二十快速定位到控件。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在外面先定义，ViewHolder静态类</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">ViewHolder</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> ImageView img;</span><br><span class="line">    <span class="keyword">public</span> TextView title;</span><br><span class="line">    <span class="keyword">public</span> TextView info;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//然后重写getView</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> View <span class="title function_">getView</span><span class="params">(<span class="type">int</span> position, View convertView, ViewGroup parent)</span> &#123;</span><br><span class="line">    ViewHolder holder;</span><br><span class="line">    <span class="keyword">if</span>(convertView == <span class="literal">null</span>) &#123;</span><br><span class="line">        holder = <span class="keyword">new</span> <span class="title class_">ViewHolder</span>();</span><br><span class="line">        convertView = mInflater.inflate(R.layout.list_item, <span class="literal">null</span>);</span><br><span class="line">        holder.img = (ImageView)item.findViewById(R.id.img)</span><br><span class="line">        holder.title = (TextView)item.findViewById(R.id.title);</span><br><span class="line">        holder.info = (TextView)item.findViewById(R.id.info);</span><br><span class="line">        convertView.setTag(holder);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        holder = (ViewHolder)convertView.getTag();</span><br><span class="line">    &#125;</span><br><span class="line">        holder.img.setImageResource(R.drawable.ic_launcher);</span><br><span class="line">        holder.title.setText(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">        holder.info.setText(<span class="string">&quot;World&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">                                                                                                </span><br><span class="line">    <span class="keyword">return</span> convertView;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<ol>
+<li>复用convertView，使用历史的view，提升效率。</li>
+<li>自定义静态类ViewHolder，减少findViewById的次数。使用ViewHolder的好处是缓存了显示数据的试图（View），加快了UI的响应速度。</li>
+<li>异步加载数据，分页加载数据</li>
+<li>使用WeakReference引用ImageView对象</li>
+</ol>
+<h2 id="2-ListView如何实现分页加载"><a href="#2-ListView如何实现分页加载" class="headerlink" title="2. ListView如何实现分页加载"></a>2. ListView如何实现分页加载</h2><ol>
+<li><p>设置Listview的滚动监听器：setOnScrollListener(new OnScrollListener{….}) 在监听器中有两个方法：滚动状态发生变化的方法 onScrollStateChanged() 和ListView被滚动时调用的方法 onScroll()</p>
+</li>
+<li><p>在滚动状态发生改变的方法中，有三种状态：</p>
+<pre><code> 1. SCROLL_STATE_TOUGH_SCROLL   //手指按下移动的状态，触摸滑动
+      2. SCROLL_STATE_FLING  //惯性滑动，滑翔
+      3. SCROLL_STATE_IDLE   //静止状态
+</code></pre>
+<p>对不同的状态进行处理，分批加载数据，只关心静止状态。如果最后一个可见条目就是数据适配器（集合）里的最后一个，此时可加载更多的数据。在每次加载的时候，计算出滚动的数量，当滚动的数量大于总数量的时候，提示用户没有更多数据了。</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">listView.setOnScrollListener(<span class="keyword">new</span> <span class="title class_">AbsListView</span>.OnScrollListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onScrollStateChanged</span><span class="params">(AbsListView absListView, <span class="type">int</span> scrollState)</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (absListView.getLastVisiblePosition() == absListView.getCount() - <span class="number">1</span>) &#123;</span><br><span class="line">                        loadData();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onScroll</span><span class="params">(AbsListView absListView, <span class="type">int</span> firstVisibleItem, <span class="type">int</span> visibleItemCount, <span class="type">int</span> totalItemCount)</span> &#123;</span><br><span class="line">                lastItem = firstVisibleItem + visibleItemCount - <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-如何在ScrollView中嵌入ListView"><a href="#3-如何在ScrollView中嵌入ListView" class="headerlink" title="3. 如何在ScrollView中嵌入ListView"></a>3. 如何在ScrollView中嵌入ListView</h2><p>​    在ScrollView中添加一个ListView会导致ListView控件显示不全，通常只会显示一条，这是因为两个控件的滚动事件冲突导致。所以需要通过ListView的item数量去计算ListView的显示高度，从而使其完整显示。现阶段最好的解决办法是，自定义ListView，重写onMeasure()方法，设置全部显示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ScrollListView</span> <span class="keyword">extends</span> <span class="title class_">ListView</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ScrollListView</span><span class="params">(Context context)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(context);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onMeasure</span><span class="params">(<span class="type">int</span> widthMeasureSpec, <span class="type">int</span> heightMeasureSpec)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">expandSpec</span> <span class="operator">=</span> MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE &gt;&gt; <span class="number">2</span>, MeasureSpec.AT_MOST);</span><br><span class="line">        <span class="built_in">super</span>.onMeasure(widthMeasureSpec, expandSpec);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-ListView中的图片错位问题是如何产生的？"><a href="#4-ListView中的图片错位问题是如何产生的？" class="headerlink" title="4.ListView中的图片错位问题是如何产生的？"></a>4.ListView中的图片错位问题是如何产生的？</h2><p>​    图片错位问题的本质源于我们的ListView中使用了缓存convertView。假设一种场景，一个ListView一屏显示了9个item，那么在加载第十个item的时候，事实上该item是重复使用了第一个item，也就是说在第一个item从网络中下载图片并最终要显示的时候，其实该item已经不在当前显示区域了，此时显示的结果可能在第10个item上输出图像，这就导致了图片错位的问题。所以解决办法在于，可见的显示，不可见的隐藏。</p>
+<h2 id="5-关于ListView中的图片优化策略"><a href="#5-关于ListView中的图片优化策略" class="headerlink" title="5.关于ListView中的图片优化策略"></a>5.关于ListView中的图片优化策略</h2><ol>
+<li>不要直接用图片路径循环BitmapFactory.decodeFile(); 使用Options保存图片大小，不要加载图片到内存中去。</li>
+<li>图片对其进行压缩处理。</li>
+<li>在ListView中取图片时不要直接拿路径去取，而是使用WeakReference代替强引用（使用WeakReference、SoftReference、WeakHashMap来存储图片信息，保证资源可以即使释放）。</li>
+<li>getView()中做图片转换时，产生的中间变量及时释放。</li>
+</ol>
+<p><strong>异步加载图片的思想：</strong></p>
+<ol>
+<li>先从内存缓存中获取图片显示（内存缓冲）</li>
+<li>获取不到的话从SD卡中获取（SD卡缓冲）</li>
+<li>都获取不到的话从网络下载图片并保存到SD卡同时加入内存并显示</li>
+</ol>
+<p><strong>原理：</strong></p>
+<ol>
+<li>先从内存中加载，没有则开启线程中SD卡或者网络中获取，从子线程中获取，否则快速滑动屏幕会感觉到不流畅。</li>
+<li>与此同时，在adapter中设置一个busy变量，表示当前ListView是否处于滑动状态，如果是滑动状态则仅从内存中获取图片，否则再开线程去SD卡或者网络获取图片。</li>
+<li>图片获取的线程使用线程池管理，避免每次都new一条新的线程；或者使用AsyncTask类，其内部也用到了线程池。从网络获取图片时，先将其保存到SD卡，然后再加载到内存，这样做的好处是加载到内存时可以做下压缩处理，减少图片所占内存。</li>
+</ol>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ListView%E4%BC%98%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">ListView优化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-ListView%E5%A6%82%E4%BD%95%E6%8F%90%E9%AB%98%E6%95%88%E7%8E%87"><span class="toc-number">1.1.</span> <span class="toc-text">1.ListView如何提高效率</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-ListView%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%88%86%E9%A1%B5%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.2.</span> <span class="toc-text">2. ListView如何实现分页加载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%A6%82%E4%BD%95%E5%9C%A8ScrollView%E4%B8%AD%E5%B5%8C%E5%85%A5ListView"><span class="toc-number">1.3.</span> <span class="toc-text">3. 如何在ScrollView中嵌入ListView</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-ListView%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E9%94%99%E4%BD%8D%E9%97%AE%E9%A2%98%E6%98%AF%E5%A6%82%E4%BD%95%E4%BA%A7%E7%94%9F%E7%9A%84%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">4.ListView中的图片错位问题是如何产生的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%85%B3%E4%BA%8EListView%E4%B8%AD%E7%9A%84%E5%9B%BE%E7%89%87%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5"><span class="toc-number">1.5.</span> <span class="toc-text">5.关于ListView中的图片优化策略</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/android-interview-listview/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/android-interview-listview/&text=android开发之 ListView优化策略"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/android-interview-listview/&title=android开发之 ListView优化策略"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/android-interview-listview/&is_video=false&description=android开发之 ListView优化策略"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=android开发之 ListView优化策略&body=Check out this article: https://lison.cc/android-interview-listview/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/android-interview-listview/&title=android开发之 ListView优化策略"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/android-interview-listview/&title=android开发之 ListView优化策略"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/android-interview-listview/&title=android开发之 ListView优化策略"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/android-interview-listview/&title=android开发之 ListView优化策略"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/android-interview-listview/&name=android开发之 ListView优化策略&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/android-interview-listview/&t=android开发之 ListView优化策略"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2014-2022
+    Lison Liou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMQWPXKTYB"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VMQWPXKTYB');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'LisonLiou/lison.cc';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

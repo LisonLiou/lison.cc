@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="树莓派上搞定wordpress之后，设置了两个强密码，mysql的，pi登录的（为什么是强密码？你懂的），结果登录wordpress后台的时候发现管理员密码忘了，如何办？找回密码吧，于是点击找回密码，填入邮箱之后系统提示我：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为wordpress配置发送邮件功能">
+<meta property="og:url" content="https://lison.cc/wordpress-config-send-email/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="树莓派上搞定wordpress之后，设置了两个强密码，mysql的，pi登录的（为什么是强密码？你懂的），结果登录wordpress后台的时候发现管理员密码忘了，如何办？找回密码吧，于是点击找回密码，填入邮箱之后系统提示我：">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-03-04T09:25:04.000Z">
+<meta property="article:modified_time" content="2023-11-16T06:15:51.873Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="折腾">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>为wordpress配置发送邮件功能 - 吾等采石之人, 当心怀大教堂之愿景.</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="LISON" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/raspberry-pi-create-flash-disk/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/raspberry-pi-hostname/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/wordpress-config-send-email/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/wordpress-config-send-email/&text=为wordpress配置发送邮件功能"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/wordpress-config-send-email/&title=为wordpress配置发送邮件功能"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/wordpress-config-send-email/&is_video=false&description=为wordpress配置发送邮件功能"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=为wordpress配置发送邮件功能&body=Check out this article: https://lison.cc/wordpress-config-send-email/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/wordpress-config-send-email/&title=为wordpress配置发送邮件功能"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/wordpress-config-send-email/&title=为wordpress配置发送邮件功能"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/wordpress-config-send-email/&title=为wordpress配置发送邮件功能"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/wordpress-config-send-email/&title=为wordpress配置发送邮件功能"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/wordpress-config-send-email/&name=为wordpress配置发送邮件功能&description=&lt;p&gt;树莓派上搞定wordpress之后，设置了两个强密码，mysql的，pi登录的（为什么是强密码？你懂的），结果登录wordpress后台的时候发现管理员密码忘了，如何办？找回密码吧，于是点击找回密码，填入邮箱之后系统提示我：&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/wordpress-config-send-email/&t=为wordpress配置发送邮件功能"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#504-Gateway-Time-out"><span class="toc-number">1.</span> <span class="toc-text">504 Gateway Time-out</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#504-Gateway-Time-out-1"><span class="toc-number">2.</span> <span class="toc-text">504 Gateway Time-out</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        为wordpress配置发送邮件功能
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Lison</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2014-03-04T09:25:04.000Z" itemprop="datePublished">2014-03-04</time>
+        
+        (Updated: <time datetime="2023-11-16T06:15:51.873Z" itemprop="dateModified">2023-11-16</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/wordpress/">wordpress</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E6%8A%98%E8%85%BE/" rel="tag">折腾</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>树莓派上搞定wordpress之后，设置了两个强密码，mysql的，pi登录的（为什么是强密码？你懂的），结果登录wordpress后台的时候发现管理员密码忘了，如何办？找回密码吧，于是点击找回密码，填入邮箱之后系统提示我：</p>
+<span id="more"></span>
+
+<blockquote>
+<p>无法发送电子邮件。<br>可能原因：您的主机禁用了mail()函数。</p>
+</blockquote>
+<p>我次奥，这可如何是好，刚装完而已，当然什么都没配置，什么都没有了，完全一光腚。于是问完度娘问谷歌，做法是直接update数据库表，因为密码是普通的md5加密。。。可我觉得这个方法不大好，于是我想了想，又想起来了。。。</p>
+<p>于是我的需求来了：邮件发送功能。</p>
+<ol>
+<li><p>在我忘记密码的时候它，可以发送重置密码邮件到我的秘密邮箱。</p>
+</li>
+<li><p>在我回复用户的评论的时候用户可以从它的秘密邮箱收到，并且有链接，他可以点击回到网站，增加用户粘性，SEO bla bla bla。。。</p>
+</li>
+</ol>
+<p>需求实现：</p>
+<p>度娘跟谷歌很多帖子都说使用插件来搞定：</p>
+<ul>
+<li>wp-mail-smtp.zip，发邮件的</li>
+<li>comment reply notification.zip，评论回复通知的</li>
+</ul>
+<p>但这不是我想要的，因为我不是租的空间，我tm有自己的服务器（虽然是小pi），还是电信（你妈逼）专线接入入入入入，我想要的是启用linux（Raspbian）的mail函数数数数数数。。。（突然间爽了）</p>
+<p>于是我看了一遍phpinfo(); 发现好像该启的都启了，但是我敲入sendmail却提示我：command not found。这个sendmail字面看来好像就是我要的东西，于是又问度娘，度娘说：看（引用地址）====&gt;<a target="_blank" rel="noopener" href="http://www.sjyhome.com/wordpress/wp-cant-email.html">http://www.sjyhome.com/wordpress/wp-cant-email.html</a></p>
+<p>原来这厮是要装的啊，原来raspbian里没预置这货啊，那个yum怎么用啊，我这不是cent os啊，debian下用什么命令啊。</p>
+<p>ok，raspbian是debian的什么什么儿子，于是问度娘就直接说：debian sendmail（其实我是想知道debian的安装命令是什么，yum不会用啊，我到底要菜刀什么时候啊）。</p>
+<p>于是度娘教会我：</p>
+<p>部分内容引自：<a target="_blank" rel="noopener" href="http://www.sjyhome.com/wordpress/wp-cant-email.html%EF%BC%88WordPress%E4%B8%8D%E8%83%BD%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6%EF%BC%8C%E6%8A%98%E8%85%BE%E7%9A%84%E5%BF%83%E9%85%B8%E5%8F%B2%EF%BC%89">http://www.sjyhome.com/wordpress/wp-cant-email.html（WordPress不能发送邮件，折腾的心酸史）</a></p>
+<p><strong>1. sudo apt-get install sendmail（其实我会用apt-get，不过想不起来了）</strong></p>
+<p><strong>2. 重启php-fpm：sudo service /etc/init.d/php5-fpm restart （我的是php5-fpm，跟上面教程的不是很一样，可能版本问题）</strong></p>
+<p><strong>3. 查看sendmail是否安装成功：/etc/init.d/sendmail status（没有加sudo），用putty运行的命令，过了很久都没有回应。我没有按Ctrl+C，而是选择了Duplicate Session，登录之后查看了一下/etc/init.d文件夹，发现sendmail安静的躺在那里，我没有作声。心里想，次奥，这到底是成没成功，于是又回到<a href="http://lison.cc/wp-login.php%EF%BC%8C%E7%82%B9%E5%87%BB%E4%BA%86%E6%89%BE%E5%9B%9E%E5%AF%86%E7%A0%81%EF%BC%8C%E5%8F%88%E5%81%9A%E4%BA%86%E4%B8%80%E9%81%8D%E6%9C%80%E5%BC%80%E5%A7%8B%E7%9A%84%E5%8A%A8%E4%BD%9C%EF%BC%8C%E7%BB%93%E6%9E%9C%E5%9C%A8%E6%88%91%E7%82%B9%E5%87%BB%E8%8E%B7%E5%8F%96%E6%96%B0%E5%AF%86%E7%A0%81%E6%8C%89%E9%92%AE%E7%81%AB%E7%8B%90%E7%9A%84%E5%BD%93%E5%89%8D%E6%A0%87%E7%AD%BE%E9%A1%B5%E8%BD%AC%E4%BA%86%E5%87%A0%E7%A7%92%E9%92%9F%E5%90%8E%E5%91%8A%E8%AF%89%E6%88%91%EF%BC%9A">http://lison.cc/wp-login.php，点击了找回密码，又做了一遍最开始的动作，结果在我点击获取新密码按钮火狐的当前标签页转了几秒钟后告诉我：</a></strong></p>
+<h1 id="504-Gateway-Time-out"><a href="#504-Gateway-Time-out" class="headerlink" title="504 Gateway Time-out"></a>504 Gateway Time-out</h1><hr>
+<p>nginx/1.2.1</p>
+<p><strong>4.于是我又了想起来：wp的后台设置（撰写）邮件服务器的地方还空着，空着。。。一切仿佛又回到了最开始，那天下午。。。</strong></p>
+<p><strong>5.后来我设置好了邮件服务器（我确定用户名密码是对的），然后又重复了刚才的找回密码动作：结果还是提示我：</strong></p>
+<h1 id="504-Gateway-Time-out-1"><a href="#504-Gateway-Time-out-1" class="headerlink" title="504 Gateway Time-out"></a>504 Gateway Time-out</h1><hr>
+<p>nginx/1.2.1</p>
+<p><strong>我的设置看起来是这样的：</strong></p>
+<p><strong>邮件服务器：smtp.qq.com</strong></p>
+<p><strong>端口号：110</strong></p>
+<p><strong>用户名：<a href="mailto:&#108;&#105;&#x73;&#111;&#x6e;&#x2e;&#x6c;&#105;&#111;&#x75;&#x40;&#113;&#113;&#x2e;&#99;&#111;&#x6d;">&#108;&#105;&#x73;&#111;&#x6e;&#x2e;&#x6c;&#105;&#111;&#x75;&#x40;&#113;&#113;&#x2e;&#99;&#111;&#x6d;</a></strong></p>
+<p><strong>密码：\</strong>*<em>*</em>*<em>*</em>*<em>*</em>***</p>
+<ul>
+<li>难道默认的110端口不行？但是我这里没法启用SSL啊（或者目前我不想启用）</li>
+</ul>
+<p><strong>。。。。。。我又走入了误区，全因我不能全神贯注的脑，和走马观花的眼。上面那个第四条对应的功能的是：快速发布，通过邮件发布文章配置的地方，也就是说，我走错门了，不好意思打扰了。</strong></p>
+<p>”那我装完了sendmail（执行sendmail status还是没有反应）要哪里做配置啊“，我是这么问度娘的（保存一下，抽根烟先）</p>
+<p>找到教程：<a target="_blank" rel="noopener" href="http://www.server110.com/sendmail/201308/385.html">http://www.server110.com/sendmail/201308/385.html</a></p>
+<p>原来要加入host：sudo vim /etc/hostname</p>
+<p>使其快速生效：sudo hostname -F /etc/hostname</p>
+<p>查看是否生效：hostname（没有生效，为什么，不管了）</p>
+<p>后面要配置mx转向，我的域名是oray免费赠我的，于是我添加mx纪录：lisonliou.gicp.net:8000，提示我不正确的域名，我早知道免费域名不能那么多功能了，到这里算是真的卡住我了。</p>
+<p>哎，还是老老实实的用wp插件吧，一切又回到最开始。。。</p>
+<p>PS： 自己的三分小地上做点写点还是挺有意思的</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#504-Gateway-Time-out"><span class="toc-number">1.</span> <span class="toc-text">504 Gateway Time-out</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#504-Gateway-Time-out-1"><span class="toc-number">2.</span> <span class="toc-text">504 Gateway Time-out</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/wordpress-config-send-email/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/wordpress-config-send-email/&text=为wordpress配置发送邮件功能"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/wordpress-config-send-email/&title=为wordpress配置发送邮件功能"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/wordpress-config-send-email/&is_video=false&description=为wordpress配置发送邮件功能"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=为wordpress配置发送邮件功能&body=Check out this article: https://lison.cc/wordpress-config-send-email/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/wordpress-config-send-email/&title=为wordpress配置发送邮件功能"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/wordpress-config-send-email/&title=为wordpress配置发送邮件功能"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/wordpress-config-send-email/&title=为wordpress配置发送邮件功能"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/wordpress-config-send-email/&title=为wordpress配置发送邮件功能"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/wordpress-config-send-email/&name=为wordpress配置发送邮件功能&description=&lt;p&gt;树莓派上搞定wordpress之后，设置了两个强密码，mysql的，pi登录的（为什么是强密码？你懂的），结果登录wordpress后台的时候发现管理员密码忘了，如何办？找回密码吧，于是点击找回密码，填入邮箱之后系统提示我：&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/wordpress-config-send-email/&t=为wordpress配置发送邮件功能"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2014-2022
+    Lison Liou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMQWPXKTYB"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VMQWPXKTYB');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'LisonLiou/lison.cc';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

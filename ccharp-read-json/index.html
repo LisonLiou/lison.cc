@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="不使用NEWTONSOFT的JSON库，使用.net framework 4.6，序列化对象并存入JSON文件；然后读取JSON文件内容并反序列化对象；使用反射方法读取其所有属性与属性值，直接上代码： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253">
+<meta property="og:type" content="article">
+<meta property="og:title" content=".NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）">
+<meta property="og:url" content="https://lison.cc/ccharp-read-json/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="不使用NEWTONSOFT的JSON库，使用.net framework 4.6，序列化对象并存入JSON文件；然后读取JSON文件内容并反序列化对象；使用反射方法读取其所有属性与属性值，直接上代码： 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-04-27T07:03:22.000Z">
+<meta property="article:modified_time" content="2023-11-16T06:15:51.590Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="json">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值） - 吾等采石之人, 当心怀大教堂之愿景.</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="LISON" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/csharp-usercontrol-mytextbox/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/android-interview-java-reference/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/ccharp-read-json/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/ccharp-read-json/&text=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/ccharp-read-json/&title=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/ccharp-read-json/&is_video=false&description=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）&body=Check out this article: https://lison.cc/ccharp-read-json/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/ccharp-read-json/&title=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/ccharp-read-json/&title=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/ccharp-read-json/&title=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/ccharp-read-json/&title=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/ccharp-read-json/&name=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/ccharp-read-json/&t=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        .NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Lison</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-04-27T07:03:22.000Z" itemprop="datePublished">2022-04-27</time>
+        
+        (Updated: <time datetime="2023-11-16T06:15:51.590Z" itemprop="dateModified">2023-11-16</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/c/">c#</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/json/" rel="tag">json</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <span id="more"></span>
+
+<p>不使用NEWTONSOFT的JSON库，使用.net framework 4.6，序列化对象并存入JSON文件；然后读取JSON文件内容并反序列化对象；使用反射方法读取其所有属性与属性值，直接上代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">using System;</span><br><span class="line">using System.IO;</span><br><span class="line">using System.Text;</span><br><span class="line">using System.Runtime.Serialization;</span><br><span class="line">using System.Runtime.Serialization.Json;</span><br><span class="line">using System.Reflection;</span><br><span class="line"></span><br><span class="line">namespace ConsoleApp1</span><br><span class="line">&#123;</span><br><span class="line">    [DataContract]</span><br><span class="line">    class MyConfig</span><br><span class="line">    &#123;</span><br><span class="line">        [DataMember]</span><br><span class="line">        public string IP</span><br><span class="line">        &#123;</span><br><span class="line">            get; set;</span><br><span class="line">        &#125;</span><br><span class="line">        [DataMember]</span><br><span class="line">        public int Port</span><br><span class="line">        &#123;</span><br><span class="line">            get; set;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    class Program</span><br><span class="line">    &#123;</span><br><span class="line">        const string CONFIG_JSON = &quot;.config&quot;;</span><br><span class="line"></span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">            MyConfig config = new MyConfig();</span><br><span class="line"></span><br><span class="line">            Console.WriteLine(&quot;IP:&quot;);</span><br><span class="line">            config.IP = Console.ReadLine();</span><br><span class="line">            Console.WriteLine(&quot;Port:&quot;);</span><br><span class="line">            config.Port = int.Parse(Console.ReadLine());</span><br><span class="line"></span><br><span class="line">            string json = JSONSerializer&lt;MyConfig&gt;.Serialize(config);</span><br><span class="line">            File.WriteAllText(CONFIG_JSON, json);</span><br><span class="line">            Console.WriteLine(&quot;写入JSON文件.config\r\n开始读取文件内容&quot;);</span><br><span class="line"></span><br><span class="line">            json = File.ReadAllText(CONFIG_JSON);</span><br><span class="line">            Console.WriteLine(&quot;读取JSON文件.config\r\n&quot; + json);</span><br><span class="line">            config = JSONSerializer&lt;MyConfig&gt;.DeSerialize(json);</span><br><span class="line"></span><br><span class="line">            Type t = config.GetType();</span><br><span class="line">            PropertyInfo[] pArray = t.GetProperties();</span><br><span class="line">            for (int i = 0; i &lt; pArray.Length; i++)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(&quot;属性&quot; + i + &quot;: &quot; + pArray[i].Name + &quot; &quot; + pArray[i].GetValue(config));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            Console.Read();</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static class JSONSerializer&lt;TType&gt; where TType : class</span><br><span class="line">    &#123;</span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// Serializes an object to JSON</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        public static string Serialize(TType instance)</span><br><span class="line">        &#123;</span><br><span class="line">            var serializer = new DataContractJsonSerializer(typeof(TType));</span><br><span class="line">            using (var stream = new MemoryStream())</span><br><span class="line">            &#123;</span><br><span class="line">                serializer.WriteObject(stream, instance);</span><br><span class="line">                return Encoding.Default.GetString(stream.ToArray());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// DeSerializes an object from JSON</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        public static TType DeSerialize(string json)</span><br><span class="line">        &#123;</span><br><span class="line">            using (var stream = new MemoryStream(Encoding.Default.GetBytes(json)))</span><br><span class="line">            &#123;</span><br><span class="line">                var serializer = new DataContractJsonSerializer(typeof(TType));</span><br><span class="line">                return serializer.ReadObject(stream) as TType;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>执行后会在当前路径生成.config文件。</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/ccharp-read-json/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/ccharp-read-json/&text=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/ccharp-read-json/&title=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/ccharp-read-json/&is_video=false&description=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）&body=Check out this article: https://lison.cc/ccharp-read-json/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/ccharp-read-json/&title=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/ccharp-read-json/&title=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/ccharp-read-json/&title=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/ccharp-read-json/&title=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/ccharp-read-json/&name=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/ccharp-read-json/&t=.NET序列化反序列化对象并写入JSON文件（读取JSON并反射其属性与值）"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2014-2022
+    Lison Liou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMQWPXKTYB"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VMQWPXKTYB');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'LisonLiou/lison.cc';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

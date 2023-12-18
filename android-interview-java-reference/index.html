@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="强软弱虚四大引用 - JAVA1. 强引用（GC: 不回收，死都不回收）​    当内存不足时，JVM开始垃圾回收，对于强引用的对象，就算是出现了OOM也不会对该对象进行回收，死也不收。 ​    强引用是我们最常见的普遍对象引用，只要还有强引用指向一个对象，就能表明对象还活着，垃圾收集器不会碰这种对象。JAVA中最常见的就是强引用，把一个对象付给另一个引用变量就是一个强引用。当一个对象被强引">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java强软弱虚四大引用">
+<meta property="og:url" content="https://lison.cc/android-interview-java-reference/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="强软弱虚四大引用 - JAVA1. 强引用（GC: 不回收，死都不回收）​    当内存不足时，JVM开始垃圾回收，对于强引用的对象，就算是出现了OOM也不会对该对象进行回收，死也不收。 ​    强引用是我们最常见的普遍对象引用，只要还有强引用指向一个对象，就能表明对象还活着，垃圾收集器不会碰这种对象。JAVA中最常见的就是强引用，把一个对象付给另一个引用变量就是一个强引用。当一个对象被强引">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-08-14T09:08:23.000Z">
+<meta property="article:modified_time" content="2023-11-16T06:15:51.358Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="java强软弱虚四大引用">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>java强软弱虚四大引用 - 吾等采石之人, 当心怀大教堂之愿景.</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="LISON" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/ccharp-read-json/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/android-interview-listview/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/android-interview-java-reference/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/android-interview-java-reference/&text=java强软弱虚四大引用"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/android-interview-java-reference/&title=java强软弱虚四大引用"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/android-interview-java-reference/&is_video=false&description=java强软弱虚四大引用"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=java强软弱虚四大引用&body=Check out this article: https://lison.cc/android-interview-java-reference/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/android-interview-java-reference/&title=java强软弱虚四大引用"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/android-interview-java-reference/&title=java强软弱虚四大引用"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/android-interview-java-reference/&title=java强软弱虚四大引用"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/android-interview-java-reference/&title=java强软弱虚四大引用"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/android-interview-java-reference/&name=java强软弱虚四大引用&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/android-interview-java-reference/&t=java强软弱虚四大引用"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%BA%E8%BD%AF%E5%BC%B1%E8%99%9A%E5%9B%9B%E5%A4%A7%E5%BC%95%E7%94%A8-JAVA"><span class="toc-number">1.</span> <span class="toc-text">强软弱虚四大引用 - JAVA</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%BC%BA%E5%BC%95%E7%94%A8%EF%BC%88GC-%E4%B8%8D%E5%9B%9E%E6%94%B6%EF%BC%8C%E6%AD%BB%E9%83%BD%E4%B8%8D%E5%9B%9E%E6%94%B6%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">1. 强引用（GC: 不回收，死都不回收）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%BB%9F%E5%BC%95%E7%94%A8%EF%BC%88GC%EF%BC%9AJVM%E5%86%85%E5%AD%98%E4%B8%8D%E5%A4%A0%E5%B0%B1%E5%9B%9E%E6%94%B6%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">2. 軟引用（GC：JVM内存不夠就回收）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%BC%B1%E5%BC%95%E7%94%A8%EF%BC%88GC-%E5%8F%AA%E8%A6%81%E6%88%91%E8%A2%AB%E8%B0%83%E7%94%A8%EF%BC%8C%E6%88%91%E5%B0%B1%E5%9B%9E%E6%94%B6%EF%BC%8C%E4%B8%8D%E7%94%A8JVM%E5%86%85%E5%AD%98%E5%A4%9F%E8%BF%98%E6%98%AF%E4%B8%8D%E5%A4%9F%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">3.弱引用（GC: 只要我被调用，我就回收，不用JVM内存够还是不够）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%99%9A%E5%BC%95%E7%94%A8"><span class="toc-number">1.4.</span> <span class="toc-text">4. 虚引用</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        java强软弱虚四大引用
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Lison</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-08-14T09:08:23.000Z" itemprop="datePublished">2021-08-14</time>
+        
+        (Updated: <time datetime="2023-11-16T06:15:51.358Z" itemprop="dateModified">2023-11-16</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/java/">java</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/java%E5%BC%BA%E8%BD%AF%E5%BC%B1%E8%99%9A%E5%9B%9B%E5%A4%A7%E5%BC%95%E7%94%A8/" rel="tag">java强软弱虚四大引用</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <span id="more"></span>
+
+<h1 id="强软弱虚四大引用-JAVA"><a href="#强软弱虚四大引用-JAVA" class="headerlink" title="强软弱虚四大引用 - JAVA"></a>强软弱虚四大引用 - JAVA</h1><h2 id="1-强引用（GC-不回收，死都不回收）"><a href="#1-强引用（GC-不回收，死都不回收）" class="headerlink" title="1. 强引用（GC: 不回收，死都不回收）"></a>1. 强引用（GC: 不回收，死都不回收）</h2><p>​    当内存不足时，JVM开始垃圾回收，对于强引用的对象，就算是出现了OOM也不会对该对象进行回收，死也不收。</p>
+<p>​    强引用是我们最常见的普遍对象引用，只要还有强引用指向一个对象，就能表明对象还活着，垃圾收集器不会碰这种对象。JAVA中最常见的就是强引用，把一个对象付给另一个引用变量就是一个强引用。当一个对象被强引用变量引用时，它处于科大状态，它是不可能被垃圾回收机制回收的，即使该对象以后永远都不会被用到JVM也不会回收，因此强引用是造成JAVA内存泄漏的主要原因之一。</p>
+<p>​    对于一个普通对象，如果没有其他的引用关系，只要超过了引用的作用域或者显示地将相应的（强）引用赋值为null，一般认为就是可以被垃圾收集了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StrongR</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		<span class="type">Object</span> <span class="variable">obj1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line">		<span class="type">Object</span> <span class="variable">obj2</span> <span class="operator">=</span> obj1;</span><br><span class="line">		</span><br><span class="line">		obj1=<span class="literal">null</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">		</span><br><span class="line">		System.out.println(obj1);</span><br><span class="line">		System.out.println(obj2);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 輸出</span></span><br><span class="line"><span class="literal">null</span></span><br><span class="line">java.lang.Object@15db9742</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-軟引用（GC：JVM内存不夠就回收）"><a href="#2-軟引用（GC：JVM内存不夠就回收）" class="headerlink" title="2. 軟引用（GC：JVM内存不夠就回收）"></a>2. 軟引用（GC：JVM内存不夠就回收）</h2><p>​    软引用是一种相对强引用弱化了一些的引用，需要用java.lang.ref.SoftReference类来实现，可以让对象豁免一些垃圾收集，对于只有软引用的对象来说：当JVM内存充足时它不会被回收，当JVM内存不足时它会被回收。</p>
+<p>​    软引用通常用在对内存敏感的程序中，比如高速缓存就有用到软引用，内存够用时就保留，不够用就回收。下面的代码展示了系统内存足够跟不足时软引用对象的GC情况。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SoftR</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		<span class="type">Object</span> <span class="variable">o1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line">		SoftReference&lt;Object&gt; softReference = <span class="keyword">new</span> <span class="title class_">SoftReference</span>&lt;Object&gt;(o1);</span><br><span class="line">		System.out.println(o1);</span><br><span class="line">		System.out.println(softReference.get());</span><br><span class="line">		</span><br><span class="line">		o1 = <span class="literal">null</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			<span class="type">byte</span>[] bytes = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">30</span>*<span class="number">1024</span>*<span class="number">1024</span>];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">finally</span> &#123;</span><br><span class="line">			System.out.println(o1);</span><br><span class="line">			System.out.println(softReference.get());</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 默认输出</span></span><br><span class="line">java.lang.Object@15db9742</span><br><span class="line">java.lang.Object@15db9742</span><br><span class="line"><span class="literal">null</span></span><br><span class="line">java.lang.Object@15db9742</span><br><span class="line">    </span><br><span class="line"><span class="comment">// 使用-Xms5m -Xmx5m  -XX:+PrintGCDetails 启动参数后输出</span></span><br><span class="line">java.lang.Object@15db9742</span><br><span class="line">java.lang.Object@15db9742</span><br><span class="line">[GC (System.gc()) [PSYoungGen: 764K-&gt;496K(1536K)] 764K-&gt;680K(5632K), <span class="number">0.0027296</span> secs] [Times: user=<span class="number">0.00</span> sys=<span class="number">0.00</span>, real=<span class="number">0.00</span> secs] </span><br><span class="line">[Full <span class="title function_">GC</span> <span class="params">(System.gc()</span>) [PSYoungGen: 496K-&gt;0K(1536K)] [ParOldGen: 184K-&gt;537K(4096K)] 680K-&gt;537K(5632K), [Metaspace: 2656K-&gt;2656K(1056768K)], <span class="number">0.0046556</span> secs] [Times: user=<span class="number">0.00</span> sys=<span class="number">0.00</span>, real=<span class="number">0.01</span> secs] </span><br><span class="line">[GC (Allocation Failure) [PSYoungGen: 0K-&gt;0K(1536K)] 537K-&gt;537K(5632K), <span class="number">0.0005369</span> secs] [Times: user=<span class="number">0.00</span> sys=<span class="number">0.00</span>, real=<span class="number">0.00</span> secs] </span><br><span class="line">[GC (Allocation Failure) [PSYoungGen: 0K-&gt;0K(1536K)] 537K-&gt;537K(5632K), <span class="number">0.0003787</span> secs] [Times: user=<span class="number">0.00</span> sys=<span class="number">0.00</span>, real=<span class="number">0.00</span> secs] </span><br><span class="line">[Full <span class="title function_">GC</span> <span class="params">(Allocation Failure)</span> [PSYoungGen: 0K-&gt;0K(1536K)] [ParOldGen: 537K-&gt;537K(4096K)] 537K-&gt;537K(5632K), [Metaspace: 2656K-&gt;2656K(1056768K)], <span class="number">0.0017620</span> secs] [Times: user=<span class="number">0.00</span> sys=<span class="number">0.00</span>, real=<span class="number">0.00</span> secs] </span><br><span class="line">[GC (Allocation Failure) [PSYoungGen: 0K-&gt;0K(1536K)] 537K-&gt;537K(5632K), <span class="number">0.0004040</span> secs] [Times: user=<span class="number">0.00</span> sys=<span class="number">0.00</span>, real=<span class="number">0.00</span> secs] </span><br><span class="line">[Full <span class="title function_">GC</span> <span class="params">(Allocation Failure)</span> [PSYoungGen: 0K-&gt;0K(1536K)] [ParOldGen: 537K-&gt;525K(4096K)] 537K-&gt;525K(5632K), [Metaspace: 2656K-&gt;2656K(1056768K)], <span class="number">0.0047294</span> secs] [Times: user=<span class="number">0.11</span> sys=<span class="number">0.00</span>, real=<span class="number">0.00</span> secs] </span><br><span class="line"><span class="literal">null</span></span><br><span class="line"><span class="literal">null</span></span><br><span class="line">Exception in thread <span class="string">&quot;main&quot;</span> java.lang.OutOfMemoryError: Java heap space</span><br><span class="line">	at reference.SoftR.main(SoftR.java:<span class="number">16</span>)</span><br><span class="line">Heap</span><br><span class="line"> PSYoungGen      total 1536K, used 30K [<span class="number">0x00000000ffe00000</span>, <span class="number">0x0000000100000000</span>, <span class="number">0x0000000100000000</span>)</span><br><span class="line">  eden space 1024K, <span class="number">2</span>% used [<span class="number">0x00000000ffe00000</span>,<span class="number">0x00000000ffe07ad0</span>,<span class="number">0x00000000fff00000</span>)</span><br><span class="line">  from space 512K, <span class="number">0</span>% used [<span class="number">0x00000000fff80000</span>,<span class="number">0x00000000fff80000</span>,<span class="number">0x0000000100000000</span>)</span><br><span class="line">  to   space 512K, <span class="number">0</span>% used [<span class="number">0x00000000fff00000</span>,<span class="number">0x00000000fff00000</span>,<span class="number">0x00000000fff80000</span>)</span><br><span class="line"> ParOldGen       total 4096K, used 525K [<span class="number">0x00000000ffa00000</span>, <span class="number">0x00000000ffe00000</span>, <span class="number">0x00000000ffe00000</span>)</span><br><span class="line">  object space 4096K, <span class="number">12</span>% used [<span class="number">0x00000000ffa00000</span>,<span class="number">0x00000000ffa834d0</span>,<span class="number">0x00000000ffe00000</span>)</span><br><span class="line"> Metaspace       used 2687K, capacity 4486K, committed 4864K, reserved 1056768K</span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">space</span>    used 291K, capacity 386K, committed 512K, reserved 1048576K</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-弱引用（GC-只要我被调用，我就回收，不用JVM内存够还是不够）"><a href="#3-弱引用（GC-只要我被调用，我就回收，不用JVM内存够还是不够）" class="headerlink" title="3.弱引用（GC: 只要我被调用，我就回收，不用JVM内存够还是不够）"></a>3.弱引用（GC: 只要我被调用，我就回收，不用JVM内存够还是不够）</h2><p>​    弱引用需要用java.lang.ref.WeakReference类来实现，它比弱引用的生存区更短。对于只有弱引用的对象来说，只要垃圾回收机制一运行，不管JVM的内存空间是否足够，都会回收该对象占用的内存。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WeakR</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">		<span class="type">Object</span> <span class="variable">o1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line">		WeakReference&lt;Object&gt; weakReference = <span class="keyword">new</span> <span class="title class_">WeakReference</span>&lt;Object&gt;(o1);</span><br><span class="line">		</span><br><span class="line">		System.out.println(o1);</span><br><span class="line">		System.out.println(weakReference.get());</span><br><span class="line">		</span><br><span class="line">		o1 = <span class="literal">null</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">		</span><br><span class="line">		System.out.println(o1);</span><br><span class="line">		System.out.println(weakReference.get());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line">java.lang.Object@15db9742</span><br><span class="line">java.lang.Object@15db9742</span><br><span class="line"><span class="literal">null</span></span><br><span class="line"><span class="literal">null</span></span><br><span class="line">    </span><br><span class="line">-------------------------------------------------------------------------------</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">myHashmap</span><span class="params">()</span> &#123;</span><br><span class="line">		HashMap&lt;Integer,String&gt; map =<span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">		Integer key= <span class="keyword">new</span> <span class="title class_">Integer</span>(<span class="number">1</span>);</span><br><span class="line">		String value=<span class="string">&quot;hashmap&quot;</span>;</span><br><span class="line">		map.put(key, value);</span><br><span class="line">		System.out.println(map);</span><br><span class="line">		</span><br><span class="line">		key = <span class="literal">null</span>;</span><br><span class="line">		System.out.println(map);</span><br><span class="line">		</span><br><span class="line">		System.gc();</span><br><span class="line">		System.out.println(map);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出    </span></span><br><span class="line">&#123;<span class="number">1</span>=hashmap&#125;</span><br><span class="line">&#123;<span class="number">1</span>=hashmap&#125;</span><br><span class="line">&#123;<span class="number">1</span>=hashmap&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">myWeakHashmap</span><span class="params">()</span> &#123;</span><br><span class="line">		WeakHashMap&lt;Integer,String&gt; map = <span class="keyword">new</span> <span class="title class_">WeakHashMap</span>&lt;&gt;();</span><br><span class="line">		<span class="type">Integer</span> <span class="variable">key</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Integer</span>(<span class="number">2</span>);</span><br><span class="line">		<span class="type">String</span> <span class="variable">value</span> <span class="operator">=</span> <span class="string">&quot;weakHashmap&quot;</span>;</span><br><span class="line">		map.put(key, value);		</span><br><span class="line">		System.out.println(map);</span><br><span class="line">		</span><br><span class="line">		key = <span class="literal">null</span>;</span><br><span class="line">		System.out.println(map);</span><br><span class="line">		</span><br><span class="line">		System.gc();</span><br><span class="line">		System.out.println(map);</span><br><span class="line">	&#125;</span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line">&#123;<span class="number">2</span>=weakHashmap&#125;</span><br><span class="line">&#123;<span class="number">2</span>=weakHashmap&#125;</span><br><span class="line">&#123;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-虚引用"><a href="#4-虚引用" class="headerlink" title="4. 虚引用"></a>4. 虚引用</h2><p>​        虚引用需要java.lang.ref.PhantomReference类来实现。顾名思义，就是形同虚设，与其他几种引用都不同，虚引用并不会决定对象的生命周期。如果一个对象持有虚引用，那么它就和没有任何引用一样，在任何时间都可能被垃圾回收器回收，它不能单点使用也不能通过它访问对象，虚引用必须和引用队列（ReferenceQueue）联合使用。<br>​        虚引用的主要作用是跟踪对象被垃圾回收的状态，仅仅提供了一种确保对象被finalize以后，做某些事情的机制。PhantomReference的get()方法总是返回null，因此无法访问对应的引用对象，其意义在于说明一个对象已经进入了finalization阶段，可以被GC回收，用来实现比finalization机制更灵活的回收操作。<br>​        换句话说，设置虚引用关联的唯一目的，就是在这个对象被收集器回收的时候收到一个系统通知或者后续添加进一步的处理。Java技术允许使用finalize()方法在垃圾收集器将对象从内存中清除出去之前做必要的清理工作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PhantomR</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">		<span class="type">Object</span> <span class="variable">o1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Object</span>();</span><br><span class="line">		ReferenceQueue&lt;Override&gt; referenceQueue=<span class="keyword">new</span> <span class="title class_">ReferenceQueue</span>&lt;&gt;();</span><br><span class="line">		PhantomReference&lt;Object&gt; phantomReference = <span class="keyword">new</span> <span class="title class_">PhantomReference</span>(o1, referenceQueue);</span><br><span class="line">		System.out.println(o1);</span><br><span class="line">		System.out.println(phantomReference.get());</span><br><span class="line">		System.out.println(referenceQueue.poll());</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">&quot;------------------------------&quot;</span>);</span><br><span class="line">		o1 = <span class="literal">null</span>;</span><br><span class="line">		System.gc();</span><br><span class="line">		Thread.sleep(<span class="number">500</span>);</span><br><span class="line">		</span><br><span class="line">		System.out.println(o1);</span><br><span class="line">		System.out.println(phantomReference.get());</span><br><span class="line">		System.out.println(referenceQueue.poll());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出</span></span><br><span class="line">java.lang.Object@15db9742</span><br><span class="line"><span class="literal">null</span></span><br><span class="line"><span class="literal">null</span></span><br><span class="line">------------------------------</span><br><span class="line"><span class="literal">null</span></span><br><span class="line"><span class="literal">null</span></span><br><span class="line">java.lang.ref.PhantomReference@6d06d69c</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%BA%E8%BD%AF%E5%BC%B1%E8%99%9A%E5%9B%9B%E5%A4%A7%E5%BC%95%E7%94%A8-JAVA"><span class="toc-number">1.</span> <span class="toc-text">强软弱虚四大引用 - JAVA</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%BC%BA%E5%BC%95%E7%94%A8%EF%BC%88GC-%E4%B8%8D%E5%9B%9E%E6%94%B6%EF%BC%8C%E6%AD%BB%E9%83%BD%E4%B8%8D%E5%9B%9E%E6%94%B6%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">1. 强引用（GC: 不回收，死都不回收）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%BB%9F%E5%BC%95%E7%94%A8%EF%BC%88GC%EF%BC%9AJVM%E5%86%85%E5%AD%98%E4%B8%8D%E5%A4%A0%E5%B0%B1%E5%9B%9E%E6%94%B6%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">2. 軟引用（GC：JVM内存不夠就回收）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%BC%B1%E5%BC%95%E7%94%A8%EF%BC%88GC-%E5%8F%AA%E8%A6%81%E6%88%91%E8%A2%AB%E8%B0%83%E7%94%A8%EF%BC%8C%E6%88%91%E5%B0%B1%E5%9B%9E%E6%94%B6%EF%BC%8C%E4%B8%8D%E7%94%A8JVM%E5%86%85%E5%AD%98%E5%A4%9F%E8%BF%98%E6%98%AF%E4%B8%8D%E5%A4%9F%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">3.弱引用（GC: 只要我被调用，我就回收，不用JVM内存够还是不够）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%99%9A%E5%BC%95%E7%94%A8"><span class="toc-number">1.4.</span> <span class="toc-text">4. 虚引用</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/android-interview-java-reference/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/android-interview-java-reference/&text=java强软弱虚四大引用"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/android-interview-java-reference/&title=java强软弱虚四大引用"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/android-interview-java-reference/&is_video=false&description=java强软弱虚四大引用"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=java强软弱虚四大引用&body=Check out this article: https://lison.cc/android-interview-java-reference/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/android-interview-java-reference/&title=java强软弱虚四大引用"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/android-interview-java-reference/&title=java强软弱虚四大引用"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/android-interview-java-reference/&title=java强软弱虚四大引用"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/android-interview-java-reference/&title=java强软弱虚四大引用"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/android-interview-java-reference/&name=java强软弱虚四大引用&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/android-interview-java-reference/&t=java强软弱虚四大引用"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2014-2022
+    Lison Liou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMQWPXKTYB"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VMQWPXKTYB');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'LisonLiou/lison.cc';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

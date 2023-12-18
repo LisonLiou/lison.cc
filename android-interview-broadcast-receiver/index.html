@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="1. 什么是Broadcast和Broadcast ReceiverBroadcast（广播）是一种广泛在应用程序之间传输信息的机制，而BroadcastReceiver（广播接收器）则是用于接收来自系统和应用的广播对其进行响应的组件。Android提供了一套完整的API，允许应用程序自由的发送和接收广播，其中又用到可以传递信息的Intent。广播其实是一种订阅者模式，所以当然需要先regi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安卓基础 - 关于Broadcast 和 Broadcast Receiver">
+<meta property="og:url" content="https://lison.cc/android-interview-broadcast-receiver/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="1. 什么是Broadcast和Broadcast ReceiverBroadcast（广播）是一种广泛在应用程序之间传输信息的机制，而BroadcastReceiver（广播接收器）则是用于接收来自系统和应用的广播对其进行响应的组件。Android提供了一套完整的API，允许应用程序自由的发送和接收广播，其中又用到可以传递信息的Intent。广播其实是一种订阅者模式，所以当然需要先regi">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-08-13T09:01:46.000Z">
+<meta property="article:modified_time" content="2023-11-16T06:15:51.355Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="安卓架构师面试题">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>安卓基础 - 关于Broadcast 和 Broadcast Receiver - 吾等采石之人, 当心怀大教堂之愿景.</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="LISON" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/android-interview-contentprovider/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/android-interview-service/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/android-interview-broadcast-receiver/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/android-interview-broadcast-receiver/&text=安卓基础 - 关于Broadcast 和 Broadcast Receiver"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/android-interview-broadcast-receiver/&title=安卓基础 - 关于Broadcast 和 Broadcast Receiver"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/android-interview-broadcast-receiver/&is_video=false&description=安卓基础 - 关于Broadcast 和 Broadcast Receiver"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=安卓基础 - 关于Broadcast 和 Broadcast Receiver&body=Check out this article: https://lison.cc/android-interview-broadcast-receiver/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/android-interview-broadcast-receiver/&title=安卓基础 - 关于Broadcast 和 Broadcast Receiver"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/android-interview-broadcast-receiver/&title=安卓基础 - 关于Broadcast 和 Broadcast Receiver"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/android-interview-broadcast-receiver/&title=安卓基础 - 关于Broadcast 和 Broadcast Receiver"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/android-interview-broadcast-receiver/&title=安卓基础 - 关于Broadcast 和 Broadcast Receiver"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/android-interview-broadcast-receiver/&name=安卓基础 - 关于Broadcast 和 Broadcast Receiver&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/android-interview-broadcast-receiver/&t=安卓基础 - 关于Broadcast 和 Broadcast Receiver"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AFBroadcast%E5%92%8CBroadcast-Receiver"><span class="toc-number">1.</span> <span class="toc-text">1. 什么是Broadcast和Broadcast Receiver</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AE%89%E8%A3%85%E5%9C%A8SD%E5%8D%A1%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E6%97%A0%E6%B3%95%E6%94%B6%E5%88%B0%E5%BC%80%E6%9C%BA%E5%B9%BF%E6%92%AD"><span class="toc-number">2.</span> <span class="toc-text">2. 为什么安装在SD卡中的应用无法收到开机广播</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        安卓基础 - 关于Broadcast 和 Broadcast Receiver
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Lison</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2021-08-13T09:01:46.000Z" itemprop="datePublished">2021-08-13</time>
+        
+        (Updated: <time datetime="2023-11-16T06:15:51.355Z" itemprop="dateModified">2023-11-16</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/%E5%AE%89%E5%8D%93%E9%9D%A2%E8%AF%95/">安卓面试</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E5%AE%89%E5%8D%93%E6%9E%B6%E6%9E%84%E5%B8%88%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="tag">安卓架构师面试题</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <span id="more"></span>
+
+
+<h2 id="1-什么是Broadcast和Broadcast-Receiver"><a href="#1-什么是Broadcast和Broadcast-Receiver" class="headerlink" title="1. 什么是Broadcast和Broadcast Receiver"></a>1. 什么是Broadcast和Broadcast Receiver</h2><p>Broadcast（广播）是一种广泛在应用程序之间传输信息的机制，而BroadcastReceiver（广播接收器）则是用于接收来自系统和应用的广播对其进行响应的组件。Android提供了一套完整的API，允许应用程序自由的发送和接收广播，其中又用到可以传递信息的Intent。广播其实是一种订阅者模式，所以当然需要先register，register的方式有两种：</p>
+<ol>
+<li><p><strong>静态注册</strong> 在manifest的application节点中添加receiver标签。<br>静态注册意味着应用在安装后就开始接收广播，一旦接收广播系统就会打开应用进程，但是如果应用是在stopped状态下就不会接收到广播。</p>
+</li>
+<li><p><strong>动态注册</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">BroadcastReceiver</span> <span class="variable">br</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyBroadcastReceiver</span>();</span><br><span class="line"><span class="type">IntentFilter</span> <span class="variable">filter</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">IntentFilter</span>(ConnectivityManager.CONNECTIVITY_ACTION);</span><br><span class="line">intentFilter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);</span><br><span class="line"><span class="built_in">this</span>.registerReceiver(br, filter);</span><br></pre></td></tr></table></figure>
+
+<p>记得在onDestroy时调用unregisterReceiver避免内存泄漏。</p>
+</li>
+</ol>
+<p><strong>广播的发送和接收方法：</strong></p>
+<ol>
+<li><p><strong>普通广播</strong><br>普通广播是一种完全异步执行的广播，在广播发出后，所有的广播接收器几乎都会在同一时刻接收到这条广播消息，因此他们接收的顺序是不固定的。另外，接收器不能拦截普通广播。</p>
+</li>
+<li><p><strong>有序广播</strong><br>有序广播是一种同步执行的广播，在广播发出之后，同一时刻只会有一个广播接收器能够收到这条广播，当这个广播接收器中的逻辑执行完毕后，广播才会继续传递，所以此时的广播接收器是有先后顺序的，且优先级（priority）高的广播接收器会先收到广播消息。有序广播可以被接收器截断使得后面的接收器无法接收到它。应用场景比如收到短信，电话拨入。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 发送一个有序广播，广播接收器不指定权限(null)，接收顺序按照manifest配置的广播接收器的priority优先级</span></span><br><span class="line"><span class="type">Intent</span> <span class="variable">intent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Intent</span>(<span class="string">&quot;com.example.MY_BROADCAST&quot;</span>);</span><br><span class="line">sendOrderedBroadcast(intent, <span class="literal">null</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在Broadcast Receiver的onReceive()中截断广播，不继续发送，则顺序之后的广播接收器将不会收到广播</span></span><br><span class="line">abortBroadcast();</span><br><span class="line"></span><br><span class="line"><span class="comment">//传递结果到下一个广播接收器</span></span><br><span class="line"><span class="type">int</span> <span class="variable">code</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"><span class="type">String</span> <span class="variable">data</span> <span class="operator">=</span> <span class="string">&quot;hello&quot;</span>;</span><br><span class="line"><span class="type">Bundle</span> <span class="variable">bundle</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">setResult(code, data, bundle);</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p><strong>本地广播</strong></p>
+<p>上述两种广播都属于全局广播，即发出的广播可被其他应用程序接收到，并且我们也可以接收到其他任何应用程序发送的广播。为了能够简单的解决全局广播可能带来的安全性问题，Android引入了一套本地广播机制，使用这个机制发出的广播只能够再应用程序内部进行传递，并且广播接收器也只能接收本应用程序发出的广播。</p>
+<p>API21的Support v4包中新增本地广播 LocalBroadcastManager，用法很简单，只需要把调用context.sendBroadcast、registerReceiver、unregisterReceiver的地方换为LocalBroadcastManager.getInstance(Context context)中对应的函数即可。创建广播的过程和普通广播是一样的，不赘述。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建广播接收器</span></span><br><span class="line">receiver = <span class="keyword">new</span> <span class="title class_">MyBroadcastReceiver</span>();</span><br><span class="line"><span class="comment">// 注册本地广播</span></span><br><span class="line">LocalBroadcastManager.getInstance(ReceiverActivity.<span class="built_in">this</span>).registerReceiver(receiver, <span class="keyword">new</span> <span class="title class_">IntentFilter</span>(<span class="string">&#x27;com.example.xxx&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 反注册receiver</span></span><br><span class="line">LocalBroadcastManager.getInstance(ReceiverActivity.<span class="built_in">this</span>).unregisterReceiver(receiver);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 发送异步广播</span></span><br><span class="line"><span class="keyword">final</span> <span class="type">Intent</span> <span class="variable">intent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Intent</span>();</span><br><span class="line">intent.setAction(<span class="string">&quot;com.example.xxx&quot;</span>);</span><br><span class="line">LocalBroadcastManager.getInstance(ReceiverActivity.<span class="built_in">this</span>).sendBroadcast(intent);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LocalBroadcastManager.getInstance(ReceiverActivity.<span class="built_in">this</span>).sendBroadcastSync(intent);</span><br></pre></td></tr></table></figure>
+
+<p>注意一点，本地广播是无法通过静态注册方式来接受的，因为静态注册主要就是为了让程序在未启动的情况下也能收到广播，而发送本地广播时，应用程序肯定已经启动了，也完全不需要使用静态注册的功能。</p>
+</li>
+</ol>
+<ol start="5">
+<li><p><strong>粘性广播</strong></p>
+<p>通过Context.sendStickyBroadcast()方法可发送粘性广播，这种广播会一直滞留，当有匹配该广播的接收器被注册后，该接收器就会收到此条广播。发送粘性广播需要<strong>BROADCAST_STICKY</strong>权限。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.BROADCAST_STICKY&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>sendStickyBroadcast()只保留最后一条广播，并且一直保留下去，这样即使已经有广播接收器处理了该广播，一旦又有匹配的广播接收器被注册，该粘性广播仍会被接收。如果只想处理一遍该广播，可通过**removeStickyBroadcast()**方法来实现。</p>
+</li>
+<li><p><strong>系统广播</strong></p>
+<p>常用系统广播</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br></pre></td><td class="code"><pre><span class="line">intent.action.AIRPLANE_MODE;</span><br><span class="line"><span class="comment">//关闭或打开飞行模式时的广播</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_BATTERY_CHANGED;</span><br><span class="line"><span class="comment">//充电状态，或者电池的电量发生变化</span></span><br><span class="line"><span class="comment">//电池的充电状态、电荷级别改变，不能通过组建声明接收这个广播，只有通过Context.registerReceiver()注册</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_BATTERY_LOW;</span><br><span class="line"><span class="comment">//表示电池电量低</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_BATTERY_OKAY;</span><br><span class="line"><span class="comment">//表示电池电量充足，即从电池电量低变化到饱满时会发出广播</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_BOOT_COMPLETED;</span><br><span class="line"><span class="comment">//在系统启动完成后，这个动作被广播一次（只有一次）。</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_CAMERA_BUTTON;</span><br><span class="line"><span class="comment">//按下照相时的拍照按键(硬件按键)时发出的广播</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_CLOSE_SYSTEM_DIALOGS;</span><br><span class="line"><span class="comment">//当屏幕超时进行锁屏时,当用户按下电源按钮,长按或短按(不管有没跳出话框)，进行锁屏时,android系统都会广播此Action消息</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_CONFIGURATION_CHANGED;</span><br><span class="line"><span class="comment">//设备当前设置被改变时发出的广播(包括的改变:界面语言，设备方向，等，请参考Configuration.java)</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_DATE_CHANGED;</span><br><span class="line"><span class="comment">//设备日期发生改变时会发出此广播</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_DEVICE_STORAGE_LOW;</span><br><span class="line"><span class="comment">//设备内存不足时发出的广播,此广播只能由系统使用，其它APP不可用？</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_DEVICE_STORAGE_OK;</span><br><span class="line"><span class="comment">//设备内存从不足到充足时发出的广播,此广播只能由系统使用，其它APP不可用？</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_DOCK_EVENT;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//发出此广播的地方frameworks\base\services\java\com\android\server\DockObserver.java</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE;</span><br><span class="line"><span class="comment">////移动APP完成之后，发出的广播(移动是指:APP2SD)</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE;</span><br><span class="line"><span class="comment">//正在移动APP时，发出的广播(移动是指:APP2SD)</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_GTALK_SERVICE_CONNECTED;</span><br><span class="line"><span class="comment">//Gtalk已建立连接时发出的广播</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_GTALK_SERVICE_DISCONNECTED;</span><br><span class="line"><span class="comment">//Gtalk已断开连接时发出的广播</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_HEADSET_PLUG;</span><br><span class="line"><span class="comment">//在耳机口上插入耳机时发出的广播</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_INPUT_METHOD_CHANGED;</span><br><span class="line"><span class="comment">//改变输入法时发出的广播</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_LOCALE_CHANGED;</span><br><span class="line"><span class="comment">//设备当前区域设置已更改时发出的广播</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_MANAGE_PACKAGE_STORAGE;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_MEDIA_BAD_REMOVAL;</span><br><span class="line"><span class="comment">//未正确移除SD卡(正确移除SD卡的方法:设置--SD卡和设备内存--卸载SD卡)，但已把SD卡取出来时发出的广播</span></span><br><span class="line"><span class="comment">//广播：扩展介质（扩展卡）已经从 SD 卡插槽拔出，但是挂载点 (mount point) 还没解除 (unmount)</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_MEDIA_BUTTON;</span><br><span class="line"><span class="comment">//按下&quot;Media Button&quot; 按键时发出的广播,假如有&quot;Media Button&quot; 按键的话(硬件按键)</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_MEDIA_CHECKING;</span><br><span class="line"><span class="comment">//插入外部储存装置，比如SD卡时，系统会检验SD卡，此时发出的广播?</span></span><br><span class="line">Intent.ACTION_MEDIA_EJECT;</span><br><span class="line"><span class="comment">//已拔掉外部大容量储存设备发出的广播（比如SD卡，或移动硬盘）,不管有没有正确卸载都会发出此广播?</span></span><br><span class="line"><span class="comment">//广播：用户想要移除扩展介质（拔掉扩展卡）。</span></span><br><span class="line">Intent.ACTION_MEDIA_MOUNTED;</span><br><span class="line"><span class="comment">//插入SD卡并且已正确安装（识别）时发出的广播</span></span><br><span class="line"><span class="comment">//广播：扩展介质被插入，而且已经被挂载。</span></span><br><span class="line">Intent.ACTION_MEDIA_NOFS;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">Intent.ACTION_MEDIA_REMOVED;</span><br><span class="line"><span class="comment">//外部储存设备已被移除，不管有没正确卸载,都会发出此广播？</span></span><br><span class="line"><span class="comment">// 广播：扩展介质被移除。</span></span><br><span class="line">Intent.ACTION_MEDIA_SCANNER_FINISHED;</span><br><span class="line"><span class="comment">//广播：已经扫描完介质的一个目录</span></span><br><span class="line">Intent.ACTION_MEDIA_SCANNER_SCAN_FILE;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">Intent.ACTION_MEDIA_SCANNER_STARTED;</span><br><span class="line"><span class="comment">//广播：开始扫描介质的一个目录</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_MEDIA_SHARED;</span><br><span class="line"><span class="comment">// 广播：扩展介质的挂载被解除 (unmount)，因为它已经作为 USB 大容量存储被共享。</span></span><br><span class="line"> Intent.ACTION_MEDIA_UNMOUNTABLE;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line">Intent.ACTION_MEDIA_UNMOUNTED</span><br><span class="line"><span class="comment">// 广播：扩展介质存在，但是还没有被挂载 (mount)。</span></span><br><span class="line">Intent.ACTION_NEW_OUTGOING_CALL;</span><br><span class="line"></span><br><span class="line">Intent.ACTION_PACKAGE_ADDED;</span><br><span class="line"><span class="comment">//成功的安装APK之后</span></span><br><span class="line"><span class="comment">//广播：设备上新安装了一个应用程序包。</span></span><br><span class="line"><span class="comment">//一个新应用包已经安装在设备上，数据包括包名（最新安装的包程序不能接收到这个广播）</span></span><br><span class="line"> Intent.ACTION_PACKAGE_CHANGED;</span><br><span class="line"><span class="comment">//一个已存在的应用程序包已经改变，包括包名</span></span><br><span class="line">Intent.ACTION_PACKAGE_DATA_CLEARED;</span><br><span class="line"><span class="comment">//清除一个应用程序的数据时发出的广播(在设置－－应用管理－－选中某个应用，之后点清除数据时?)</span></span><br><span class="line"><span class="comment">//用户已经清除一个包的数据，包括包名（清除包程序不能接收到这个广播）</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_PACKAGE_INSTALL;</span><br><span class="line"><span class="comment">//触发一个下载并且完成安装时发出的广播，比如在电子市场里下载应用？</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line">Intent.ACTION_PACKAGE_REMOVED;</span><br><span class="line"><span class="comment">//成功的删除某个APK之后发出的广播</span></span><br><span class="line"><span class="comment">//一个已存在的应用程序包已经从设备上移除，包括包名（正在被安装的包程序不能接收到这个广播）</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_PACKAGE_REPLACED;</span><br><span class="line"><span class="comment">//替换一个现有的安装包时发出的广播（不管现在安装的APP比之前的新还是旧，都会发出此广播？）</span></span><br><span class="line">Intent.ACTION_PACKAGE_RESTARTED;</span><br><span class="line"><span class="comment">//用户重新开始一个包，包的所有进程将被杀死，所有与其联系的运行时间状态应该被移除，包括包名（重新开始包程序不能接收到这个广播）</span></span><br><span class="line">Intent.ACTION_POWER_CONNECTED;</span><br><span class="line"><span class="comment">//插上外部电源时发出的广播</span></span><br><span class="line">Intent.ACTION_POWER_DISCONNECTED;</span><br><span class="line"><span class="comment">//已断开外部电源连接时发出的广播</span></span><br><span class="line">Intent.ACTION_PROVIDER_CHANGED;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_REBOOT;</span><br><span class="line"><span class="comment">//重启设备时的广播</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_SCREEN_OFF;</span><br><span class="line"><span class="comment">//屏幕被关闭之后的广播</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_SCREEN_ON;</span><br><span class="line"><span class="comment">//屏幕被打开之后的广播</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_SHUTDOWN;</span><br><span class="line"><span class="comment">//关闭系统时发出的广播</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_TIMEZONE_CHANGED;</span><br><span class="line"><span class="comment">//时区发生改变时发出的广播</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_TIME_CHANGED;</span><br><span class="line"><span class="comment">//时间被设置时发出的广播</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_TIME_TICK;</span><br><span class="line"><span class="comment">//广播：当前时间已经变化（正常的时间流逝）。</span></span><br><span class="line"><span class="comment">//当前时间改变，每分钟都发送，不能通过组件声明来接收，只有通过Context.registerReceiver()方法来注册</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_UID_REMOVED;</span><br><span class="line"><span class="comment">//一个用户ID已经从系统中移除发出的广播</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_UMS_CONNECTED;</span><br><span class="line"><span class="comment">//设备已进入USB大容量储存状态时发出的广播？</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_UMS_DISCONNECTED;</span><br><span class="line"><span class="comment">//设备已从USB大容量储存状态转为正常状态时发出的广播？</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_USER_PRESENT;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"></span><br><span class="line">Intent.ACTION_WALLPAPER_CHANGED;</span><br><span class="line"><span class="comment">//设备墙纸已改变时发出的广播</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<p>注意事项：不要在广播里添加过多逻辑或者进行任何耗时操作，因为在广播中是不允许开辟线程的，当onReceiver()方法运行较长时间（超过10秒）还没有结束的话，那么程序会报错（ANR），广播更多的时候扮演的是一个打开其他组件的角色，比如启动Service，Notification，Activity等。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//如何测试广播</span><br><span class="line">adb shell am broadcast -a android.intent.action.BOOT_COMPLETED</span><br></pre></td></tr></table></figure>
+
+<p>广播的发送者和接收者事先是不需要知道对方的存在的，这样带来的好处便是，系统各个组件可以松耦合的组织在一起，这样系统就具有高度的可扩展性，容易与其他系统进行集成。</p>
+<h2 id="2-为什么安装在SD卡中的应用无法收到开机广播"><a href="#2-为什么安装在SD卡中的应用无法收到开机广播" class="headerlink" title="2. 为什么安装在SD卡中的应用无法收到开机广播"></a>2. 为什么安装在SD卡中的应用无法收到开机广播</h2><p>在Android API Level8之后，程序可以安装在SD卡上（manifest android:installLocation选项）。如果程序安装在SD卡上，系统启动完成发送BOOT_COMPLETED广播之后，SD卡才会挂在，因此程序无法监听到该广播。</p>
+<p><strong>解决办法：</strong> 同时监听开机和SD卡挂在广播（不能只监听挂在就认为系统以开机，因为有的手机没有sd卡）</p>
+<p>如何实现一个能同时监听开机BOOT_COMPLETED和挂载MEDIA_MOUNTED的广播接收器呢？理论上只要将MEDIA_MOUNTED的intent-filter和BOOT_COMPLETED的intent-filter放在一起就行了，但是放在同一个intent-filter里，BOOT_COMPLETED会监听不到，需要单独放置再两个intent-filter中：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">receiver</span> <span class="attr">android:name</span>=<span class="string">&quot;.Ge&quot;</span>&gt;</span>          </span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span> &gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.action.BOOT_COMPLETED&quot;</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">intent-filter</span> &gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.action.MEDIA_MOUNTED&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.action.MEDIA_UNMOUNTED&quot;</span>/&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:scheme</span>=<span class="string">&quot;file&quot;</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;/<span class="name">data</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">receiver</span>&gt;</span>  </span><br></pre></td></tr></table></figure>
+
+<p><strong>无法接收开机广播的情况还有以下几种：</strong></p>
+<ol>
+<li><p>BOOT_COMPLETED对应的action和uses-permission没有一起添加</p>
+</li>
+<li><p>应用安装到了SD卡内，安装再sd卡内的应用是收不到BOOT_COMPLETED广播的</p>
+</li>
+<li><p>系统开启了Fast Boot模式，这种模式下系统启动并不会发送BOOT_COMPLETED广播</p>
+</li>
+<li><p>应用程序安装后从来没有启动过，这种情况下应用程序接收不到任何广播，包括BOOT_COMPLETED、ACTION_PACKAGE_ADDED、CONNECTIVITY_ACTION等。系统为了加强安全性控制，应用程序安装后或是（设置）应用管理中被强制关闭后处于stopped状态，在这种状态下接收不到任何广播。直到被启动过（用户打开或是其他应用调用）才会脱离这种状态，所以Androiod 3.1之后</p>
+<ol>
+<li>应用程序无法在安装后自己启动</li>
+<li>没有UI的程序必须通过其他应用激活才能启动，如它的Activity、Service、Content Provider被其他应用调用。</li>
+</ol>
+</li>
+<li><p>针对上述应用处于stopped的情况，在发送广播时，可以使用允许发送给stopped状态下的应用FLAG</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 默认是FLAG_EXCLUDE_STOPPED_PACKAGES</span></span><br><span class="line">intent = <span class="keyword">new</span> <span class="title class_">Intent</span>(intent);</span><br><span class="line"><span class="comment">// 允许发送给stopped状态下的应用</span></span><br><span class="line">intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<p>所以为了确保可以接收到BOOT_COMPLETED广播：</p>
+<ol>
+<li><p>安装应用后，首先要启动一次</p>
+</li>
+<li><p>添加一下权限：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.RECEIVE_BOOT_COMPLETED&quot;</span> /&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">uses-permission</span> <span class="attr">android:name</span>=<span class="string">&quot;android.permission.RESTART_PACKAGES&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><pre><code class="xml">&lt;receiver android:name=&quot;.BootBroadcastReceiver&quot; &gt;  
+            &lt;intent-filter&gt;  
+                &lt;action android:name=&quot;android.intent.action.BOOT_COMPLETED&quot; /&gt;  
+  
+                &lt;category android:name=&quot;android.intent.category.HOME&quot; /&gt;  
+            &lt;/intent-filter&gt;  
+            &lt;intent-filter&gt;  
+                &lt;action android:name=&quot;android.intent.action.PACKAGE_ADDED&quot; /&gt;  
+                &lt;action android:name=&quot;android.intent.action.PACKAGE_REMOVED&quot; /&gt;  
+                &lt;action android:name=&quot;android.intent.action.PACKAGE_REPLACED&quot; /&gt;  
+  
+                &lt;data android:scheme=&quot;package&quot; /&gt;  
+            &lt;/intent-filter&gt;  
+        &lt;/receiver&gt;  
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">4. ```java</span><br><span class="line">   public class BootBroadcastReceiver extends BroadcastReceiver  </span><br><span class="line">   &#123;  </span><br><span class="line">       @Override  </span><br><span class="line">       public void onReceive(Context context, Intent intent)  </span><br><span class="line">       &#123;  </span><br><span class="line">           //接收广播：系统启动完成后运行程序  </span><br><span class="line">           if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED))  </span><br><span class="line">           &#123;  </span><br><span class="line">               Intent ootStartIntent = new Intent(context, Login_Activity.class);  </span><br><span class="line">               ootStartIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  </span><br><span class="line">               context.startActivity(ootStartIntent);  </span><br><span class="line">           &#125;  </span><br><span class="line">           //接收广播：安装更新后，自动启动自己。        </span><br><span class="line">           if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED) || intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED))  </span><br><span class="line">           &#123;  </span><br><span class="line">               Intent ootStartIntent = new Intent(context, Login_Activity.class);  </span><br><span class="line">               ootStartIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  </span><br><span class="line">               context.startActivity(ootStartIntent);  </span><br><span class="line">           &#125;  </span><br><span class="line">       &#125;  </span><br><span class="line">   &#125;  </span><br></pre></td></tr></table></figure>
+</code></pre>
+</li>
+<li><p>最后一种情况，看下系统中是否有360管家之类的流氓软件，他们会将一些开机广播给屏蔽掉，加快开机速度，只需将其打开即可。</p>
+</li>
+</ol>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AFBroadcast%E5%92%8CBroadcast-Receiver"><span class="toc-number">1.</span> <span class="toc-text">1. 什么是Broadcast和Broadcast Receiver</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AE%89%E8%A3%85%E5%9C%A8SD%E5%8D%A1%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E6%97%A0%E6%B3%95%E6%94%B6%E5%88%B0%E5%BC%80%E6%9C%BA%E5%B9%BF%E6%92%AD"><span class="toc-number">2.</span> <span class="toc-text">2. 为什么安装在SD卡中的应用无法收到开机广播</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/android-interview-broadcast-receiver/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/android-interview-broadcast-receiver/&text=安卓基础 - 关于Broadcast 和 Broadcast Receiver"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/android-interview-broadcast-receiver/&title=安卓基础 - 关于Broadcast 和 Broadcast Receiver"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/android-interview-broadcast-receiver/&is_video=false&description=安卓基础 - 关于Broadcast 和 Broadcast Receiver"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=安卓基础 - 关于Broadcast 和 Broadcast Receiver&body=Check out this article: https://lison.cc/android-interview-broadcast-receiver/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/android-interview-broadcast-receiver/&title=安卓基础 - 关于Broadcast 和 Broadcast Receiver"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/android-interview-broadcast-receiver/&title=安卓基础 - 关于Broadcast 和 Broadcast Receiver"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/android-interview-broadcast-receiver/&title=安卓基础 - 关于Broadcast 和 Broadcast Receiver"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/android-interview-broadcast-receiver/&title=安卓基础 - 关于Broadcast 和 Broadcast Receiver"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/android-interview-broadcast-receiver/&name=安卓基础 - 关于Broadcast 和 Broadcast Receiver&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/android-interview-broadcast-receiver/&t=安卓基础 - 关于Broadcast 和 Broadcast Receiver"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2014-2022
+    Lison Liou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMQWPXKTYB"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VMQWPXKTYB');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'LisonLiou/lison.cc';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="队列Queue，先进先出 First In First Out (FIFO) 的线性表, 只允许在表的一端插入元素(队尾Rear), 表的另一端删除元素(队首Front)，基本操作有初始化队列，判断空，入队，出队，读取队首元素。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习基于链表的队列Queue实现java版">
+<meta property="og:url" content="https://lison.cc/java-queue/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="队列Queue，先进先出 First In First Out (FIFO) 的线性表, 只允许在表的一端插入元素(队尾Rear), 表的另一端删除元素(队首Front)，基本操作有初始化队列，判断空，入队，出队，读取队首元素。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAckAAABhCAMAAACK2ap0AAAAS1BMVEX///8AAAD//7ZmAAD/25Db//8AOpCQ2///tmZmtv86AgC2//8AAGYAADo6kNvbkDoAZrY6ADq2ZgD//9uQOgCQtpA6kJBmOpA6AGYoCV3+AAADU0lEQVR42u2d23KjMAxALUjS3Bqy7PX/v3TtCiKC6WY6wIzMntOmgMuohoMM9EEOAACwFiLjhtGmfiTRNUgAl0i/jPSb8sHDpC4w6R01Y76sUcY5aevodMgLk8/ahKR0i9iwOfQaMbki+gnpg0mnTJpUYWbSvuyOWtVxedj/ByuF8DCp3ybRTCaC6iMn3dKrMZMmWLftIRaTnpk2adsqVel25dnVI2I6ZfTe+MHAHjnpmWECjjPUzHVjLSb9IrbWOzKtjzyVroUnHgAAAAAAAOg5isjNUZzQyN3RcTUSOfmJ8/kJOr6/hd15xiEvHKeqf9Wxo27608VyFGf37Tx1gr7/uCXL10uYh8WZSXuqPkx66Y9eXafgJk48svY+Kfgt/jjPvlgszmzUpJ/+hNAc9sFNnHh1mslRwrfvP88zLxaL48Tkcv1pRNL14CVOyutPTP6Mo+5uvkmN48ik9Wc26X7rJU60OGVSByAdi+ZgcdyMrn1//AyLi8Q5Xi+fmKzq2xJ/weI4MblQfywRnMRpRZlI7ub9bYFByOI4Mdn3x9Hbg8ZZ8YJoZryxrhCnkcRh76U/KQmuFz9xOpMAAAAAAAAAADlia9QBKZSooqdroA5IoYjpE4M6ICUiypMq6oAUijwthTogBTK8T5pQ6oAUWAdEzFYHdUBKRRRdU6gDUiQyvlVSB6RITIyZpA5IgchkTlIHpEjUSRL0gDogAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABb5igi95Cq2mpJ/9iQuOUtUxOZtN2vqlpEA2U7Z7OxwCo010vUcB96iy2JvMVorSXuMFzNds5mY0HlKlT1SU/xl0xqlXHTZ7OtqMlXs7HAwuh5VzNfMJmcTOXk8bB/NtnIaXo2FlgYzRDNlvFd8RTylmFSShRifiy9bWczmc3GAmFtk69z0tJSXZrJ9m5Z/q/ZWDCpLG9S0+lrJtXlYW8mdakmX8zGwui6OKpLx70oUzU8VOQt+VWgBu1xJjeZz8biuaZNycT3CT3F7WEfddxNRd6Sz9BiJo8qaPqJx2ZjYXBdj1bf1nUlurFX+7zFJGpD9p+BqMp2NpOmVgSRq7H7wwveNkh3uOo3N68NUNWMeQBeoC7SVsDkVsDkVsDkJvgLAXcjURaKPhEAAAAASUVORK5CYII=">
+<meta property="article:published_time" content="2018-12-23T09:19:18.000Z">
+<meta property="article:modified_time" content="2023-11-16T06:15:51.628Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="找工作的程序员, 找啊找啊找啊找">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAckAAABhCAMAAACK2ap0AAAAS1BMVEX///8AAAD//7ZmAAD/25Db//8AOpCQ2///tmZmtv86AgC2//8AAGYAADo6kNvbkDoAZrY6ADq2ZgD//9uQOgCQtpA6kJBmOpA6AGYoCV3+AAADU0lEQVR42u2d23KjMAxALUjS3Bqy7PX/v3TtCiKC6WY6wIzMntOmgMuohoMM9EEOAACwFiLjhtGmfiTRNUgAl0i/jPSb8sHDpC4w6R01Y76sUcY5aevodMgLk8/ahKR0i9iwOfQaMbki+gnpg0mnTJpUYWbSvuyOWtVxedj/ByuF8DCp3ybRTCaC6iMn3dKrMZMmWLftIRaTnpk2adsqVel25dnVI2I6ZfTe+MHAHjnpmWECjjPUzHVjLSb9IrbWOzKtjzyVroUnHgAAAAAAAOg5isjNUZzQyN3RcTUSOfmJ8/kJOr6/hd15xiEvHKeqf9Wxo27608VyFGf37Tx1gr7/uCXL10uYh8WZSXuqPkx66Y9eXafgJk48svY+Kfgt/jjPvlgszmzUpJ/+hNAc9sFNnHh1mslRwrfvP88zLxaL48Tkcv1pRNL14CVOyutPTP6Mo+5uvkmN48ik9Wc26X7rJU60OGVSByAdi+ZgcdyMrn1//AyLi8Q5Xi+fmKzq2xJ/weI4MblQfywRnMRpRZlI7ub9bYFByOI4Mdn3x9Hbg8ZZ8YJoZryxrhCnkcRh76U/KQmuFz9xOpMAAAAAAAAAADlia9QBKZSooqdroA5IoYjpE4M6ICUiypMq6oAUijwthTogBTK8T5pQ6oAUWAdEzFYHdUBKRRRdU6gDUiQyvlVSB6RITIyZpA5IgchkTlIHpEjUSRL0gDogAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABb5igi95Cq2mpJ/9iQuOUtUxOZtN2vqlpEA2U7Z7OxwCo010vUcB96iy2JvMVorSXuMFzNds5mY0HlKlT1SU/xl0xqlXHTZ7OtqMlXs7HAwuh5VzNfMJmcTOXk8bB/NtnIaXo2FlgYzRDNlvFd8RTylmFSShRifiy9bWczmc3GAmFtk69z0tJSXZrJ9m5Z/q/ZWDCpLG9S0+lrJtXlYW8mdakmX8zGwui6OKpLx70oUzU8VOQt+VWgBu1xJjeZz8biuaZNycT3CT3F7WEfddxNRd6Sz9BiJo8qaPqJx2ZjYXBdj1bf1nUlurFX+7zFJGpD9p+BqMp2NpOmVgSRq7H7wwveNkh3uOo3N68NUNWMeQBeoC7SVsDkVsDkVsDkJvgLAXcjURaKPhEAAAAASUVORK5CYII=">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>学习基于链表的队列Queue实现java版 - 吾等采石之人, 当心怀大教堂之愿景.</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="LISON" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/melody-mr-nobody/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/java-stack/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/java-queue/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/java-queue/&text=学习基于链表的队列Queue实现java版"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/java-queue/&title=学习基于链表的队列Queue实现java版"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/java-queue/&is_video=false&description=学习基于链表的队列Queue实现java版"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习基于链表的队列Queue实现java版&body=Check out this article: https://lison.cc/java-queue/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/java-queue/&title=学习基于链表的队列Queue实现java版"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/java-queue/&title=学习基于链表的队列Queue实现java版"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/java-queue/&title=学习基于链表的队列Queue实现java版"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/java-queue/&title=学习基于链表的队列Queue实现java版"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/java-queue/&name=学习基于链表的队列Queue实现java版&description=&lt;p&gt;队列Queue，先进先出 First In First Out (FIFO) 的线性表, 只允许在表的一端插入元素(队尾Rear), 表的另一端删除元素(队首Front)，基本操作有初始化队列，判断空，入队，出队，读取队首元素。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/java-queue/&t=学习基于链表的队列Queue实现java版"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        学习基于链表的队列Queue实现java版
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Lison</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2018-12-23T09:19:18.000Z" itemprop="datePublished">2018-12-23</time>
+        
+        (Updated: <time datetime="2023-11-16T06:15:51.628Z" itemprop="dateModified">2023-11-16</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/java/">java</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>队列Queue，先进先出 First In First Out (FIFO) 的线性表, 只允许在表的一端插入元素(队尾Rear), 表的另一端删除元素(队首Front)，基本操作有初始化队列，判断空，入队，出队，读取队首元素。</p>
+<span id="more"></span>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 单个节点</span><br><span class="line"> * </span><br><span class="line"> * @author Lison-Liou</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class Node&lt;E&gt; &#123;</span><br><span class="line">	E data = null;</span><br><span class="line">	Node&lt;E&gt; next;</span><br><span class="line"></span><br><span class="line">	public Node() &#123;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Node(E data) &#123;</span><br><span class="line">		this.data = data;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public Node(E data, Node&lt;E&gt; next) &#123;</span><br><span class="line">		this.data = data;</span><br><span class="line">		this.next = next;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> * 链表队列实现</span><br><span class="line"> * @author Lison-Liou</span><br><span class="line"> *</span><br><span class="line"> * @param &lt;E&gt;</span><br><span class="line"> */</span><br><span class="line">public class MyQueue&lt;E&gt; &#123;</span><br><span class="line"></span><br><span class="line">	int size;</span><br><span class="line">	Node&lt;E&gt; front, rear;</span><br><span class="line"></span><br><span class="line">	public void initQueue() &#123;</span><br><span class="line">		front = rear = null;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public boolean isEmpty() &#123;</span><br><span class="line">		return size == 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void enQueue(int data) &#123;</span><br><span class="line"></span><br><span class="line">		if (isEmpty()) &#123;</span><br><span class="line">			front = new Node(data);</span><br><span class="line">			rear = front;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			Node newRear = new Node(data);</span><br><span class="line">			rear.next = newRear;</span><br><span class="line">			rear = newRear;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		size++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public E deQueue() &#123;</span><br><span class="line"></span><br><span class="line">		if (!isEmpty()) &#123;</span><br><span class="line"></span><br><span class="line">			Node&lt;E&gt; f0 = front;</span><br><span class="line">			Node&lt;E&gt; f = f0.next;</span><br><span class="line">			front = f;</span><br><span class="line"></span><br><span class="line">			size--;</span><br><span class="line">			return f0.data;</span><br><span class="line">		&#125;</span><br><span class="line">		return null;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public E frontQueue() &#123;</span><br><span class="line">		return front.data;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	public void clear() &#123;</span><br><span class="line">		while (!isEmpty()) &#123;</span><br><span class="line">			deQueue();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">//// 链表队列测试代码==========================================================================</span><br><span class="line"></span><br><span class="line">		MyQueue&lt;Integer&gt; queue = new MyQueue&lt;Integer&gt;();</span><br><span class="line">		queue.initQueue();</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;入队列操作--------------------------&quot;);</span><br><span class="line">		for (int i = 0; i &lt; 7; i++) &#123;</span><br><span class="line">			int d = random.nextInt(i + 1);</span><br><span class="line">			System.out.print(d + &quot;\t&quot;);</span><br><span class="line">			queue.enQueue(d);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">//		System.out.println(&quot;\r\n出队列操作--------------------------&quot;);</span><br><span class="line">//		while (!queue.isEmpty()) &#123;</span><br><span class="line">//			System.err.print(queue.deQueue() + &quot;\t&quot;);</span><br><span class="line">//		&#125;</span><br><span class="line">		</span><br><span class="line">		System.out.println(&quot;\r\n清空队列操作--------------------------&quot;);</span><br><span class="line">		queue.clear();</span><br><span class="line"></span><br><span class="line">		System.out.println(&quot;\r\nQUEUE SIZE: &quot; + queue.size);</span><br></pre></td></tr></table></figure>
+
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAckAAABhCAMAAACK2ap0AAAAS1BMVEX///8AAAD//7ZmAAD/25Db//8AOpCQ2///tmZmtv86AgC2//8AAGYAADo6kNvbkDoAZrY6ADq2ZgD//9uQOgCQtpA6kJBmOpA6AGYoCV3+AAADU0lEQVR42u2d23KjMAxALUjS3Bqy7PX/v3TtCiKC6WY6wIzMntOmgMuohoMM9EEOAACwFiLjhtGmfiTRNUgAl0i/jPSb8sHDpC4w6R01Y76sUcY5aevodMgLk8/ahKR0i9iwOfQaMbki+gnpg0mnTJpUYWbSvuyOWtVxedj/ByuF8DCp3ybRTCaC6iMn3dKrMZMmWLftIRaTnpk2adsqVel25dnVI2I6ZfTe+MHAHjnpmWECjjPUzHVjLSb9IrbWOzKtjzyVroUnHgAAAAAAAOg5isjNUZzQyN3RcTUSOfmJ8/kJOr6/hd15xiEvHKeqf9Wxo27608VyFGf37Tx1gr7/uCXL10uYh8WZSXuqPkx66Y9eXafgJk48svY+Kfgt/jjPvlgszmzUpJ/+hNAc9sFNnHh1mslRwrfvP88zLxaL48Tkcv1pRNL14CVOyutPTP6Mo+5uvkmN48ik9Wc26X7rJU60OGVSByAdi+ZgcdyMrn1//AyLi8Q5Xi+fmKzq2xJ/weI4MblQfywRnMRpRZlI7ub9bYFByOI4Mdn3x9Hbg8ZZ8YJoZryxrhCnkcRh76U/KQmuFz9xOpMAAAAAAAAAADlia9QBKZSooqdroA5IoYjpE4M6ICUiypMq6oAUijwthTogBTK8T5pQ6oAUWAdEzFYHdUBKRRRdU6gDUiQyvlVSB6RITIyZpA5IgchkTlIHpEjUSRL0gDogAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABb5igi95Cq2mpJ/9iQuOUtUxOZtN2vqlpEA2U7Z7OxwCo010vUcB96iy2JvMVorSXuMFzNds5mY0HlKlT1SU/xl0xqlXHTZ7OtqMlXs7HAwuh5VzNfMJmcTOXk8bB/NtnIaXo2FlgYzRDNlvFd8RTylmFSShRifiy9bWczmc3GAmFtk69z0tJSXZrJ9m5Z/q/ZWDCpLG9S0+lrJtXlYW8mdakmX8zGwui6OKpLx70oUzU8VOQt+VWgBu1xJjeZz8biuaZNycT3CT3F7WEfddxNRd6Sz9BiJo8qaPqJx2ZjYXBdj1bf1nUlurFX+7zFJGpD9p+BqMp2NpOmVgSRq7H7wwveNkh3uOo3N68NUNWMeQBeoC7SVsDkVsDkVsDkJvgLAXcjURaKPhEAAAAASUVORK5CYII="></p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/java-queue/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/java-queue/&text=学习基于链表的队列Queue实现java版"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/java-queue/&title=学习基于链表的队列Queue实现java版"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/java-queue/&is_video=false&description=学习基于链表的队列Queue实现java版"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=学习基于链表的队列Queue实现java版&body=Check out this article: https://lison.cc/java-queue/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/java-queue/&title=学习基于链表的队列Queue实现java版"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/java-queue/&title=学习基于链表的队列Queue实现java版"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/java-queue/&title=学习基于链表的队列Queue实现java版"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/java-queue/&title=学习基于链表的队列Queue实现java版"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/java-queue/&name=学习基于链表的队列Queue实现java版&description=&lt;p&gt;队列Queue，先进先出 First In First Out (FIFO) 的线性表, 只允许在表的一端插入元素(队尾Rear), 表的另一端删除元素(队首Front)，基本操作有初始化队列，判断空，入队，出队，读取队首元素。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/java-queue/&t=学习基于链表的队列Queue实现java版"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2014-2022
+    Lison Liou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMQWPXKTYB"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VMQWPXKTYB');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'LisonLiou/lison.cc';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

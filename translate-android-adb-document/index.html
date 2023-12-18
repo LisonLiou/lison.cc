@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="名词释义：模拟器：指使用ADT或者第三方软件创建的安卓模拟器安卓设备（设备）：指运行安卓系统的硬件、含手机、Pad，TV等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)">
+<meta property="og:url" content="https://lison.cc/translate-android-adb-document/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="名词释义：模拟器：指使用ADT或者第三方软件创建的安卓模拟器安卓设备（设备）：指运行安卓系统的硬件、含手机、Pad，TV等">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2015-12-16T03:46:26.000Z">
+<meta property="article:modified_time" content="2023-11-16T06:15:51.861Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="未完待续">
+<meta property="article:tag" content="不列大标题">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创) - 吾等采石之人, 当心怀大教堂之愿景.</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="LISON" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/why/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/self-portrait/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/translate-android-adb-document/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/translate-android-adb-document/&text=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/translate-android-adb-document/&title=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/translate-android-adb-document/&is_video=false&description=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)&body=Check out this article: https://lison.cc/translate-android-adb-document/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/translate-android-adb-document/&title=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/translate-android-adb-document/&title=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/translate-android-adb-document/&title=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/translate-android-adb-document/&title=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/translate-android-adb-document/&name=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)&description=&lt;p&gt;&lt;strong&gt;名词释义：&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;模拟器：指使用ADT或者第三方软件创建的安卓模拟器&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;安卓设备（设备）：指运行安卓系统的硬件、含手机、Pad，TV等&lt;/strong&gt;&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/translate-android-adb-document/&t=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Lison</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2015-12-16T03:46:26.000Z" itemprop="datePublished">2015-12-16</time>
+        
+        (Updated: <time datetime="2023-11-16T06:15:51.861Z" itemprop="dateModified">2023-11-16</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E4%B8%8D%E5%88%97%E5%A4%A7%E6%A0%87%E9%A2%98/" rel="tag">不列大标题</a>, <a class="tag-link-link" href="/tags/%E6%9C%AA%E5%AE%8C%E5%BE%85%E7%BB%AD/" rel="tag">未完待续</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p><strong>名词释义：</strong><br><strong>模拟器：指使用ADT或者第三方软件创建的安卓模拟器</strong><br><strong>安卓设备（设备）：指运行安卓系统的硬件、含手机、Pad，TV等</strong></p>
+<span id="more"></span>
+
+<p>Android Debug Bride简称adb，是一个多用途的命令行工具，能够让你与你的安卓模拟器或者安卓设备进行通讯。它是一个包含三个组件的C-S程序：</p>
+<ol>
+<li>客户端。运行在你的开发机上。你可以通过shell发送一条adb命令用开调用一个客户端。其他的Android工具例如ADT插件和DDMS也可以创建adb客户端。</li>
+<li>服务端。运行在你的开发机的后台进程中，服务端管理客户端与运行在模拟器或设备上的adb守护进程的通信工作。</li>
+<li>守护进程。是一个运行在每个模拟器或者设备上的后台进程。</li>
+</ol>
+<p>可以在<sdk>/plateform-tools目录找到adb工具。</p>
+<p>当你启动一个adb客户端的时候，客户端会首先检查是否已经有adb服务端进程在运行。如果没有，就开启服务进程。当服务进程开启之后，它会绑定本地TCP的5037端口并且监听来自adb客户端的命令（所有的adb客户端都使用5037端口与服务端进行通信）。</p>
+<p>然后服务端与所有正在运行的模拟器/设备建立连接。服务端通过扫描模拟器/设备的开放端口（5555-5585范围内的奇数端口）来定位设备。当服务端发现adb守护进程时，就与这个端口建立连接。需要注意的是模拟器/设备获取的是一对连续的端口号（偶数端口号用于控制台连接，奇数端口号用于adb连接）示例：</p>
+<p>模拟器1  控制台端口号：5554<br>模拟器1  adb端口号：5555<br>模拟器2  控制台端口号：5556<br>模拟器2  adb端口号：5557</p>
+<p>如上所述，模拟器已经与adb的5555端口建立了连接，与控制台监听5554端口是一样的。</p>
+<p>一旦服务器与所有模拟器建立连接，就可以通过adb命令访问这些设备。基于服务端管理着所有模拟器/设备并且处理多个adb客户端的命令，你可以通过任意一个adb客户端控制任意的模拟器/设备（或者通过脚本）。</p>
+<p>**Enabling adb Debugging 开启adb调试<br>**</p>
+<hr>
+<p>为使用usb连接的设备使用开启adb，需要在设备的系统设置-&gt;开发者选项中开启USB调试。</p>
+<p>在Android4.2或者更高版本的系统中，开发者选项默认是隐藏的。显示的话，需要依次点击设置-&gt;关于手机，连续点击内部版本号（Build Number）七次。然后返回上一个界面的底部会出现开发者选项。</p>
+<p>在有些设备中，开发者选项界面可能所在的位置或者名称会有不同。</p>
+<p>注意：当用电脑连接一个运行着Android4.4.2或者更高版本的系统，系统会弹出一个对话框（显示RSA key）询问是否允许通过这台电脑进行调试。这个安全机制确保用户的设备不会被USB调试或者执行其他adb命令，除非用户点击对话框的确认按钮。这需要你的adb版本是1.0.31（在SDK Plateform-tools r16.0.01或者更高版本中）为了调试运行Android4.2.2或更高版本的系统。<br>更多关于连接一个通过USB连接的设备，请阅读Using Hardware Devices。</p>
+<p>**Syntax 语法<br>**</p>
+<hr>
+<p>你可以从开发机上通过一个命令行工具发送一条adb命令（或者一个脚本），用法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb [-d|-e|-s &lt;serialNumber&gt;] &lt;command&gt;</span><br></pre></td></tr></table></figure>
+
+<p>如果当前只连接了一台模拟器/设备，adb命令就会发送到这台默认的设备。如果有多个模拟器/设备在运行并且已连接，就需要使用-d、-e、或者-s选项来指定目标设备并且执行命令。</p>
+<p>**Commands 命令<br>**</p>
+<hr>
+<p>下面这张表列出了所有adb支持的命令，以及他们的解释及用途。<br>表1 可用的adb命令</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>命令/选项</th>
+<th>描述</th>
+<th>注释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Target Device</td>
+<td><code>-d</code></td>
+<td>向唯一连接的USB设备执行一条adb命令</td>
+<td>如果连接多台设备将返回错误</td>
+</tr>
+<tr>
+<td><code>-e</code></td>
+<td>向唯一连接的模拟器执行一条adb命令</td>
+<td>如果正在运行多个模拟器将返回错误</td>
+<td></td>
+</tr>
+<tr>
+<td><code>-s </code></td>
+<td>向指定的模拟器/设备执行一条adb命令，模拟器名称例如：emulator-5556</td>
+<td>See <a href="#directingcommands">Directing Commands to a Specific Emulator/Device Instance</a>.</td>
+<td></td>
+</tr>
+<tr>
+<td>General</td>
+<td><code>devices</code></td>
+<td>打印所有已经附加的模拟器/设备列表</td>
+<td>See <a href="#devicestatus">Querying for Emulator/Device Instances</a> for more information.</td>
+</tr>
+<tr>
+<td><code>help</code></td>
+<td>打印adb支持的命令列表</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>version</code></td>
+<td>打印adb版本号</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Debug</td>
+<td><code>logcat [option] [filter-specs]</code></td>
+<td>将log data输出到屏幕</td>
+<td></td>
+</tr>
+<tr>
+<td><code>bugreport</code></td>
+<td>将系统信息，状态，logcat数据输出到屏幕</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>jdwp</code></td>
+<td>在一个给定的设备上打印可用的JDWP进程列表</td>
+<td>可以使用端口转发 jdwp:<pid> port 转发指定的连接到一个特定的JDWP进程，例如： <code>adb forward tcp:8000 jdwp:472</code> <code>jdb -attach localhost:8000</code></td>
+<td></td>
+</tr>
+<tr>
+<td>Data</td>
+<td><code>install </code></td>
+<td>将一个安卓应用程序（指定apk文件的全路径）发送到模拟器/设备</td>
+<td></td>
+</tr>
+<tr>
+<td><code>pull </code></td>
+<td>从模拟器/设备拷贝一个指定的文件到开发机。</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>push </code></td>
+<td>将一个指定的文件拷贝至模拟器/设备上。</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ports and Networking</td>
+<td><code>forward </code></td>
+<td>将本地socket连接的指定端口转发至指定的远程模拟器/设备端口</td>
+<td>指定端口可以使用这些格式：<code>tcp:``local:``dev:``jdwp:</code></td>
+</tr>
+<tr>
+<td><code>ppp [parm]...</code></td>
+<td>通过USB运行PPP（点对点协议）：`` — the tty for PPP stream. For example <code>dev:/dev/omap_csmi_ttyl</code>.<code>[parm]... </code> — zero or more PPP/PPPD options, such as <code>defaultroute</code>, <code>local</code>, <code>notty</code>, etc.注意不要自动启动一个PPP连接</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Scripting</td>
+<td><code>get-serialno</code></td>
+<td>打印adb示例的序列号串</td>
+<td>查看 <a href="#devicestatus">Querying for Emulator/Device Instances</a> 获取更多信息</td>
+</tr>
+<tr>
+<td><code>get-state</code></td>
+<td>打印模拟器/设备的adb状态</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>wait-for-device</code></td>
+<td>在设备上线前阻止命令执行。</td>
+<td>可以向adb预置这条命令，这种情况下，adb会等待模拟器/设备连接后才执行adb命令，示例：<code>adb wait-for-device shell getprop</code>注意这条命令不会导致adb一只等待整个系统启动完毕。因此，你不应该预置一条需要等待整个系统完全启动的命令。举例来说，安装命令需要Android Package Manager启动，而Android Package Manager需要整个系统完全启动，类似于这样的命令<code>adb wait-for-device install .apk</code>会发送安装命令当模拟器或设备连接到adb服务端，但之前Android系统已经完全启动，因此会得到一个错误的结果。</td>
+<td></td>
+</tr>
+<tr>
+<td>Server</td>
+<td><code>start-server</code></td>
+<td>检查adb服务端进程是否正在运行，如果没有运行，则运行它。</td>
+<td></td>
+</tr>
+<tr>
+<td><code>kill-server</code></td>
+<td>结束adb服务端进程</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Shell</td>
+<td><code>shell</code></td>
+<td>在目标模拟器/设备上开启一个远端shell</td>
+<td>查看 <a href="#shellcommands">Issuing Shell Commands</a> 获取更多内容</td>
+</tr>
+<tr>
+<td><code>shell [shellCommand]</code></td>
+<td>在目标模拟器/设备上发送一个shell命令执行后退出。</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>要不先到这儿。</p>
+<p>这不是一个翻译计划，也没有很多小组成员，只有一个惺忪着睡眼的程序猿。旨在将自己用到的阅读到的感觉比较有用的官方文档翻译一下供自己或者后来的盆友看，鉴于水平有限，文中不免有些生涩及直译的成分，不及与错误之处倘若有高手看到还请不吝指正。</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/translate-android-adb-document/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/translate-android-adb-document/&text=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/translate-android-adb-document/&title=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/translate-android-adb-document/&is_video=false&description=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)&body=Check out this article: https://lison.cc/translate-android-adb-document/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/translate-android-adb-document/&title=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/translate-android-adb-document/&title=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/translate-android-adb-document/&title=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/translate-android-adb-document/&title=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/translate-android-adb-document/&name=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)&description=&lt;p&gt;&lt;strong&gt;名词释义：&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;模拟器：指使用ADT或者第三方软件创建的安卓模拟器&lt;/strong&gt;&lt;br&gt;&lt;strong&gt;安卓设备（设备）：指运行安卓系统的硬件、含手机、Pad，TV等&lt;/strong&gt;&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/translate-android-adb-document/&t=Android Debug Bridge adb - 安卓调试桥 官方文档汉化记录(原创)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2014-2022
+    Lison Liou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMQWPXKTYB"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VMQWPXKTYB');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'LisonLiou/lison.cc';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

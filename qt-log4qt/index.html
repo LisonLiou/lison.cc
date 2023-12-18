@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="1.    下载Log4Qt项目源码下载长期支持版本的Log4Qt项目源码 1git clone git@github.com:MEONMedical&#x2F;Log4Qt.git  2. 添加子项目并构建项目将项目源码拷贝至项目跟路径，修改项目pro文件，追加：QT +&#x3D; concurrent，启用Log4Qt的多线程支持。然后将Log4Qt项目作为当前项目的子项目配置为： 123456789101">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Log4Qt的配置及使用方法">
+<meta property="og:url" content="https://lison.cc/qt-log4qt/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="1.    下载Log4Qt项目源码下载长期支持版本的Log4Qt项目源码 1git clone git@github.com:MEONMedical&#x2F;Log4Qt.git  2. 添加子项目并构建项目将项目源码拷贝至项目跟路径，修改项目pro文件，追加：QT +&#x3D; concurrent，启用Log4Qt的多线程支持。然后将Log4Qt项目作为当前项目的子项目配置为： 123456789101">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="data:image/png;base64,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">
+<meta property="og:image" content="data:image/png;base64,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">
+<meta property="article:published_time" content="2022-05-16T08:52:31.000Z">
+<meta property="article:modified_time" content="2023-11-16T06:15:51.651Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="Log4Qt">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/png;base64,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">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Log4Qt的配置及使用方法 - 吾等采石之人, 当心怀大教堂之愿景.</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="LISON" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/c-dll-for-qt-N-cpp/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/csharp-how-to-find-memoryleak/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/qt-log4qt/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/qt-log4qt/&text=Log4Qt的配置及使用方法"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/qt-log4qt/&title=Log4Qt的配置及使用方法"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/qt-log4qt/&is_video=false&description=Log4Qt的配置及使用方法"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Log4Qt的配置及使用方法&body=Check out this article: https://lison.cc/qt-log4qt/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/qt-log4qt/&title=Log4Qt的配置及使用方法"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/qt-log4qt/&title=Log4Qt的配置及使用方法"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/qt-log4qt/&title=Log4Qt的配置及使用方法"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/qt-log4qt/&title=Log4Qt的配置及使用方法"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/qt-log4qt/&name=Log4Qt的配置及使用方法&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/qt-log4qt/&t=Log4Qt的配置及使用方法"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%8B%E8%BD%BDLog4Qt%E9%A1%B9%E7%9B%AE%E6%BA%90%E7%A0%81"><span class="toc-number">1.</span> <span class="toc-text">1.    下载Log4Qt项目源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%B7%BB%E5%8A%A0%E5%AD%90%E9%A1%B9%E7%9B%AE%E5%B9%B6%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.</span> <span class="toc-text">2. 添加子项目并构建项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Log4Qt%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">3.    Log4Qt配置</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Log4Qt的配置及使用方法
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Lison</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-05-16T08:52:31.000Z" itemprop="datePublished">2022-05-16</time>
+        
+        (Updated: <time datetime="2023-11-16T06:15:51.651Z" itemprop="dateModified">2023-11-16</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Qt/">Qt</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Log4Qt/" rel="tag">Log4Qt</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <span id="more"></span>
+
+<h3 id="1-下载Log4Qt项目源码"><a href="#1-下载Log4Qt项目源码" class="headerlink" title="1.    下载Log4Qt项目源码"></a>1.    下载Log4Qt项目源码</h3><p>下载长期支持版本的Log4Qt项目源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:MEONMedical/Log4Qt.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-添加子项目并构建项目"><a href="#2-添加子项目并构建项目" class="headerlink" title="2. 添加子项目并构建项目"></a>2. 添加子项目并构建项目</h3><p>将项目源码拷贝至项目跟路径，修改项目pro文件，追加：QT += concurrent，启用Log4Qt的多线程支持。然后将Log4Qt项目作为当前项目的子项目配置为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 定义 Log4Qt 源码根目录</span><br><span class="line">LOG4QT_PATH = $$PWD/Log4Qt</span><br><span class="line"># 定义所需的宏</span><br><span class="line">DEFINES += LOG4QT_LIBRARY</span><br><span class="line"># 指定编译项目时应该被搜索的 #include 目录</span><br><span class="line">INCLUDEPATH += $$LOG4QT_PATH/src \</span><br><span class="line">               $$LOG4QT_PATH/src/log4qt \</span><br><span class="line">               $$LOG4QT_PATH/include \</span><br><span class="line">               $$LOG4QT_PATH/include/log4qt</span><br><span class="line"># 将 Log4Qt 源代码添加至项目中</span><br><span class="line">include($$LOG4QT_PATH/src/log4qt/log4qt.pri)</span><br><span class="line">include($$LOG4QT_PATH/build.pri)</span><br><span class="line">include($$LOG4QT_PATH/g++.pri)</span><br></pre></td></tr></table></figure>
+<p>执行qmake，完成后项目结构如下：</p>
+<p><img src="data:image/png;base64,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"></p>
+<p>至此项目配置工作完成。</p>
+<h3 id="3-Log4Qt配置"><a href="#3-Log4Qt配置" class="headerlink" title="3.    Log4Qt配置"></a>3.    Log4Qt配置</h3><p>本节目的为将Log4Qt配置为</p>
+<ul>
+<li>满足项目对日志功能的使用需求：在指定路径生成日志文件*.log</li>
+<li>可配置日志文件的最大大小</li>
+<li>日志文件个数可配置，超出后重新开始记录；例如配置最多10个，则文件增长到三个之后，若要增加第四个，则第四个会覆盖原有第一个文件，原有第一个编号置为第二个，以此类推，最后一个会被删除。达到日志文件的滚动备份。</li>
+</ul>
+<p><strong>配置ConsoleAppender，将日志输出至控制台，方便调试</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">// Create a console appender</span><br><span class="line">       Log4Qt::ConsoleAppender *consoleAppender = new Log4Qt::ConsoleAppender(layout, Log4Qt::ConsoleAppender::STDOUT_TARGET);</span><br><span class="line">       consoleAppender-&gt;setName(QStringLiteral(&quot;My Appender&quot;));</span><br><span class="line">       consoleAppender-&gt;activateOptions();</span><br><span class="line">       // Add appender on root logger</span><br><span class="line">       logger-&gt;addAppender(consoleAppender);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       Log4Qt::RollingFileAppender *appender = new Log4Qt::RollingFileAppender;</span><br><span class="line">       // 设置输出目的地为应用程序所在目录下的logFile.log</span><br><span class="line">       appender-&gt;setFile(&quot;A.log&quot;);</span><br><span class="line">       // 设置日志为追加方式写入输出文件</span><br><span class="line">       appender-&gt;setAppendFile(true);</span><br><span class="line">       // 设置备份文件的最大数量为10个</span><br><span class="line">       appender-&gt;setMaxBackupIndex(2);</span><br><span class="line">       // 设置输出文件的最大值为1KB</span><br><span class="line">       appender-&gt;setMaxFileSize(&quot;1KB&quot;);</span><br><span class="line">       appender-&gt;setLayout(layout);</span><br><span class="line">       // 设置编码</span><br><span class="line">       appender-&gt;setEncoding(QTextCodec::codecForName(&quot;UTF-8&quot;));</span><br><span class="line"></span><br><span class="line">       appender-&gt;setImmediateFlush(true);</span><br><span class="line">       // 设置阈值级别为INFO</span><br><span class="line">       appender-&gt;setThreshold(Log4Qt::Level::ALL_INT);</span><br><span class="line">       // 激活选项</span><br><span class="line">       appender-&gt;activateOptions();</span><br><span class="line">       logger-&gt;addAppender(appender);</span><br></pre></td></tr></table></figure>
+
+<p>项目运行后，可以观察到项目的Shadow Build路径中，三个日志文件在大小、时间与内容的来回变化。</p>
+<p><img src="data:image/png;base64,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"></p>
+<p>完整内容见：<a target="_blank" rel="noopener" href="https://gitee.com/lison/sample_log4qt">https://gitee.com/lison/sample_log4qt</a></p>
+<p>###4.    关于Sample_log4qt</p>
+<p>项目以调用封装后的系统的ping功能为例，演示在配置了log4qt日志功能后，使用Log4Qt的日志输出功能与使用系统本身的qDebug()功能都能很好的重定向到配置的日志文件中的功能示例。</p>
+<p>引用</p>
+<ol>
+<li>   <a target="_blank" rel="noopener" href="https://blog.51cto.com/quantfabric/2299422">Log4Qt快速入门——Log4Qt日志输出重定向源码解析</a></li>
+<li>   Log4Qt详细文档 <a target="_blank" rel="noopener" href="https://github.com/MEONMedical/Log4Qt">MEONMedical/Log4Qt: Log4Qt - Logging for the Qt cross-platform application framework (github.com)</a></li>
+</ol>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%8B%E8%BD%BDLog4Qt%E9%A1%B9%E7%9B%AE%E6%BA%90%E7%A0%81"><span class="toc-number">1.</span> <span class="toc-text">1.    下载Log4Qt项目源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%B7%BB%E5%8A%A0%E5%AD%90%E9%A1%B9%E7%9B%AE%E5%B9%B6%E6%9E%84%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.</span> <span class="toc-text">2. 添加子项目并构建项目</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Log4Qt%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">3.    Log4Qt配置</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/qt-log4qt/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/qt-log4qt/&text=Log4Qt的配置及使用方法"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/qt-log4qt/&title=Log4Qt的配置及使用方法"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/qt-log4qt/&is_video=false&description=Log4Qt的配置及使用方法"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Log4Qt的配置及使用方法&body=Check out this article: https://lison.cc/qt-log4qt/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/qt-log4qt/&title=Log4Qt的配置及使用方法"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/qt-log4qt/&title=Log4Qt的配置及使用方法"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/qt-log4qt/&title=Log4Qt的配置及使用方法"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/qt-log4qt/&title=Log4Qt的配置及使用方法"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/qt-log4qt/&name=Log4Qt的配置及使用方法&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/qt-log4qt/&t=Log4Qt的配置及使用方法"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2014-2022
+    Lison Liou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMQWPXKTYB"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VMQWPXKTYB');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'LisonLiou/lison.cc';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

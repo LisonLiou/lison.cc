@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="OK，小打小闹，在Pi上部署了wordpress，成功。无奈电信疯掉了我的80端口，所以需要修改为别的端口，于是使用8000，据说8080也被疯掉了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wordpress站点修改域名端口号（默认端口号修改）">
+<meta property="og:url" content="https://lison.cc/wordpress-config-port/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="OK，小打小闹，在Pi上部署了wordpress，成功。无奈电信疯掉了我的80端口，所以需要修改为别的端口，于是使用8000，据说8080也被疯掉了。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2014-03-03T08:56:21.000Z">
+<meta property="article:modified_time" content="2023-11-16T06:15:51.872Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="折腾">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>wordpress站点修改域名端口号（默认端口号修改） - 吾等采石之人, 当心怀大教堂之愿景.</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="LISON" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/linux-chmod/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/wordpress-baidu-tongji/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/wordpress-config-port/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/wordpress-config-port/&text=wordpress站点修改域名端口号（默认端口号修改）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/wordpress-config-port/&title=wordpress站点修改域名端口号（默认端口号修改）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/wordpress-config-port/&is_video=false&description=wordpress站点修改域名端口号（默认端口号修改）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=wordpress站点修改域名端口号（默认端口号修改）&body=Check out this article: https://lison.cc/wordpress-config-port/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/wordpress-config-port/&title=wordpress站点修改域名端口号（默认端口号修改）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/wordpress-config-port/&title=wordpress站点修改域名端口号（默认端口号修改）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/wordpress-config-port/&title=wordpress站点修改域名端口号（默认端口号修改）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/wordpress-config-port/&title=wordpress站点修改域名端口号（默认端口号修改）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/wordpress-config-port/&name=wordpress站点修改域名端口号（默认端口号修改）&description=&lt;p&gt;OK，小打小闹，在Pi上部署了wordpress，成功。无奈电信疯掉了我的80端口，所以需要修改为别的端口，于是使用8000，据说8080也被疯掉了。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/wordpress-config-port/&t=wordpress站点修改域名端口号（默认端口号修改）"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8E%E6%98%AF%E4%B9%8E%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">于是乎：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E5%8E%9F%E5%9B%A0%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">什么原因：</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        wordpress站点修改域名端口号（默认端口号修改）
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Lison</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2014-03-03T08:56:21.000Z" itemprop="datePublished">2014-03-03</time>
+        
+        (Updated: <time datetime="2023-11-16T06:15:51.872Z" itemprop="dateModified">2023-11-16</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/wordpress/">wordpress</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E6%8A%98%E8%85%BE/" rel="tag">折腾</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>OK，小打小闹，在Pi上部署了wordpress，成功。无奈电信疯掉了我的80端口，所以需要修改为别的端口，于是使用8000，据说8080也被疯掉了。</p>
+<span id="more"></span>
+
+<p>OK，小打小闹，在Pi上部署了wordpress，成功。无奈电信疯掉了我的80端口，所以需要修改为别的端口，于是使用8000，据说8080也被疯掉了。</p>
+<h3 id="于是乎："><a href="#于是乎：" class="headerlink" title="于是乎："></a>于是乎：</h3><ol>
+<li><p>路由上做端口映射，8000映射到我的pi</p>
+</li>
+<li><p>修改nginx相关文件：/etc/nginx/sites-enabled/wordpress与/etc/nginx/sites-available/wordpress，将其中的默认端口号80修改为8000.</p>
+</li>
+<li><p>重启nginx：sudo nginx -s reload，重启php5-fpm：sudo service php5-fpm reload，成功。</p>
+</li>
+</ol>
+<p>浏览器敲入地址：<a target="_blank" rel="noopener" href="http://lison.cc....不行,打不开./">http://lison.cc。。。。不行，打不开。</a></p>
+<h3 id="什么原因："><a href="#什么原因：" class="headerlink" title="什么原因："></a>什么原因：</h3><ol>
+<li><p><font  color=green>数据库连不上？root和wordpress用户使用命令方式登录 mysql -u root -p 加密码都能进入，新建test.php，输入：<?php phpinfo(); ?>，也能正常打开。新建一个连接数据库的页面，也TMD能连上。所以这个排除掉。</font></p>
+</li>
+<li><p><font color=green>8000端口没映射成功？外部网络输入命令：telnet lisonliou.gicp.net 8000，直接进入，说明已成功。Ctrl+C之后提示400（这是为什么，不知道）。</font></p>
+</li>
+<li><p>其他的想不到了。</p>
+</li>
+</ol>
+<p>后来各种谷歌度娘问：nginx 怎么修改端口？因为以前windows下部署ngxin可以直接修改目录下的nginx.conf的listen节点，现在nginx.conf中没有这个选项，于是，修改了上述/etc/nginx/sites-available(enabled)/wordpress这两个文件。怎么改也不行，难道是我重启nginx，php-fpm的方式不对？难道是我打开的方式不对？难道是。。。bla bla bla。</p>
+<p>上面绿色的第一项倒腾了好久，进入了误区，又是wp-config.php开启debug，开启表修复什么的。而且始终在以域名+端口方式访问，并没有加入具体的文件名，后来加入文件名访问（<a href="http://lison.cc/wp-login.php%EF%BC%89%E5%8F%91%E7%8E%B0php%E6%B2%A1%E9%97%AE%E9%A2%98%EF%BC%8Cmysql%E4%B9%9F%E8%83%BD%E8%BF%9E%E4%B8%8A%EF%BC%8C%E4%BD%86%E6%98%AFcss%E6%B2%A1%E6%9C%89%E5%8A%A0%E8%BD%BD%E4%B8%8A%EF%BC%8C%E4%BA%8E%E6%98%AF%E6%9F%A5%E7%9C%8B%E6%BA%90%E4%BB%A3%E7%A0%81%EF%BC%8C%E5%8F%91%E7%8E%B0css%E7%9A%84%E8%BF%9E%E6%8E%A5%E5%9C%B0%E5%9D%80%E9%83%BD%E6%B2%A1%E6%9C%89%E5%8A%A0%E5%85%A5%E7%AB%AF%E5%8F%A3%E5%8F%B7%EF%BC%8Cok%EF%BC%8C%E8%BF%99%E4%B8%8B%E9%97%AE%E5%BA%A6%E5%A8%98%E5%B0%B1%E6%9C%89%E6%96%B9%E5%90%91%E4%BA%86%EF%BC%9A%E2%80%9Dwordpress%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3%E2%80%9D%EF%BC%8C%E4%BA%8E%E6%98%AF%EF%BC%8C%E6%89%BE%E5%88%B0%E4%BA%86%E4%B8%8B%E9%9D%A2%E6%96%87%E7%AB%A0%E7%9A%84%E5%86%85%E5%AE%B9%EF%BC%8C%E4%BB%A5%E4%B8%8B%E6%98%AF%E5%86%85%E5%AE%B9%E7%89%87%E6%AE%B5%EF%BC%9A">http://lison.cc/wp-login.php）发现php没问题，mysql也能连上，但是css没有加载上，于是查看源代码，发现css的连接地址都没有加入端口号，ok，这下问度娘就有方向了：”wordpress修改端口”，于是，找到了下面文章的内容，以下是内容片段：</a></p>
+<blockquote>
+<p><em>wordpress关于端口的不在配置文件里，而在数据表wp_options中的siteurl和home两个变量</em><br><em>mysql&gt; update wp_options set option_value = ‘<a href="http://sas.123.com:8001’">http://sas.123.com:8001’</a> where option_id = 1;</em><br><em>mysql&gt; update wp_options set option_value = ‘<a href="http://sas.123.com:8001’">http://sas.123.com:8001’</a> where option_id = 37;</em></p>
+<p><em>原有文章中如果有插图，则插图的URL地址要更新</em><br><em>mysql&gt; UPDATE wp_posts SET post_content = REPLACE( post_content, “<a target="_blank" rel="noopener" href="http://sas.123.com/">http://sas.123.com</a>“, “<a target="_blank" rel="noopener" href="http://sas.123.com:8001/">http://sas.123.com:8001</a>” ) where post_date &lt; “2011-09-15”;</em></p>
+</blockquote>
+<p>** <font color=red>遗留的问题：</font>**</p>
+<p><strong>1. <font color=red>现在正在编辑的文章不知道能不能提交成功。</font></strong></p>
+<p><strong>2. <font color=red>直接敲入域名<a target="_blank" rel="noopener" href="http://lison.cc还是打不开/">http://lison.cc还是打不开</a></font></strong></p>
+<p>** <font color=red><a href="http://lison.cc/index.php%E4%B9%9F%E6%89%93%E4%B8%8D%E5%BC%80%E3%80%82%E8%80%8C%E4%B8%94%E8%87%AA%E5%8A%A8%E5%AF%BC%E5%90%91%E5%88%B0%E4%BA%86%EF%BC%9Ahttp://lison.cc%EF%BC%8C%E7%81%AB%E7%8B%90%E7%BB%99%E5%87%BA%E7%9A%84%E6%8F%90%E7%A4%BA%E6%98%AF%EF%BC%9A%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E6%97%B6%E9%97%B4%E8%BF%87%E9%95%BF%E3%80%82">http://lison.cc/index.php也打不开。而且自动导向到了：http://lison.cc，火狐给出的提示是：服务器响应时间过长。</a>**</font></p>
+<p>这是为什么，先不管了，反正端口号已经修改成功了，先Ctrl+C一下，面的提交保存不了。</p>
+<p>解决遗留的问题：</p>
+<p>1.看来是已经发布成功了。</p>
+<p>2.在wordpress的wp_opitons表中还有一项需要update：</p>
+<p>update wp_options set option_value=’<a target="_blank" rel="noopener" href="http://lison.cc’/">http://lison.cc’</a> where option_id=36; 这个36是干什么的？不知道，这个wp_options表是干什么的，是wp系统配置表？不知道。</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8E%E6%98%AF%E4%B9%8E%EF%BC%9A"><span class="toc-number">1.</span> <span class="toc-text">于是乎：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E5%8E%9F%E5%9B%A0%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">什么原因：</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/wordpress-config-port/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/wordpress-config-port/&text=wordpress站点修改域名端口号（默认端口号修改）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/wordpress-config-port/&title=wordpress站点修改域名端口号（默认端口号修改）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/wordpress-config-port/&is_video=false&description=wordpress站点修改域名端口号（默认端口号修改）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=wordpress站点修改域名端口号（默认端口号修改）&body=Check out this article: https://lison.cc/wordpress-config-port/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/wordpress-config-port/&title=wordpress站点修改域名端口号（默认端口号修改）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/wordpress-config-port/&title=wordpress站点修改域名端口号（默认端口号修改）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/wordpress-config-port/&title=wordpress站点修改域名端口号（默认端口号修改）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/wordpress-config-port/&title=wordpress站点修改域名端口号（默认端口号修改）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/wordpress-config-port/&name=wordpress站点修改域名端口号（默认端口号修改）&description=&lt;p&gt;OK，小打小闹，在Pi上部署了wordpress，成功。无奈电信疯掉了我的80端口，所以需要修改为别的端口，于是使用8000，据说8080也被疯掉了。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/wordpress-config-port/&t=wordpress站点修改域名端口号（默认端口号修改）"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2014-2022
+    Lison Liou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMQWPXKTYB"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VMQWPXKTYB');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'LisonLiou/lison.cc';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

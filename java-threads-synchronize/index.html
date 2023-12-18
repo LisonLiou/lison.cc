@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="为了完成多个任务，常创建多个线程，它们可能毫不相关，但有时它们完成的任务在某种程度上有一定的关系，此时就需要线程之间有一些交互。在Java中，使用一对方法wait()和notify()&#x2F;notifyAll()实现线程的交互。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java拾遗：多线程中的生产者消费者问题 – 线程的同步">
+<meta property="og:url" content="https://lison.cc/java-threads-synchronize/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="为了完成多个任务，常创建多个线程，它们可能毫不相关，但有时它们完成的任务在某种程度上有一定的关系，此时就需要线程之间有一些交互。在Java中，使用一对方法wait()和notify()&#x2F;notifyAll()实现线程的交互。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-18T12:10:50.000Z">
+<meta property="article:modified_time" content="2023-11-16T06:15:51.629Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="多线程">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Java拾遗：多线程中的生产者消费者问题 – 线程的同步 - 吾等采石之人, 当心怀大教堂之愿景.</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="LISON" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/android-fiddler/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/fragment-null-must-be-a-public-static-class-to-be-properly-recreated-from-instance-state/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/java-threads-synchronize/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/java-threads-synchronize/&text=Java拾遗：多线程中的生产者消费者问题 – 线程的同步"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/java-threads-synchronize/&title=Java拾遗：多线程中的生产者消费者问题 – 线程的同步"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/java-threads-synchronize/&is_video=false&description=Java拾遗：多线程中的生产者消费者问题 – 线程的同步"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java拾遗：多线程中的生产者消费者问题 – 线程的同步&body=Check out this article: https://lison.cc/java-threads-synchronize/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/java-threads-synchronize/&title=Java拾遗：多线程中的生产者消费者问题 – 线程的同步"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/java-threads-synchronize/&title=Java拾遗：多线程中的生产者消费者问题 – 线程的同步"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/java-threads-synchronize/&title=Java拾遗：多线程中的生产者消费者问题 – 线程的同步"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/java-threads-synchronize/&title=Java拾遗：多线程中的生产者消费者问题 – 线程的同步"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/java-threads-synchronize/&name=Java拾遗：多线程中的生产者消费者问题 – 线程的同步&description=&lt;blockquote&gt;
+&lt;p&gt;为了完成多个任务，常创建多个线程，它们可能毫不相关，但有时它们完成的任务在某种程度上有一定的关系，此时就需要线程之间有一些交互。在Java中，使用一对方法wait()和notify()/notifyAll()实现线程的交互。&lt;/p&gt;
+&lt;/blockquote&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/java-threads-synchronize/&t=Java拾遗：多线程中的生产者消费者问题 – 线程的同步"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98%E7%9A%84%E6%8F%90%E5%87%BA"><span class="toc-number">1.</span> <span class="toc-text">同步问题的提出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">解决方法</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Java拾遗：多线程中的生产者消费者问题 – 线程的同步
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Lison</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-09-18T12:10:50.000Z" itemprop="datePublished">2020-09-18</time>
+        
+        (Updated: <time datetime="2023-11-16T06:15:51.629Z" itemprop="dateModified">2023-11-16</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/java/">java</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" rel="tag">多线程</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>为了完成多个任务，常创建多个线程，它们可能毫不相关，但有时它们完成的任务在某种程度上有一定的关系，此时就需要线程之间有一些交互。在Java中，使用一对方法wait()和notify()/notifyAll()实现线程的交互。</p>
+</blockquote>
+<span id="more"></span>
+
+<h3 id="同步问题的提出"><a href="#同步问题的提出" class="headerlink" title="同步问题的提出"></a>同步问题的提出</h3><p>操作系统中的生产者消费者问题，就是一个经典的同步问题。举一个例子，有两个人，一个人在刷盘子，另一个人在烘干。这两个人各自代表一个线程，他们之间有一个共享的对象 — 盘架，刷好而等待烘干的盘子放在盘架上。两个人在没有事做事都愿意歇着。显然，盘架上有刷好的盘子时，烘干的人才能开始工作；而如果刷盘子的人刷的太快，刷好的盘子占满了盘架时，他就不能再继续工作了，而要等到盘架上有空位置才行。</p>
+<p>这个示例要说明的问题是，生产者生产一个产品后就放入共享对象中，而不管共享对象中是否有产品。消费者从共享对象中取用产品，但不检测是否已经取过。</p>
+<p>若共享对象中只能存放一个数据，可能出现以下问题（线程不同步的情况下）：</p>
+<p>– 生产者比消费者快时，消费者会漏掉一些数据没有取到。<br>– 消费者比生产者快时，消费者取相同的数据。</p>
+<p>在java语言中，可以用wait()和notify()/notifyAll()方法来协调线程间的运行速度关系，这些方法都定义在java.lang.Object类中。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>为了解决线程运行速度问题，<strong>Java提供了一种建立在对象实例之上的交互方法。\</strong>Java中的每个对象实例都有两个线程队列和他相连*<em>。*</em>第一个用来排列等待锁定标志的线程。第二个则用来实现wait()和notify()的交互机制**。**</p>
+<p>类java.lang.Object中定义了三个方法wait()和notify()/notifyAll()。</p>
+<p>wait方法导致当前的线程等待，同时会让当先线程释放其所持有的“对象互斥锁”，进入wait队列（等待队列）；而notify()/notifyAll()方法的作用是唤醒一个或所有正在等待队列中等待的线程，并将它（们）移入用一个“对象互斥锁”队列。notify()/notifyAll()方法和wait()方法都只能在被声明为synchronized的方法或代码中调用。方法notify()最多只能释放等待队列中的第一个线程，如果有多个线程在等待，则其他的线程将继续留在队列中。notifyAll()方法能够释放所有等待线程。</p>
+<p>再来看看前面刷盘子的例子。线程t1代表刷盘子，线程t2代表烘干，它们都有对盘架drainingBoard的访问权。假设线程t2（烘干线程）想要进行烘干工作，而此时盘架时空的，则应表示如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if(drainingBoard.isEmpty())</span><br><span class="line">	drainingBoard.wait(); //盘架空时则等待</span><br></pre></td></tr></table></figure>
+
+
+<p>当线程t2执行了wait()调用后，它不可以再执行，并加入到对象drainingBoard的等待队列中。在有线程将它从这个队列释放之前，它不能再次运行。</p>
+<p>那么，烘干线程怎样才能重新运行呢？这应该有洗刷线程t1来通知它已经有工作可以做了，运行drainingBoard的notify调用可以做到这一点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">drainingBoard.addItem(); //放入一个盘子</span><br><span class="line">drainingBoard.notify();</span><br></pre></td></tr></table></figure>
+
+
+<p>此时，drainingBoard的等待队列中第一个阻塞线程由队列中释放出来，并可重新参加运行的竞争。</p>
+<p>注意，在这里使用notify调用时，没有考虑是否有正在等待的线程。事实上，应该只有在增加盘子后使得盘架不再空时才执行这个调用。如果等待队列中没有阻塞线程时调用了方法notify()，则这个调用不做任何工作。notify()调用不会被保留到以后再发生效用。</p>
+<p>使用这个机制，程序能够非常简单的协调洗刷线程和烘干线程，而且并不需要了解这些线程的身份。每当执行一项工作，使得另一个线程能够开始工作，就通知对象drainingBoard(调用notify())；每当由于盘架空或满而不能继续工作时，就等待对象drainingBoard(调用wait())。</p>
+<p>在调用一个对象的wait(),notify()/notifyAll()时，必须首先持有该对象的锁定标志，因此这些方法必须在同步程序块中调用。这样，应该将代码改写如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">synchronized(drainingBoard) &#123;</span><br><span class="line"> if(drainingBoard.isEmpty())</span><br><span class="line">  	drainingBoard.wait();</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>和</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> synchronized(drainingBoard) &#123;</span><br><span class="line">	drainingBoard.addItem();</span><br><span class="line">	drainingBoard.notify();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>附上源码：</p>
+<blockquote>
+<p>DrainingBoard.java</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public class DrainingBoard &#123;</span><br><span class="line"> private ArrayList&lt;String&gt; plates;</span><br><span class="line"> private static int MAX_ITEM_COUNT = 10;</span><br><span class="line"></span><br><span class="line"> public DrainingBoard() &#123;</span><br><span class="line"> 	plates = new ArrayList&lt;&gt;();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> public void addItem() &#123;</span><br><span class="line"> 	if (plates.size() &gt;= MAX_ITEM_COUNT)</span><br><span class="line"> 		return;</span><br><span class="line"> 	</span><br><span class="line"> 	plates.add(“P” + plates.size());</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> public void minusItem() &#123;</span><br><span class="line"> 	if (!isEmpty())</span><br><span class="line"> 		plates.remove(0);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> public boolean isEmpty() &#123;</span><br><span class="line"> 	return plates.size() == 0;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> public int getSize() &#123;</span><br><span class="line"> 	return plates.size();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> public boolean isFull() &#123;</span><br><span class="line"> 	return plates.size() &gt;= MAX_ITEM_COUNT;</span><br><span class="line">	 &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>main.java</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br></pre></td><td class="code"><pre><span class="line"> DrainingBoard drainingBoard = new DrainingBoard();</span><br><span class="line"></span><br><span class="line"> Thread t1 = new Thread() &#123;</span><br><span class="line"></span><br><span class="line"> @Override</span><br><span class="line"> public void run() &#123;</span><br><span class="line"> 	while (true) &#123;</span><br><span class="line"> 	synchronized (drainingBoard) &#123;</span><br><span class="line"> 	try &#123;</span><br><span class="line"></span><br><span class="line"> 		if (drainingBoard.isFull()) &#123;</span><br><span class="line"> 			System.out.println(“Full wait()”);&gt; drainingBoard.wait(); //t1进入等待（drainingBoard）的队列，资源达到上限</span><br><span class="line"> 		&#125; else &#123;</span><br><span class="line"> 			drainingBoard.addItem();</span><br><span class="line"> 			System.out.println(“Add notify()” + drainingBoard.getSize());</span><br><span class="line"> 			drainingBoard.notify(); //通知等待（drainingBoard）队列中的第一个线程可以出队了</span><br><span class="line"> 		&#125;</span><br><span class="line"></span><br><span class="line"> 	&#125; catch (Exception e) &#123;</span><br><span class="line"> 		e.printStackTrace();</span><br><span class="line"> 	&#125;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;;</span><br><span class="line"></span><br><span class="line"> Thread t2 = new Thread() &#123;</span><br><span class="line"> @Override</span><br><span class="line"> public void run() &#123;</span><br><span class="line"> 	while (true) &#123;</span><br><span class="line"> 		synchronized (drainingBoard) &#123;</span><br><span class="line"> 		try &#123;</span><br><span class="line"> 			if (drainingBoard.isEmpty()) &#123;</span><br><span class="line"></span><br><span class="line"> 				System.out.println(“Empty wait()”); drainingBoard.wait(); //t2进入等待（drainingBoard）的队列（资源枯竭），知道有人notify他才可以出队</span><br><span class="line"></span><br><span class="line"> 			&#125; else &#123;</span><br><span class="line"> 				System.out.println(“Have minus()” + drainingBoard.getSize());</span><br><span class="line"> 				drainingBoard.minusItem();</span><br><span class="line"> 				drainingBoard.notify(); //通知等待（drainingBoard）的队列中的第一个线程出队（释放）</span><br><span class="line"> 			&#125;</span><br><span class="line">		 &#125; catch (InterruptedException e) &#123;</span><br><span class="line"> 			e.printStackTrace();</span><br><span class="line"> 		&#125;</span><br><span class="line"> 	&#125;</span><br><span class="line"> &#125;</span><br><span class="line"> &#125;;</span><br><span class="line"> &#125;;</span><br><span class="line"></span><br><span class="line"> // t1.setPriority(Thread.MIN_PRIORITY);</span><br><span class="line"> // t2.setPriority(Thread.MAX_PRIORITY);</span><br><span class="line"></span><br><span class="line"> t1.start();</span><br><span class="line"> t2.start();</span><br><span class="line"></span><br><span class="line">部分运行结果（因机器而异，并不完全相同）：</span><br><span class="line"></span><br><span class="line">&gt; Add notify()1</span><br><span class="line">&gt; Add notify()2</span><br><span class="line">&gt; Add notify()3</span><br><span class="line">&gt; Have minus()3</span><br><span class="line">&gt; Have minus()2</span><br><span class="line">&gt; Have minus()1</span><br><span class="line">&gt; Empty wait()</span><br><span class="line">&gt; Add notify()1</span><br><span class="line">&gt; Add notify()2</span><br><span class="line">&gt; Add notify()3</span><br><span class="line">&gt; Add notify()4</span><br><span class="line">&gt; Add notify()5</span><br><span class="line">&gt; Add notify()6</span><br><span class="line">&gt; Add notify()7</span><br><span class="line">&gt; Add notify()8</span><br><span class="line">&gt; Add notify()9</span><br><span class="line">&gt; Add notify()10</span><br><span class="line">&gt; Full wait()</span><br><span class="line">&gt; Have minus()10</span><br><span class="line">&gt; Have minus()9</span><br><span class="line">&gt; Have minus()8</span><br><span class="line">&gt; Have minus()7</span><br><span class="line">&gt; Have minus()6</span><br><span class="line">&gt; Have minus()5</span><br><span class="line">&gt; Have minus()4</span><br><span class="line">&gt; Have minus()3</span><br><span class="line">&gt; Have minus()2</span><br><span class="line">&gt; Have minus()1</span><br><span class="line">&gt; Empty wait()</span><br><span class="line">&gt; Add notify()1</span><br><span class="line">&gt; Add notify()2</span><br><span class="line">&gt; Add notify()3</span><br><span class="line">&gt; Add notify()4</span><br><span class="line">&gt; Add notify()5</span><br><span class="line">&gt; Add notify()6</span><br><span class="line">&gt; Add notify()7</span><br><span class="line">&gt; Add notify()8</span><br><span class="line">&gt; Add notify()9</span><br><span class="line">&gt; Add notify()10</span><br><span class="line">&gt; Have minus()10</span><br><span class="line">&gt; Have minus()9</span><br><span class="line">&gt; Have minus()8</span><br><span class="line">&gt; Have minus()7</span><br><span class="line">&gt; Have minus()6</span><br><span class="line">&gt; Have minus()5</span><br><span class="line">&gt; Have minus()4</span><br><span class="line">&gt; Have minus()3</span><br><span class="line">&gt; Have minus()2</span><br><span class="line">&gt; Have minus()1</span><br><span class="line">&gt; Empty wait()</span><br><span class="line">&gt; Add notify()1</span><br><span class="line">&gt; Add notify()2</span><br><span class="line">&gt; Add notify()3</span><br><span class="line">&gt; Add notify()4</span><br><span class="line">&gt; Add notify()5</span><br><span class="line">&gt; Add notify()6</span><br><span class="line">&gt; Add notify()7</span><br><span class="line">&gt; Add notify()8</span><br><span class="line">&gt; Add notify()9</span><br><span class="line">&gt; Add notify()10</span><br><span class="line">&gt; Full wait()</span><br><span class="line">&gt; Have minus()10</span><br><span class="line">&gt; Have minus()9</span><br><span class="line">&gt; Have minus()8</span><br><span class="line">&gt; Have minus()7</span><br><span class="line">&gt; Have minus()6</span><br><span class="line">&gt; Have minus()5</span><br><span class="line">&gt; Have minus()4</span><br><span class="line">&gt; Have minus()3</span><br><span class="line">&gt; Have minus()2</span><br><span class="line">&gt; Have minus()1</span><br><span class="line">&gt; Empty wait()</span><br><span class="line">&gt; Add notify()1</span><br><span class="line">&gt; Add notify()2</span><br><span class="line">&gt; Add notify()3</span><br><span class="line">&gt; Add notify()4</span><br><span class="line">&gt; Add notify()5</span><br><span class="line">&gt; Add notify()6</span><br><span class="line">&gt; Add notify()7</span><br><span class="line">&gt; Add notify()8</span><br><span class="line">&gt; Add notify()9</span><br><span class="line">&gt; Add notify()10</span><br><span class="line">&gt; Full wait()</span><br><span class="line">&gt; Have minus()10</span><br><span class="line">&gt; Have minus()9</span><br><span class="line">&gt; Have minus()8</span><br><span class="line">&gt; Have minus()7</span><br><span class="line">&gt; Have minus()6</span><br><span class="line">&gt; Have minus()5</span><br><span class="line">&gt; Have minus()4</span><br><span class="line">&gt; Have minus()3</span><br><span class="line">&gt; Have minus()2</span><br><span class="line">&gt; Have minus()1</span><br><span class="line">&gt; Empty wait()</span><br><span class="line">&gt; Add notify()1</span><br><span class="line">&gt; Add notify()2</span><br><span class="line">&gt; Add notify()3</span><br><span class="line">&gt; Add notify()4</span><br><span class="line">&gt; Add notify()5</span><br><span class="line">&gt; Add notify()6</span><br><span class="line">&gt; Add notify()7</span><br><span class="line">&gt; Add notify()8</span><br><span class="line">&gt; Add notify()9</span><br><span class="line">&gt; Add notify()10</span><br><span class="line">&gt; Full wait()</span><br><span class="line">&gt; Have minus()10</span><br><span class="line">&gt; Have minus()9</span><br><span class="line">&gt; Have minus()8</span><br><span class="line">&gt; Add notify()8</span><br><span class="line">&gt; Add notify()9</span><br><span class="line">&gt; Add notify()10</span><br><span class="line">&gt; Full wait()</span><br><span class="line">&gt; Have minus()10</span><br><span class="line">&gt; Have minus()9</span><br><span class="line">&gt; Have minus()8</span><br><span class="line">&gt; Have minus()7</span><br><span class="line">&gt; Have minus()6</span><br><span class="line">&gt; Have minus()5</span><br><span class="line">&gt; Have minus()4</span><br><span class="line">&gt; Have minus()3</span><br><span class="line">&gt; Have minus()2</span><br><span class="line">&gt; Have minus()1</span><br><span class="line">&gt; Empty wait()</span><br><span class="line">&gt; Add notify()1</span><br><span class="line">&gt; Add notify()2</span><br><span class="line">&gt; Add notify()3</span><br><span class="line">&gt; Add notify()4</span><br><span class="line">&gt; Add notify()5</span><br><span class="line">&gt; Add notify()6</span><br><span class="line">&gt; Add notify()7</span><br><span class="line">&gt; Have minus()7</span><br><span class="line">&gt; Have minus()6</span><br><span class="line">&gt; Have minus()5</span><br><span class="line">&gt; Have minus()4</span><br><span class="line">&gt; Have minus()3</span><br><span class="line">&gt; Have minus()2</span><br><span class="line">&gt; Have minus()1</span><br><span class="line">&gt; Empty wait()</span><br><span class="line">&gt; Add notify()1</span><br><span class="line">&gt; Add notify()2</span><br><span class="line">&gt; Add notify()3</span><br><span class="line">&gt; Add notify()4</span><br><span class="line">&gt; Add notify()5</span><br><span class="line">&gt; Add notify()6</span><br><span class="line">&gt; Add notify()7</span><br><span class="line">&gt; Add notify()8</span><br><span class="line">&gt; Add notify()9</span><br><span class="line">&gt; Add notify()10</span><br><span class="line">&gt; Full wait()</span><br><span class="line">&gt; Have minus()10</span><br><span class="line">&gt; Have minus()9</span><br><span class="line">&gt; Have minus()8</span><br><span class="line">&gt; Have minus()7</span><br><span class="line">&gt; Have minus()6</span><br><span class="line">&gt; Have minus()5</span><br><span class="line">&gt; Have minus()4</span><br><span class="line">&gt; Have minus()3</span><br><span class="line">&gt; Add notify()3</span><br><span class="line">&gt; Add notify()4</span><br><span class="line">&gt; Add notify()5</span><br><span class="line">&gt; Add notify()6</span><br><span class="line">&gt; Add notify()7</span><br><span class="line">&gt; Add notify()8</span><br><span class="line">&gt; Add notify()9</span><br><span class="line">&gt; Add notify()10</span><br><span class="line">&gt; Full wait()</span><br><span class="line"></span><br><span class="line">文章讲解摘自《Java语言程序设计（一）》多线程章节，文章中没有给出详细代码，害得我亲手撸了一遍，不过也巩固了科学技术知识，提高了加班生产力。</span><br><span class="line"></span><br><span class="line">其中的对线程设置优先级的地方已注释，怎么切换好像都看不出太不一样的地方。</span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98%E7%9A%84%E6%8F%90%E5%87%BA"><span class="toc-number">1.</span> <span class="toc-text">同步问题的提出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">解决方法</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/java-threads-synchronize/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/java-threads-synchronize/&text=Java拾遗：多线程中的生产者消费者问题 – 线程的同步"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/java-threads-synchronize/&title=Java拾遗：多线程中的生产者消费者问题 – 线程的同步"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/java-threads-synchronize/&is_video=false&description=Java拾遗：多线程中的生产者消费者问题 – 线程的同步"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java拾遗：多线程中的生产者消费者问题 – 线程的同步&body=Check out this article: https://lison.cc/java-threads-synchronize/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/java-threads-synchronize/&title=Java拾遗：多线程中的生产者消费者问题 – 线程的同步"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/java-threads-synchronize/&title=Java拾遗：多线程中的生产者消费者问题 – 线程的同步"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/java-threads-synchronize/&title=Java拾遗：多线程中的生产者消费者问题 – 线程的同步"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/java-threads-synchronize/&title=Java拾遗：多线程中的生产者消费者问题 – 线程的同步"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/java-threads-synchronize/&name=Java拾遗：多线程中的生产者消费者问题 – 线程的同步&description=&lt;blockquote&gt;
+&lt;p&gt;为了完成多个任务，常创建多个线程，它们可能毫不相关，但有时它们完成的任务在某种程度上有一定的关系，此时就需要线程之间有一些交互。在Java中，使用一对方法wait()和notify()/notifyAll()实现线程的交互。&lt;/p&gt;
+&lt;/blockquote&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/java-threads-synchronize/&t=Java拾遗：多线程中的生产者消费者问题 – 线程的同步"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2014-2022
+    Lison Liou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMQWPXKTYB"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VMQWPXKTYB');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'LisonLiou/lison.cc';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

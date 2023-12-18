@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="关于[Python]，人生苦短，我用python Python2.x 与Python3.x 存在严重的兼容性问题   python快速教程 python初级教程  关于opencv OpenCV 编程简介（矩阵&#x2F;图像&#x2F;视频的基本读写操作）Emgu cv Tutorial  关于Linux学习 树莓派与Linux Debian 学习笔记 鸟哥的Linux私房菜 Quick Start Guide f">
+<meta property="og:type" content="article">
+<meta property="og:title" content="树莓派学习使用入门资料整理 – Raspberry PI">
+<meta property="og:url" content="https://lison.cc/hello-raspberrypi/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="关于[Python]，人生苦短，我用python Python2.x 与Python3.x 存在严重的兼容性问题   python快速教程 python初级教程  关于opencv OpenCV 编程简介（矩阵&#x2F;图像&#x2F;视频的基本读写操作）Emgu cv Tutorial  关于Linux学习 树莓派与Linux Debian 学习笔记 鸟哥的Linux私房菜 Quick Start Guide f">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-05-15T03:14:52.000Z">
+<meta property="article:modified_time" content="2023-11-16T06:15:51.611Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="找工作的程序员, 找啊找啊找啊找">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>树莓派学习使用入门资料整理 – Raspberry PI - 吾等采石之人, 当心怀大教堂之愿景.</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="LISON" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/plan-annual/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/android-webview-java-native/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/hello-raspberrypi/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/hello-raspberrypi/&text=树莓派学习使用入门资料整理 – Raspberry PI"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/hello-raspberrypi/&title=树莓派学习使用入门资料整理 – Raspberry PI"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/hello-raspberrypi/&is_video=false&description=树莓派学习使用入门资料整理 – Raspberry PI"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=树莓派学习使用入门资料整理 – Raspberry PI&body=Check out this article: https://lison.cc/hello-raspberrypi/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/hello-raspberrypi/&title=树莓派学习使用入门资料整理 – Raspberry PI"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/hello-raspberrypi/&title=树莓派学习使用入门资料整理 – Raspberry PI"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/hello-raspberrypi/&title=树莓派学习使用入门资料整理 – Raspberry PI"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/hello-raspberrypi/&title=树莓派学习使用入门资料整理 – Raspberry PI"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/hello-raspberrypi/&name=树莓派学习使用入门资料整理 – Raspberry PI&description=&lt;h3 id=&#34;关于-Python-，人生苦短，我用python&#34;&gt;&lt;a href=&#34;#关于-Python-，人生苦短，我用python&#34; class=&#34;headerlink&#34; title=&#34;关于[Python]，人生苦短，我用python&#34;&gt;&lt;/a&gt;关于[&lt;a href=&#34;https://www.python.org/&#34;&gt;Python&lt;/a&gt;]，人生苦短，我用python&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;Python2.x 与Python3.x 存在严重的兼容性问题&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.cnblogs.com/vamei/archive/2012/09/13/2682778.html&#34;&gt;python快速教程&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.crifan.com/files/doc/docbook/python_beginner_tutorial/release/html/python_beginner_tutorial.html#what_is_python&#34;&gt;python初级教程&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;关于opencv&#34;&gt;&lt;a href=&#34;#关于opencv&#34; class=&#34;headerlink&#34; title=&#34;关于opencv&#34;&gt;&lt;/a&gt;关于opencv&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;http://wiki.opencv.org.cn/index.php/OpenCV_%E7%BC%96%E7%A8%8B%E7%AE%80%E4%BB%8B%EF%BC%88%E7%9F%A9%E9%98%B5/%E5%9B%BE%E5%83%8F/%E8%A7%86%E9%A2%91%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%BB%E5%86%99%E6%93%8D%E4%BD%9C%EF%BC%89#.EF.BC.881.EF.BC.89___Linux:&#34;&gt;OpenCV 编程简介（矩阵/图像/视频的基本读写操作）&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://www.emgu.com/wiki/index.php/Tutorial#Working_with_Images&#34;&gt;Emgu cv Tutorial&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;关于Linux学习&#34;&gt;&lt;a href=&#34;#关于Linux学习&#34; class=&#34;headerlink&#34; title=&#34;关于Linux学习&#34;&gt;&lt;/a&gt;关于Linux学习&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.cnblogs.com/vamei/archive/2012/10/10/2718229.html&#34;&gt;树莓派与Linux&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.kuqin.com/docs/debian.html&#34;&gt;Debian 学习笔记&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://cn.linux.vbird.org/&#34;&gt;鸟哥的Linux私房菜&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://cygwin.com/cygwin-ug-net/ov-ex-unix.html&#34;&gt;Quick Start Guide for those more experienced with UNIX&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;关于树莓派&#34;&gt;&lt;a href=&#34;#关于树莓派&#34; class=&#34;headerlink&#34; title=&#34;关于树莓派&#34;&gt;&lt;/a&gt;关于树莓派&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;http://pan.baidu.com/share/link?shareid=2217805167&amp;uk=3775748088&#34;&gt;树莓派入门指南&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://tieba.baidu.com/p/2831020443&#34;&gt;用python让树莓派说话&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://tieba.baidu.com/f?kw=%EF%BF%BD%EF%BF%BD%DD%AE%EF%BF%BD%EF%BF%BD&amp;pn=150&#34;&gt;树莓派吧&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;https://www.raspberrypi.org/forums/viewforum.php?f=32&amp;sid=541135bc7aaad3acafdf0dae6ebb65b0&#34;&gt;树莓派官方社区Python讨论版&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://www.geek-workshop.com/forum-50-1.html&#34;&gt;极客工仿树莓派板块&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://www.52pi.net/&#34;&gt;树莓派中文站&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://www.electricstuff.co.uk/&#34;&gt;Mike’s Electric Stuff 查设备sheet&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://blog.csdn.net/xukai871105/article/details/14109211&#34;&gt;树莓派I2C接口扩展&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://www.oschina.net/question/1425530_140979&#34;&gt;树莓派GPIO使用&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://blog.csdn.net/liang890319/article/details/8677437&#34;&gt;探索Wiring Pi&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://wiringpi.com/&#34;&gt;Wiringpi.com 官网&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://cafe.miwor.com/&#34;&gt;Café&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://www.alldatasheet.com/&#34;&gt;AllDatasheet&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://www.eserviceinfo.com/&#34;&gt;Search Datasheet&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://pinouts.ru/&#34;&gt;Handbook of hardware schemes, cables layouts and connectors pinouts&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;https://allpinouts.org/&#34;&gt;All Pinouts&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;https://www.adafruit.com/&#34;&gt;AdaFruit&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://www.cnblogs.com/lovers/articles/2658777.html&#34;&gt;Asterisk搭建VoIP&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://blog.csdn.net/xukai871105/article/details/23115627&#34;&gt;树莓派学习索引&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/hello-raspberrypi/&t=树莓派学习使用入门资料整理 – Raspberry PI"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-Python-%EF%BC%8C%E4%BA%BA%E7%94%9F%E8%8B%A6%E7%9F%AD%EF%BC%8C%E6%88%91%E7%94%A8python"><span class="toc-number">1.</span> <span class="toc-text">关于[Python]，人生苦短，我用python</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8Eopencv"><span class="toc-number">2.</span> <span class="toc-text">关于opencv</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8ELinux%E5%AD%A6%E4%B9%A0"><span class="toc-number">3.</span> <span class="toc-text">关于Linux学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%A0%91%E8%8E%93%E6%B4%BE"><span class="toc-number">4.</span> <span class="toc-text">关于树莓派</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        树莓派学习使用入门资料整理 – Raspberry PI
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Lison</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-05-15T03:14:52.000Z" itemprop="datePublished">2017-05-15</time>
+        
+        (Updated: <time datetime="2023-11-16T06:15:51.611Z" itemprop="dateModified">2023-11-16</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/raspberry-pi/">raspberry pi</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="关于-Python-，人生苦短，我用python"><a href="#关于-Python-，人生苦短，我用python" class="headerlink" title="关于[Python]，人生苦短，我用python"></a>关于[<a target="_blank" rel="noopener" href="https://www.python.org/">Python</a>]，人生苦短，我用python</h3><blockquote>
+<p>Python2.x 与Python3.x 存在严重的兼容性问题</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/vamei/archive/2012/09/13/2682778.html">python快速教程</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.crifan.com/files/doc/docbook/python_beginner_tutorial/release/html/python_beginner_tutorial.html#what_is_python">python初级教程</a></li>
+</ul>
+<h3 id="关于opencv"><a href="#关于opencv" class="headerlink" title="关于opencv"></a>关于opencv</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="http://wiki.opencv.org.cn/index.php/OpenCV_%E7%BC%96%E7%A8%8B%E7%AE%80%E4%BB%8B%EF%BC%88%E7%9F%A9%E9%98%B5/%E5%9B%BE%E5%83%8F/%E8%A7%86%E9%A2%91%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%BB%E5%86%99%E6%93%8D%E4%BD%9C%EF%BC%89#.EF.BC.881.EF.BC.89___Linux:">OpenCV 编程简介（矩阵/图像/视频的基本读写操作）</a><br><a target="_blank" rel="noopener" href="http://www.emgu.com/wiki/index.php/Tutorial#Working_with_Images">Emgu cv Tutorial</a></p>
+</blockquote>
+<h3 id="关于Linux学习"><a href="#关于Linux学习" class="headerlink" title="关于Linux学习"></a>关于Linux学习</h3><ul>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/vamei/archive/2012/10/10/2718229.html">树莓派与Linux</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.kuqin.com/docs/debian.html">Debian 学习笔记</a></li>
+<li><a target="_blank" rel="noopener" href="http://cn.linux.vbird.org/">鸟哥的Linux私房菜</a></li>
+<li><a target="_blank" rel="noopener" href="http://cygwin.com/cygwin-ug-net/ov-ex-unix.html">Quick Start Guide for those more experienced with UNIX</a></li>
+</ul>
+<h3 id="关于树莓派"><a href="#关于树莓派" class="headerlink" title="关于树莓派"></a>关于树莓派</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="http://pan.baidu.com/share/link?shareid=2217805167&uk=3775748088">树莓派入门指南</a><br><a target="_blank" rel="noopener" href="http://tieba.baidu.com/p/2831020443">用python让树莓派说话</a><br><a target="_blank" rel="noopener" href="http://tieba.baidu.com/f?kw=%EF%BF%BD%EF%BF%BD%DD%AE%EF%BF%BD%EF%BF%BD&pn=150">树莓派吧</a><br><a target="_blank" rel="noopener" href="https://www.raspberrypi.org/forums/viewforum.php?f=32&sid=541135bc7aaad3acafdf0dae6ebb65b0">树莓派官方社区Python讨论版</a><br><a target="_blank" rel="noopener" href="http://www.geek-workshop.com/forum-50-1.html">极客工仿树莓派板块</a><br><a target="_blank" rel="noopener" href="http://www.52pi.net/">树莓派中文站</a><br><a target="_blank" rel="noopener" href="http://www.electricstuff.co.uk/">Mike’s Electric Stuff 查设备sheet</a><br><a target="_blank" rel="noopener" href="http://blog.csdn.net/xukai871105/article/details/14109211">树莓派I2C接口扩展</a><br><a target="_blank" rel="noopener" href="http://www.oschina.net/question/1425530_140979">树莓派GPIO使用</a><br><a target="_blank" rel="noopener" href="http://blog.csdn.net/liang890319/article/details/8677437">探索Wiring Pi</a><br><a target="_blank" rel="noopener" href="http://wiringpi.com/">Wiringpi.com 官网</a><br><a target="_blank" rel="noopener" href="http://cafe.miwor.com/">Café</a><br><a target="_blank" rel="noopener" href="http://www.alldatasheet.com/">AllDatasheet</a><br><a target="_blank" rel="noopener" href="http://www.eserviceinfo.com/">Search Datasheet</a><br><a target="_blank" rel="noopener" href="http://pinouts.ru/">Handbook of hardware schemes, cables layouts and connectors pinouts</a><br><a target="_blank" rel="noopener" href="https://allpinouts.org/">All Pinouts</a><br><a target="_blank" rel="noopener" href="https://www.adafruit.com/">AdaFruit</a><br><a target="_blank" rel="noopener" href="http://www.cnblogs.com/lovers/articles/2658777.html">Asterisk搭建VoIP</a><br><a target="_blank" rel="noopener" href="http://blog.csdn.net/xukai871105/article/details/23115627">树莓派学习索引</a></p>
+</blockquote>
+<span id="more"></span>
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E-Python-%EF%BC%8C%E4%BA%BA%E7%94%9F%E8%8B%A6%E7%9F%AD%EF%BC%8C%E6%88%91%E7%94%A8python"><span class="toc-number">1.</span> <span class="toc-text">关于[Python]，人生苦短，我用python</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8Eopencv"><span class="toc-number">2.</span> <span class="toc-text">关于opencv</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8ELinux%E5%AD%A6%E4%B9%A0"><span class="toc-number">3.</span> <span class="toc-text">关于Linux学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E6%A0%91%E8%8E%93%E6%B4%BE"><span class="toc-number">4.</span> <span class="toc-text">关于树莓派</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/hello-raspberrypi/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/hello-raspberrypi/&text=树莓派学习使用入门资料整理 – Raspberry PI"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/hello-raspberrypi/&title=树莓派学习使用入门资料整理 – Raspberry PI"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/hello-raspberrypi/&is_video=false&description=树莓派学习使用入门资料整理 – Raspberry PI"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=树莓派学习使用入门资料整理 – Raspberry PI&body=Check out this article: https://lison.cc/hello-raspberrypi/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/hello-raspberrypi/&title=树莓派学习使用入门资料整理 – Raspberry PI"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/hello-raspberrypi/&title=树莓派学习使用入门资料整理 – Raspberry PI"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/hello-raspberrypi/&title=树莓派学习使用入门资料整理 – Raspberry PI"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/hello-raspberrypi/&title=树莓派学习使用入门资料整理 – Raspberry PI"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/hello-raspberrypi/&name=树莓派学习使用入门资料整理 – Raspberry PI&description=&lt;h3 id=&#34;关于-Python-，人生苦短，我用python&#34;&gt;&lt;a href=&#34;#关于-Python-，人生苦短，我用python&#34; class=&#34;headerlink&#34; title=&#34;关于[Python]，人生苦短，我用python&#34;&gt;&lt;/a&gt;关于[&lt;a href=&#34;https://www.python.org/&#34;&gt;Python&lt;/a&gt;]，人生苦短，我用python&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;Python2.x 与Python3.x 存在严重的兼容性问题&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.cnblogs.com/vamei/archive/2012/09/13/2682778.html&#34;&gt;python快速教程&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.crifan.com/files/doc/docbook/python_beginner_tutorial/release/html/python_beginner_tutorial.html#what_is_python&#34;&gt;python初级教程&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;关于opencv&#34;&gt;&lt;a href=&#34;#关于opencv&#34; class=&#34;headerlink&#34; title=&#34;关于opencv&#34;&gt;&lt;/a&gt;关于opencv&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;http://wiki.opencv.org.cn/index.php/OpenCV_%E7%BC%96%E7%A8%8B%E7%AE%80%E4%BB%8B%EF%BC%88%E7%9F%A9%E9%98%B5/%E5%9B%BE%E5%83%8F/%E8%A7%86%E9%A2%91%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%BB%E5%86%99%E6%93%8D%E4%BD%9C%EF%BC%89#.EF.BC.881.EF.BC.89___Linux:&#34;&gt;OpenCV 编程简介（矩阵/图像/视频的基本读写操作）&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://www.emgu.com/wiki/index.php/Tutorial#Working_with_Images&#34;&gt;Emgu cv Tutorial&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;关于Linux学习&#34;&gt;&lt;a href=&#34;#关于Linux学习&#34; class=&#34;headerlink&#34; title=&#34;关于Linux学习&#34;&gt;&lt;/a&gt;关于Linux学习&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.cnblogs.com/vamei/archive/2012/10/10/2718229.html&#34;&gt;树莓派与Linux&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.kuqin.com/docs/debian.html&#34;&gt;Debian 学习笔记&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://cn.linux.vbird.org/&#34;&gt;鸟哥的Linux私房菜&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://cygwin.com/cygwin-ug-net/ov-ex-unix.html&#34;&gt;Quick Start Guide for those more experienced with UNIX&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;关于树莓派&#34;&gt;&lt;a href=&#34;#关于树莓派&#34; class=&#34;headerlink&#34; title=&#34;关于树莓派&#34;&gt;&lt;/a&gt;关于树莓派&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;http://pan.baidu.com/share/link?shareid=2217805167&amp;uk=3775748088&#34;&gt;树莓派入门指南&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://tieba.baidu.com/p/2831020443&#34;&gt;用python让树莓派说话&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://tieba.baidu.com/f?kw=%EF%BF%BD%EF%BF%BD%DD%AE%EF%BF%BD%EF%BF%BD&amp;pn=150&#34;&gt;树莓派吧&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;https://www.raspberrypi.org/forums/viewforum.php?f=32&amp;sid=541135bc7aaad3acafdf0dae6ebb65b0&#34;&gt;树莓派官方社区Python讨论版&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://www.geek-workshop.com/forum-50-1.html&#34;&gt;极客工仿树莓派板块&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://www.52pi.net/&#34;&gt;树莓派中文站&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://www.electricstuff.co.uk/&#34;&gt;Mike’s Electric Stuff 查设备sheet&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://blog.csdn.net/xukai871105/article/details/14109211&#34;&gt;树莓派I2C接口扩展&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://www.oschina.net/question/1425530_140979&#34;&gt;树莓派GPIO使用&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://blog.csdn.net/liang890319/article/details/8677437&#34;&gt;探索Wiring Pi&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://wiringpi.com/&#34;&gt;Wiringpi.com 官网&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://cafe.miwor.com/&#34;&gt;Café&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://www.alldatasheet.com/&#34;&gt;AllDatasheet&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://www.eserviceinfo.com/&#34;&gt;Search Datasheet&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://pinouts.ru/&#34;&gt;Handbook of hardware schemes, cables layouts and connectors pinouts&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;https://allpinouts.org/&#34;&gt;All Pinouts&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;https://www.adafruit.com/&#34;&gt;AdaFruit&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://www.cnblogs.com/lovers/articles/2658777.html&#34;&gt;Asterisk搭建VoIP&lt;/a&gt;&lt;br&gt;&lt;a href=&#34;http://blog.csdn.net/xukai871105/article/details/23115627&#34;&gt;树莓派学习索引&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/hello-raspberrypi/&t=树莓派学习使用入门资料整理 – Raspberry PI"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2014-2022
+    Lison Liou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMQWPXKTYB"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VMQWPXKTYB');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'LisonLiou/lison.cc';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

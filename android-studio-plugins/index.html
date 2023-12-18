@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="本来Intellij全家桶的东西已经够强大了，然而还有这么多优秀的插件，本文手记笔者开发过程中接触使用的插件，在此作记录，插件排名不分先后（当然eclipse也很经典）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Studio优秀插件最佳实践，不定期更新中">
+<meta property="og:url" content="https://lison.cc/android-studio-plugins/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="本来Intellij全家桶的东西已经够强大了，然而还有这么多优秀的插件，本文手记笔者开发过程中接触使用的插件，在此作记录，插件排名不分先后（当然eclipse也很经典）">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-15T11:47:39.000Z">
+<meta property="article:modified_time" content="2023-11-16T06:15:51.367Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="找工作的程序员, 找啊找啊找啊找">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Android Studio优秀插件最佳实践，不定期更新中 - 吾等采石之人, 当心怀大教堂之愿景.</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="LISON" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/android-okhttp-httpdns/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/design-pattern-builder/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/android-studio-plugins/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/android-studio-plugins/&text=Android Studio优秀插件最佳实践，不定期更新中"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/android-studio-plugins/&title=Android Studio优秀插件最佳实践，不定期更新中"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/android-studio-plugins/&is_video=false&description=Android Studio优秀插件最佳实践，不定期更新中"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android Studio优秀插件最佳实践，不定期更新中&body=Check out this article: https://lison.cc/android-studio-plugins/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/android-studio-plugins/&title=Android Studio优秀插件最佳实践，不定期更新中"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/android-studio-plugins/&title=Android Studio优秀插件最佳实践，不定期更新中"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/android-studio-plugins/&title=Android Studio优秀插件最佳实践，不定期更新中"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/android-studio-plugins/&title=Android Studio优秀插件最佳实践，不定期更新中"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/android-studio-plugins/&name=Android Studio优秀插件最佳实践，不定期更新中&description=&lt;p&gt;本来Intellij全家桶的东西已经够强大了，然而还有这么多优秀的插件，本文手记笔者开发过程中接触使用的插件，在此作记录，插件排名不分先后（当然eclipse也很经典）&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/android-studio-plugins/&t=Android Studio优秀插件最佳实践，不定期更新中"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Android Studio优秀插件最佳实践，不定期更新中
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Lison</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-04-15T11:47:39.000Z" itemprop="datePublished">2020-04-15</time>
+        
+        (Updated: <time datetime="2023-11-16T06:15:51.367Z" itemprop="dateModified">2023-11-16</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/android/">android</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>本来Intellij全家桶的东西已经够强大了，然而还有这么多优秀的插件，本文手记笔者开发过程中接触使用的插件，在此作记录，插件排名不分先后（当然eclipse也很经典）</p>
+<span id="more"></span>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/8103-svg2vectordrawable">SVG2VectorDrawable</a> 字面意思可以看明白，svg转向量图Drawable对象，APP图片瘦身必备步骤，之前都是使用在线工具直接生成各种大小的Drawable对象，本质还是图片，这个工具将图片直接转为Vector。典型的使用场景是比如我们app底部的Tab选项卡使用的那一类小图标，形式比较固定，就是一个默认的icon，一个默认颜色，按下时变成其他颜色。关于Vetor对象的图标的高级使用方法详见 -&gt; <a target="_blank" rel="noopener" href="https://gist.github.com/pgq10240817/18acdb1c84bf9b142793562de1dcee0f%E3%80%82">https://gist.github.com/pgq10240817/18acdb1c84bf9b142793562de1dcee0f。</a></li>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/7742-lifecycle-sorter">Lifecycle Sorter</a>，这个翻译成生命周期整理器？没错，就是自动将Activity，Fragment的override方法比如onCreate，onResume等方法依次按照生命周期顺序从上到下重新排列，不用每次都费力去差sdk了吧。安装完成点击Code-&gt;Sort Lifecycle Methods。不过如果你都能记得住并且此时是一脸不屑的话，na当我没说。<a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/7742-lifecycle-sorter">传送门这里—&gt;</a></li>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/7354-innerbuilder">InnerBuilder</a>，将Bean转化为构造器与链式调用模式的代码，将原始的getter setter方式改造为Builder加链式调用，例如：User user = new User.Builder().firstName(“Lison”).lastName(“Liou”).age(32).phoneNo(“15066796811”).build();<br>而这之前通常的写法是：User user=new User(); user.setFirstName(“Lison”) … <a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/7354-innerbuilder">传送门</a></li>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/7332-android-parcelable-code-generator">Parcelable Code Generator</a>，要在Intent中传递序列化对象，一种方法是实现Serializeble接口，另外一种就是实现Parcelable接口；Parcelable的方式效率比较高，但需要重写一堆方法，本插件就是为此而生，自动生成describeContents，writeToParcelable等方法。<a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/7332-android-parcelable-code-generator">传送门</a></li>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/164-ideavim/">IdeaVim</a> 这个不用多做介绍，懂的自然懂，Android Studio的Vim模拟器，反正我在几乎所有的IDE上都装了Vim插件，Android Studio, Pycharm, VS2019，VScode bla，<a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/164-ideavim/">传送门</a></li>
+<li><a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/6317-lombok/versions">lombok</a> 帮助你减少重复代码编写的工作，比如重复的编写getter setter代码，重复的使用Builder插件生成代码（InnerBuilder没别的意思），简单化注解同步方法等等。使用很酷，很提高效率。需要注意的是有些版本的插件与当前Android Studio不兼容，需要自己尝试下。<a target="_blank" rel="noopener" href="https://plugins.jetbrains.com/plugin/6317-lombok/versions">传门送。</a> <a target="_blank" rel="noopener" href="https://projectlombok.org/features/all">注解列表介绍。</a></li>
+</ul>
+<p>今天先放三个，后面慢慢更新。。。</p>
+<p>有句流行语怎么说来，乾坤未定，你我皆是黑马。虽然不再高考，但也没到认命的时候把。</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/android-studio-plugins/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/android-studio-plugins/&text=Android Studio优秀插件最佳实践，不定期更新中"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/android-studio-plugins/&title=Android Studio优秀插件最佳实践，不定期更新中"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/android-studio-plugins/&is_video=false&description=Android Studio优秀插件最佳实践，不定期更新中"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android Studio优秀插件最佳实践，不定期更新中&body=Check out this article: https://lison.cc/android-studio-plugins/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/android-studio-plugins/&title=Android Studio优秀插件最佳实践，不定期更新中"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/android-studio-plugins/&title=Android Studio优秀插件最佳实践，不定期更新中"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/android-studio-plugins/&title=Android Studio优秀插件最佳实践，不定期更新中"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/android-studio-plugins/&title=Android Studio优秀插件最佳实践，不定期更新中"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/android-studio-plugins/&name=Android Studio优秀插件最佳实践，不定期更新中&description=&lt;p&gt;本来Intellij全家桶的东西已经够强大了，然而还有这么多优秀的插件，本文手记笔者开发过程中接触使用的插件，在此作记录，插件排名不分先后（当然eclipse也很经典）&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/android-studio-plugins/&t=Android Studio优秀插件最佳实践，不定期更新中"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2014-2022
+    Lison Liou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMQWPXKTYB"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-VMQWPXKTYB');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'LisonLiou/lison.cc';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>
