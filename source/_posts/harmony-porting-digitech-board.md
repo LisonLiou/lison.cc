@@ -73,5 +73,5 @@ keywords:
 18. [嵌入式Linux系统移植的四大步骤](https://z.itpub.net/article/detail/A4D4995A2035757F82E1F38BDDFC2F57)
 19. [详解三大编译器：gcc、llvm 和 clang](https://zhuanlan.zhihu.com/p/357803433)
 20. [ohos内核,initrd,设备树启动说明](https://laval.csdn.net/64c7944e9a15ac690d7c7027.html?login=from_csdn)
-21. 
+21. [**Linux kernel 编译方法大全记录**](https://www.cnblogs.com/chenfulin5/p/6179554.html)
 
