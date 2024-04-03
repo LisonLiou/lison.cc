@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="编译鸿蒙4.0源码，16G内存吸干，不增加硬件的前提下，试下扩展虚拟内存。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu 20.04设置虚拟内存">
+<meta property="og:url" content="https://lison.cc/ubuntu-extend-memory-swapfile/index.html">
+<meta property="og:site_name" content="LISON">
+<meta property="og:description" content="编译鸿蒙4.0源码，16G内存吸干，不增加硬件的前提下，试下扩展虚拟内存。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="data:image/png;base64,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">
+<meta property="article:published_time" content="2024-04-03T02:33:48.000Z">
+<meta property="article:modified_time" content="2024-04-03T05:22:51.448Z">
+<meta property="article:author" content="Lison Liou">
+<meta property="article:tag" content="虚拟内存">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/png;base64,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">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Ubuntu 20.04设置虚拟内存 - 吾等采石之人, 当心怀大教堂之愿景.</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+      <link rel="alternate" href="/true" title="LISON" type="application/atom+xml" />
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/linux-shell-ls-xargs/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/ubuntu-extend-memory-swapfile/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/ubuntu-extend-memory-swapfile/&text=Ubuntu 20.04设置虚拟内存"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/ubuntu-extend-memory-swapfile/&title=Ubuntu 20.04设置虚拟内存"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/ubuntu-extend-memory-swapfile/&is_video=false&description=Ubuntu 20.04设置虚拟内存"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Ubuntu 20.04设置虚拟内存&body=Check out this article: https://lison.cc/ubuntu-extend-memory-swapfile/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/ubuntu-extend-memory-swapfile/&title=Ubuntu 20.04设置虚拟内存"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/ubuntu-extend-memory-swapfile/&title=Ubuntu 20.04设置虚拟内存"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/ubuntu-extend-memory-swapfile/&title=Ubuntu 20.04设置虚拟内存"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/ubuntu-extend-memory-swapfile/&title=Ubuntu 20.04设置虚拟内存"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/ubuntu-extend-memory-swapfile/&name=Ubuntu 20.04设置虚拟内存&description=&lt;blockquote&gt;
+&lt;p&gt;编译鸿蒙4.0源码，16G内存吸干，不增加硬件的前提下，试下扩展虚拟内&lt;br&gt;存。&lt;/p&gt;
+&lt;/blockquote&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/ubuntu-extend-memory-swapfile/&t=Ubuntu 20.04设置虚拟内存"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%A6%96%E5%85%88%E4%BF%9D%E8%AF%81%E6%8B%A5%E6%9C%89%E8%B6%B3%E5%A4%9F%E7%9A%84%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%EF%BC%8C%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%B8%8D%E5%B0%B1%E6%98%AF%E4%BA%A4%E6%8D%A2%E7%9A%84%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%EF%BC%8C%E7%89%BA%E7%89%B2%E6%97%B6%E9%97%B4%E6%8D%A2%E5%8F%96%E7%A9%BA%E9%97%B4%EF%BC%88%E6%89%93%E5%B7%A5%E4%B8%8D%E5%B0%B1%E6%98%AF%E4%BA%BA%E8%82%89%E6%8D%A2%E7%8C%AA%E8%82%89%EF%BC%8C%E6%88%91%E5%AF%B9%E8%BF%99%E7%89%87%E5%9C%9F%E5%9C%B0%E6%B2%A1%E6%9C%89%E4%BB%BB%E4%BD%95%E6%84%9F%E6%83%85%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">1. 首先保证拥有足够的磁盘空间，虚拟内存不就是交换的磁盘空间，牺牲时间换取空间（打工不就是人肉换猪肉，我对这片土地没有任何感情）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%9F%A5%E7%9C%8B%E7%8E%B0%E6%9C%89%E7%9A%84%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">2.</span> <span class="toc-text">2. 查看现有的虚拟内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">3. 创建虚拟内存配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%AE%8C%E6%88%90%E5%90%8E%E5%86%8D%E6%AC%A1%E6%9F%A5%E7%9C%8B%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">4.</span> <span class="toc-text">4. 完成后再次查看虚拟内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%8C%82%E8%BD%BD%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">5.</span> <span class="toc-text">5. 开机自动挂载虚拟内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E5%AE%8C%E6%88%90"><span class="toc-number">6.</span> <span class="toc-text">6. 完成</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Ubuntu 20.04设置虚拟内存
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Lison</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-04-03T02:33:48.000Z" itemprop="datePublished">2024-04-03</time>
+        
+        (Updated: <time datetime="2024-04-03T05:22:51.448Z" itemprop="dateModified">2024-04-03</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Linux/">Linux</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" rel="tag">虚拟内存</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <blockquote>
+<p>编译鸿蒙4.0源码，16G内存吸干，不增加硬件的前提下，试下扩展虚拟内<br>存。</p>
+</blockquote>
+<span id="more"></span>
+
+<h4 id="1-首先保证拥有足够的磁盘空间，虚拟内存不就是交换的磁盘空间，牺牲时间换取空间（打工不就是人肉换猪肉，我对这片土地没有任何感情）"><a href="#1-首先保证拥有足够的磁盘空间，虚拟内存不就是交换的磁盘空间，牺牲时间换取空间（打工不就是人肉换猪肉，我对这片土地没有任何感情）" class="headerlink" title="1. 首先保证拥有足够的磁盘空间，虚拟内存不就是交换的磁盘空间，牺牲时间换取空间（打工不就是人肉换猪肉，我对这片土地没有任何感情）"></a>1. 首先保证拥有足够的磁盘空间，虚拟内存不就是交换的磁盘空间，牺牲时间换取空间（打工不就是人肉换猪肉，我对这片土地没有任何感情）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df -h #查看你的分区有足够的空间</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-查看现有的虚拟内存"><a href="#2-查看现有的虚拟内存" class="headerlink" title="2. 查看现有的虚拟内存"></a>2. 查看现有的虚拟内存</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">free -h</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-创建虚拟内存配置文件"><a href="#3-创建虚拟内存配置文件" class="headerlink" title="3. 创建虚拟内存配置文件"></a>3. 创建虚拟内存配置文件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">mkdir swap &amp;&amp; cd swap</span><br><span class="line"></span><br><span class="line"># bs为块的大小, count为创建多少个块（我扩展了16G 16*1024）</span><br><span class="line">sudo dd if=/dev/zero of=swapfile bs=1M count=16384</span><br><span class="line"></span><br><span class="line"># 修改权限</span><br><span class="line">sudo chmod 0600 swapfile</span><br><span class="line"></span><br><span class="line"># 把生成的文件转换成swap文件</span><br><span class="line">sudo mkswap swapfile</span><br><span class="line"></span><br><span class="line"># 激活文件</span><br><span class="line">sudo swapon swapfile</span><br><span class="line"></span><br><span class="line"># 释放文件（如果需要的话）</span><br><span class="line">sudo swapoff swapfile</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-完成后再次查看虚拟内存"><a href="#4-完成后再次查看虚拟内存" class="headerlink" title="4. 完成后再次查看虚拟内存"></a>4. 完成后再次查看虚拟内存</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">free -h</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-开机自动挂载虚拟内存"><a href="#5-开机自动挂载虚拟内存" class="headerlink" title="5. 开机自动挂载虚拟内存"></a>5. 开机自动挂载虚拟内存</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/fstab</span><br><span class="line"></span><br><span class="line"># 增加如下 [虚拟内存文件路径] swap swap defaults 0 0</span><br><span class="line"># 比如我的路径</span><br><span class="line">/home/lison/swap/swapfile swap swap defaults 0 0</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="6-完成"><a href="#6-完成" class="headerlink" title="6. 完成"></a>6. 完成</h4><p><img src="data:image/png;base64,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"></p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%A6%96%E5%85%88%E4%BF%9D%E8%AF%81%E6%8B%A5%E6%9C%89%E8%B6%B3%E5%A4%9F%E7%9A%84%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%EF%BC%8C%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%B8%8D%E5%B0%B1%E6%98%AF%E4%BA%A4%E6%8D%A2%E7%9A%84%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%EF%BC%8C%E7%89%BA%E7%89%B2%E6%97%B6%E9%97%B4%E6%8D%A2%E5%8F%96%E7%A9%BA%E9%97%B4%EF%BC%88%E6%89%93%E5%B7%A5%E4%B8%8D%E5%B0%B1%E6%98%AF%E4%BA%BA%E8%82%89%E6%8D%A2%E7%8C%AA%E8%82%89%EF%BC%8C%E6%88%91%E5%AF%B9%E8%BF%99%E7%89%87%E5%9C%9F%E5%9C%B0%E6%B2%A1%E6%9C%89%E4%BB%BB%E4%BD%95%E6%84%9F%E6%83%85%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">1. 首先保证拥有足够的磁盘空间，虚拟内存不就是交换的磁盘空间，牺牲时间换取空间（打工不就是人肉换猪肉，我对这片土地没有任何感情）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%9F%A5%E7%9C%8B%E7%8E%B0%E6%9C%89%E7%9A%84%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">2.</span> <span class="toc-text">2. 查看现有的虚拟内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%88%9B%E5%BB%BA%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">3. 创建虚拟内存配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%AE%8C%E6%88%90%E5%90%8E%E5%86%8D%E6%AC%A1%E6%9F%A5%E7%9C%8B%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">4.</span> <span class="toc-text">4. 完成后再次查看虚拟内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%8C%82%E8%BD%BD%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">5.</span> <span class="toc-text">5. 开机自动挂载虚拟内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E5%AE%8C%E6%88%90"><span class="toc-number">6.</span> <span class="toc-text">6. 完成</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://lison.cc/ubuntu-extend-memory-swapfile/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://lison.cc/ubuntu-extend-memory-swapfile/&text=Ubuntu 20.04设置虚拟内存"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://lison.cc/ubuntu-extend-memory-swapfile/&title=Ubuntu 20.04设置虚拟内存"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://lison.cc/ubuntu-extend-memory-swapfile/&is_video=false&description=Ubuntu 20.04设置虚拟内存"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Ubuntu 20.04设置虚拟内存&body=Check out this article: https://lison.cc/ubuntu-extend-memory-swapfile/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://lison.cc/ubuntu-extend-memory-swapfile/&title=Ubuntu 20.04设置虚拟内存"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://lison.cc/ubuntu-extend-memory-swapfile/&title=Ubuntu 20.04设置虚拟内存"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://lison.cc/ubuntu-extend-memory-swapfile/&title=Ubuntu 20.04设置虚拟内存"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://lison.cc/ubuntu-extend-memory-swapfile/&title=Ubuntu 20.04设置虚拟内存"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://lison.cc/ubuntu-extend-memory-swapfile/&name=Ubuntu 20.04设置虚拟内存&description=&lt;blockquote&gt;
+&lt;p&gt;编译鸿蒙4.0源码，16G内存吸干，不增加硬件的前提下，试下扩展虚拟内&lt;br&gt;存。&lt;/p&gt;
+&lt;/blockquote&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://lison.cc/ubuntu-extend-memory-swapfile/&t=Ubuntu 20.04设置虚拟内存"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2014-2022
+    Lison Liou
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/LisonLiou/">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LV525B8LYR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-LV525B8LYR');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'LisonLiou/lison.cc';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>
