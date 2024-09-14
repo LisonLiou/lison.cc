@@ -1,0 +1,45 @@
+---
+title: top5-ideas-in-the-world
+tags:
+  - null
+  - null
+categories:
+  - null
+author: Lison
+img: ''
+top: false
+cover: false
+coverImg: ''
+toc: false
+mathjax: false
+summary: ''
+date: 2024-09-14 16:31:28
+desc:
+keywords:
+---
+
+<!--more-->
+
+
+
+TOP 5 IDEAS IN THE WORLD.
+
+
+MURPHY'S LAW
+THE MORE YOU FEAR SOMETHING, THE MORE IT WILL HAPPEN.
+
+
+KIDLIN'S LAW
+IF YOU CAN WRITE THE PROBLEM DOWN CLEARLY, THEN THE MATTERS IS HALF SOLVED.
+
+
+GIBERT'S LAW
+THE BIGGEST PROBLEM AT WORK IS THAT NO ONE TELLS YOU WHAT TO DO.
+
+
+WALSON'S LAW
+IF YOU PUT INFORMATION AND INTELLEGENCE FIRST AT ALL THE TIMES, THEN THE MONEY KEEPS COMING IN.
+
+
+FALKLAND'S LAW
+WHEN YOU DON'T HAVE TO MAKE A DESICION, THEN DON'T MAKE A DECISION. 
