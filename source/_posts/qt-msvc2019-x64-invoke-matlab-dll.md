@@ -1,5 +1,6 @@
 ---
-title: qt_msvc2019_x64_invoke_matlab_dll
+title: Qt调用Matlab生成dll的配置过程与问题排查解决记录
+
 tags:
   - null
   - null
@@ -15,10 +16,9 @@ mathjax: false
 summary: ''
 date: 2025-04-26 21:18:07
 desc:
-keywords:
+keywords: qt, msvc_2019_x64, matlab dll
 ---
 
-# Qt调用Matlab生成dll的配置过程与问题排查解决记录
 
 <!--more-->
 
@@ -241,7 +241,7 @@ void invokeMatlab2(QVector<QVector<double>> data) {
   - **删除** 项目中的 `detect.cpp` 和 `detect.h`。
   - 保持仅通过 `detect.lib` 调用外部函数接口。
 
-## 最终 `.pro` 文件关键配置（MATLAB部分）
+### 最终 `.pro` 文件关键配置（MATLAB部分）
 
 ```qmake
 # Matlab 头文件路径
@@ -263,13 +263,13 @@ INCLUDEPATH += $$PWD/dll
 DEPENDPATH += $$PWD/dll
 ```
 
-## 小结
+### 小结
 
 - `.lib` 是编译时用的，`.dll` 是运行时用的，两者不可混淆。
 - 链接路径中有空格的地方一定要加上引号 `"..."`。
 - 遇到 LNK2005，注意不要重复定义同名函数。
 - `INCLUDEPATH` 和 `LIBS` 的顺序也可能影响编译。
 
-## 参考
+### 参考
 
 [Matlab打包为dll，并使用C++调用](https://blog.csdn.net/qq_37955704/article/details/128506358)

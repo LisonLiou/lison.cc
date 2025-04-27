@@ -1,5 +1,5 @@
 ---
-title: hello_JAP
+title: Hello JAP
 tags:
   - null
   - null
